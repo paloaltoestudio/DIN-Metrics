@@ -1,18 +1,58 @@
 """Users views."""
 
 # Django
-from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView
+from django.contrib import messages
+
 
 # Exception
 from django.db.utils import IntegrityError
 
 # Models
-from django.contrib.auth.models import User
-from users.models import Athlete
+from users.models import Athlete, User
+from users.forms import UpdateUserForm
 
-User = get_user_model()
+class Index(ListView):
+    model = User
+    template_name = 'users/index.html'
+    context_object_name = 'users'
+
+
+class UserDetail(DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/detail.html'
+
+
+def user_update(request, id):
+    if request.method == 'POST':
+
+        form = UpdateUserForm(request.POST)
+        user = User.objects.get(id=request.POST['id'])
+        athlete = Athlete.objects.get_or_create(user=user)
+        athlete = athlete[0]
+
+        if form.is_valid():
+            print(form.cleaned_data)
+            data = form.cleaned_data
+
+            athlete.age = data['age']
+            athlete.phone = data['phone']
+            athlete.birthdate = data['birthdate']
+            athlete.gender = data['gender']
+            athlete.save()
+
+            return redirect('users:user_detail', id=id)
+
+        else:
+            messages.add_message(request, messages.ERROR, form.errors)
+            return redirect('users:user_detail', id)
+
+
+
 
 def login_view(request):
     """Login view."""

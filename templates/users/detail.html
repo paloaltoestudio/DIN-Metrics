@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+    <h1>{{user.first_name}} {{user.last_name}}</h1>
+    <a href="{% url 'users:index' %}">Atrás</a>
+    <ul>
+        <li>Edad: {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
+        <li>Género: {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
+        <li>Teléfono: {% if user.athlete.phone %} {{ user.athlete.phone }} {{ user.athlete.phone }} {% else %} --- {% endif %}</li>
+        <li>Fecha de nacimiento: {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
+    </ul>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action="{% url 'users:user_update' user.id %}" method='post'>
+        {% csrf_token %}
+        <input type="number" placeholder="Edad" name="age" value="{{ user.athlete.age }}">
+        <input type="number" placeholder="Teléfono" name="phone" value="{{ user.athlete.phone }}">
+        <input type="date" name="birthdate" value="{{ user.athlete.birthdate| date:'Y-m-d' }}">
+        <select name="gender" id="gender">
+            <option {% if user.athlete.gender == 'M' %} selected {% endif %} value="M">Masculino</option>
+            <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
+            <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
+        </select>
+        <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
+        <button>Enviar</button>
+    </form>
+{% endblock  %}

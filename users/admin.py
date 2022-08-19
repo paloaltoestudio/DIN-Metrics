@@ -5,7 +5,12 @@ from users.models import Athlete, User
 
 @admin.register(Athlete)
 class AthleteAdmin(admin.ModelAdmin):
-    pass
+
+    fieldsets = (
+        (None, {'fields': ('user', 'phone', 'birthdate', 'gender', 'age', 'created', 'modified')}),
+    )
+
+    readonly_fields = ('created', 'modified')
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
