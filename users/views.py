@@ -19,12 +19,36 @@ class Index(ListView):
     model = User
     template_name = 'users/index.html'
     context_object_name = 'users'
+    extra_context = {
+        'page': 'user_list_detail'
+    }
+
+
+class ManagerView(ListView):
+    model = User
+    template_name = 'users/managers.html'
+    context_object_name = 'users'
+    extra_context = {
+        'page': 'manager_list_detail'
+    }
 
 
 class UserDetail(DetailView):
     model = User
     pk_url_kwarg = 'id'
     template_name = 'users/detail.html'
+    extra_context = {
+        'page': 'user_list_detail'
+    }
+
+
+class ManagerDetail(DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/manager_detail.html'
+    extra_context = {
+        'page': 'manager_list_detail'
+    }
 
 
 def user_update(request, id):
@@ -96,9 +120,13 @@ def signup(request):
         athlete.save()
 
         # return redirect('login')
-        return render(request, 'users/signup.html')
+        return render(request, 'users/signup.html', {
+            'page': 'user_signup'
+        })
 
-    return render(request, 'users/signup.html')
+    return render(request, 'users/signup.html', {
+        'page': 'user_signup'
+    })
 
 
 @login_required
