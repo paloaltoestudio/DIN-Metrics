@@ -1,13 +1,21 @@
-{% extends 'base.html' %}
+{% extends 'layout/base.html' %}
 
 {% block container %}
 
-    <h1>{{user.first_name}} {{user.last_name}}</h1>
-    <a href="{% url 'users:index' %}">Atrás</a>
+
+
+    <a class="mb-3 btn btn-sm" href="{% url 'users:index' %}">
+        <i class="material-icons">arrow_back</i>
+        Volver
+    </a>
+
+    <h2>{{user.first_name}} {{user.last_name}}</h2>
+    
     <ul>
         <li>Edad: {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
         <li>Género: {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
-        <li>Teléfono: {% if user.athlete.phone %} {{ user.athlete.phone }} {{ user.athlete.phone }} {% else %} --- {% endif %}</li>
+        <li>Email: {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
+        <li>Teléfono: {% if user.athlete.phone %} {{ user.athlete.phone }} {% else %} --- {% endif %}</li>
         <li>Fecha de nacimiento: {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
     </ul>
 

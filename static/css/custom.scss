@@ -1,0 +1,46 @@
+
+
+.auth {
+    background: #1c1c63;
+
+    .container {
+        height: 100vh;
+
+        .box {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+
+            .logo {
+                position: relative;
+                margin: auto;
+                margin-top: -50px;
+                margin-bottom: 20px;
+                background: #fff;
+                width: 250px;
+                padding: 10px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2px 10px rgba(black, 0.1);
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            h1 {
+                font-size: 2rem;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            input {
+                border-bottom: 1px solid #000;
+            }
+        }
+    }
+}
