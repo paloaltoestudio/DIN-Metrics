@@ -4,7 +4,7 @@
 
 {% block container %}
 
-    <h1>Registro de deportista</h1>
+    <h1>Registro de empresario</h1>
 
     {% if error %}
         <p class="alert alert-danger">{{ error }}</p>
@@ -25,24 +25,11 @@
         
         <div class="form-group">
             <input class="form-control" type="email" placeholder="Email" name="email" required="true" />
-            <input class="form-control" type="text" name="role" value="ATHLETE" hidden />
+            <input class="form-control" type="text" name="role" value="MANAGER" hidden />
         </div>
         
         <div class="form-group">
             <input class="form-control" type="text" placeholder="Teléfono" name="phone" />
-        </div>
-
-        <div class="form-group">
-            <input class="form-control" type="date" name="birthdate" value="{{ user.athlete.birthdate| date:'Y-m-d' }}">
-        </div>
-
-        <div class="form-group">
-            <select class="form-control" name="gender" id="gender">
-                <option value="">Género</option>
-                <option {% if user.athlete.gender == 'M' %} selected {% endif %} value="M">Masculino</option>
-                <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
-                <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
-            </select>
         </div>
         
         <div class="form-group">
@@ -53,7 +40,7 @@
             <input class="form-control" type="password" placeholder="Confirmar contraseña" name="passwd_confirmation" required="true" />
         </div>
 
-        <button class="btn btn-primary btn-block mt-5" type="submit">Agregar Deportista</button>
+        <button class="btn btn-primary btn-block mt-5" type="submit">Agregar Empresario</button>
 
     </form>
 
