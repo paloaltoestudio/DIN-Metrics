@@ -34,11 +34,14 @@ class ManagerView(ListView):
 
 
 class UserDetail(DetailView):
+    managers = User.objects.filter(role = 'MANAGER')
+
     model = User
     pk_url_kwarg = 'id'
     template_name = 'users/detail.html'
     extra_context = {
-        'page': 'user_list_detail'
+        'page': 'user_list_detail',
+        'managers': managers
     }
 
 
@@ -54,28 +57,46 @@ class ManagerDetail(DetailView):
 def user_update(request, id):
     if request.method == 'POST':
 
-        form = UpdateUserForm(request.POST)
         user = User.objects.get(id=request.POST['id'])
-        athlete = Athlete.objects.get_or_create(user=user)
-        athlete = athlete[0]
+        form = UpdateUserForm(request.POST)
+        
+        if user:
+            role = user.role
 
         if form.is_valid():
-            print(form.cleaned_data)
             data = form.cleaned_data
+            
+            user.phone = data['phone']
+            user.first_name = data['first_name']
+            user.last_name = data['last_name']
+            user.email = data['email']
+            user.save()
+            
+            if role and role == 'ATHLETE':
+                if data['manager']:
+                    manager = User.objects.get(id = data['manager'])
+                    
+                athlete = Athlete.objects.get_or_create(user=user)
+                athlete = athlete[0]
+                athlete.age = data['age']
+                athlete.birthdate = data['birthdate']
+                athlete.gender = data['gender']
+                athlete.manager = manager
+                athlete.save()
 
-            athlete.age = data['age']
-            athlete.phone = data['phone']
-            athlete.birthdate = data['birthdate']
-            athlete.gender = data['gender']
-            athlete.save()
-
-            return redirect('users:user_detail', id=id)
+                return redirect('users:user_detail', id=id)
 
         else:
             messages.add_message(request, messages.ERROR, form.errors)
+            if role and role == 'ATHLETE':
+                return redirect('users:user_detail', id)
+            elif role and role == 'MANAGER':
+                return redirect('users:manager_detail', id)
+
+        if role and role == 'ATHLETE':
             return redirect('users:user_detail', id)
-
-
+        elif role and role == 'MANAGER':
+            return redirect('users:manager_detail', id)
 
 
 def login_view(request):

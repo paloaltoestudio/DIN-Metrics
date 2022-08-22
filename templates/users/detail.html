@@ -15,8 +15,10 @@
         <li>Edad: {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
         <li>Género: {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
         <li>Email: {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
-        <li>Teléfono: {% if user.athlete.phone %} {{ user.athlete.phone }} {% else %} --- {% endif %}</li>
+        <li>Teléfono: {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
         <li>Fecha de nacimiento: {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
+        <li>Manager: {% if user.athlete.manager %}<a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a>{% else %}No Asignado{% endif %}</li>
+        
     </ul>
 
     {% if messages %}
@@ -29,14 +31,34 @@
 
     <form action="{% url 'users:user_update' user.id %}" method='post'>
         {% csrf_token %}
+        <input type="text" placeholder="text" name="first_name" value="{{ user.first_name }}">
+        <input type="text" placeholder="text" name="last_name" value="{{ user.last_name }}">
+        <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
         <input type="number" placeholder="Edad" name="age" value="{{ user.athlete.age }}">
-        <input type="number" placeholder="Teléfono" name="phone" value="{{ user.athlete.phone }}">
+        <input type="number" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
         <input type="date" name="birthdate" value="{{ user.athlete.birthdate| date:'Y-m-d' }}">
         <select name="gender" id="gender">
+            <option value="">Género</option>
             <option {% if user.athlete.gender == 'M' %} selected {% endif %} value="M">Masculino</option>
             <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
             <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
         </select>
+
+        <select name="manager" id="manager">
+            <option value="">Escoge el empresario</option>
+            {% if user.athlete.manager %}
+                <option value="{{ user.athlete.manager.id }}" selected>{{ user.athlete.manager }}</option>
+            {% endif %}
+
+            {% if managers %}
+            {% for manager in managers %}
+                <option value="{{ manager.id }}">{{ manager }}</option>
+            {% endfor %}
+            {% else %}
+                no managers
+            {% endif %}
+        </select>
+
         <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
         <button>Enviar</button>
     </form>
