@@ -16,9 +16,13 @@
     <ul>
         <li>Email: {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
         <li>Teléfono: {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
+        <li>Cédula: {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
     </ul>
 
     <h3>Jugadores</h3>
+    {% if not user.Athlete.all %}
+        No hay jugadores asignados
+    {% endif %}
 
     <ul>
         {% for Athlete in user.Athlete.all %}
@@ -30,6 +34,7 @@
         {% csrf_token %}
         <input type="text" placeholder="text" name="first_name" value="{{ user.first_name }}">
         <input type="text" placeholder="text" name="last_name" value="{{ user.last_name }}">
+        <input type="text" placeholder="Cédula" name="document" value="{{ user.document }}">
         <input type="text" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
         <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
         <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>

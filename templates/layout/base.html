@@ -37,14 +37,16 @@
               </a></div>
             <div class="sidebar-wrapper">
               <ul class="nav">
+                {% if request.user.role != 'ATHLETE' %}
                 <li class="nav-item {% if page == 'user_list_detail' %} active {% endif %}">
                   <a class="nav-link" href="{% url 'users:index' %}">
                     <i class="material-symbols-outlined">directions_run</i>
                     <p>Deportistas</p>
                   </a>
                 </li>
+                {% endif %}
 
-                {% if request.user.role != 'MANAGER' %}
+                {% if request.user.role == 'ADMIN' %}
                 <li class="nav-item {% if page == 'user_signup' %} active {% endif %}">
                   <a class="nav-link" href="{% url 'users:signup' %}">
                     <i class="material-symbols-outlined">add</i>
@@ -61,6 +63,15 @@
                   <a class="nav-link" href="{% url 'users:new_manager' %}">
                     <i class="material-symbols-outlined">add</i>
                     <p>Agregar Empresario</p>
+                  </a>
+                </li>
+                {% endif %}
+
+                {% if request.user.role == 'ATHLETE' %}
+                <li class="nav-item {% if page == 'user_list_detail' %} active {% endif %}">
+                  <a class="nav-link" href="{% url 'users:user_detail' request.user.id %}">
+                    <i class="material-symbols-outlined">person</i>
+                    <p>Perfil</p>
                   </a>
                 </li>
                 {% endif %}
@@ -176,7 +187,7 @@
                 swal({
                     icon: 'success',
                     title: "{{ message }}",
-                    timer: 1500
+                    timer: 1100
                   });
             </script>
             {% endif %}

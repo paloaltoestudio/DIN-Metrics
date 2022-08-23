@@ -3,6 +3,7 @@
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.contrib import messages
@@ -19,7 +20,7 @@ from users.utils import age
 
 
 
-class Index(ListView):
+class Index(LoginRequiredMixin, ListView):
     model = User
     ordering = ['-date_joined']
     paginate_by = 15
@@ -30,8 +31,20 @@ class Index(ListView):
         'page': 'user_list_detail'
     }
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        athletes = Athlete.objects.filter(manager = self.request.user)
+        context["has_athletes"] = len(athletes) > 0
+        return context
 
-class ManagerView(ListView):
+    def get(self, *args, **kwargs):
+        if self.request.user.role == 'ATHLETE':
+            return redirect('users:user_detail', self.request.user.id)
+        return super(Index, self).get(*args, **kwargs)
+    
+
+
+class ManagerView(LoginRequiredMixin, ListView):
     model = User
     ordering = ['-date_joined']
     paginate_by = 15
@@ -43,7 +56,7 @@ class ManagerView(ListView):
     }
 
 
-class UserDetail(DetailView):
+class UserDetail(LoginRequiredMixin, DetailView):
     managers = User.objects.filter(role = 'MANAGER')
 
     model = User
@@ -55,7 +68,7 @@ class UserDetail(DetailView):
     }
 
 
-class ManagerDetail(DetailView):
+class ManagerDetail(LoginRequiredMixin, DetailView):
     model = User
     pk_url_kwarg = 'id'
     template_name = 'users/manager_detail.html'
@@ -79,6 +92,7 @@ def user_update(request, id):
             user.phone = data['phone']
             user.first_name = data['first_name']
             user.last_name = data['last_name']
+            user.document = data['document']
             user.email = data['email']
             user.save()
             
@@ -92,6 +106,11 @@ def user_update(request, id):
 
                 athlete.birthdate = data['birthdate']
                 athlete.gender = data['gender']
+                athlete.team = data['team']
+                athlete.sport = data['sport']
+                athlete.size = data['size']
+                athlete.weight = data['weight']
+                athlete.eps = data['eps']
 
                 if data['manager']:
                     manager = User.objects.get(id = data['manager'])
@@ -119,8 +138,10 @@ def user_update(request, id):
 class UserLoginView(LoginView):
     next_page = 'users:index'
     template_name = 'users/login.html'
+    redirect_authenticated_user = True
+        
 
-
+@login_required
 def signup(request):
     """Sign up view."""
     if request.method == 'POST':
@@ -158,6 +179,7 @@ def signup(request):
         'page': 'user_signup'
     })
 
+@login_required
 def new_manager(request):
     """Manager register up view."""
     if request.method == 'POST':

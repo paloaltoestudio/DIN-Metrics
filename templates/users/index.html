@@ -4,6 +4,8 @@
 
     <h1>Deportistas</h1>
 
+    {% if has_athletes or request.user.role == 'ADMIN' %}
+
     {% if users %}
         <ul>
             {% for user in users %}
@@ -31,6 +33,11 @@
             {% endif %}
         </span>
     </div>
+
+    {% else %}
+    <h3>No tienes deportistas asociados aun.</h3>
+    {% endif %}
+    
     {% endblock %}
 
 

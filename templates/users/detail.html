@@ -1,10 +1,12 @@
 {% extends 'layout/base.html' %}
 
 {% block container %}
+    {% if request.user.role != 'ATHLETE' %}
     <a class="mb-3 btn btn-sm" href="{% url 'users:index' %}">
         <i class="material-icons">arrow_back</i>
         deportistas
     </a>
+    {% endif %}
 
     {% if user.athlete.manager == request.user or request.user.role != 'MANAGER' %}
     <h2>{{user.first_name}} {{user.last_name}}</h2>
@@ -15,6 +17,12 @@
         <li>Email: {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
         <li>Teléfono: {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
         <li>Fecha de nacimiento: {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
+        <li>Cédula: {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
+        <li>Equipo: {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
+        <li>Deporte: {% if user.athlete.sport %} {{ user.athlete.sport }} {% else %} --- {% endif %}</li>
+        <li>Talla: {% if user.athlete.size %} {{ user.athlete.size }} {% else %} --- {% endif %}</li>
+        <li>Peso: {% if user.athlete.weight %} {{ user.athlete.weight }} {% else %} --- {% endif %}</li>
+        <li>EPS: {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>
         <li>Manager: {% if user.athlete.manager %}<a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a>{% else %}No Asignado{% endif %}</li>
         
     </ul>
@@ -35,6 +43,7 @@
         {% csrf_token %}
         <input type="text" placeholder="text" name="first_name" value="{{ user.first_name }}">
         <input type="text" placeholder="text" name="last_name" value="{{ user.last_name }}">
+        <input type="text" placeholder="Cédula" name="document" value="{{ user.document }}">
         <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
         <input type="text" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
         <input type="date" name="birthdate" value="{{ user.athlete.birthdate| date:'Y-m-d' }}">
@@ -44,7 +53,13 @@
             <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
             <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
         </select>
-
+        <input type="text" placeholder="Talla" name="size" value="{{ user.athlete.size }}">
+        <input type="text" placeholder="Peso" name="weight" value="{{ user.athlete.weight }}">
+        <input type="text" placeholder="EPS" name="eps" value="{{ user.athlete.eps }}">
+        
+        <input type="text" placeholder="Equipo" name="team" value="{{ user.athlete.team }}">
+        <input type="text" placeholder="Deporte" name="sport" value="{{ user.athlete.sport }}">
+        
         <select name="manager" id="manager">
             <option value="">Escoge el empresario</option>
             {% if user.athlete.manager %}

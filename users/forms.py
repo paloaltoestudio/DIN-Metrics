@@ -9,9 +9,15 @@ class UpdateUserForm(forms.Form):
 
     first_name = forms.CharField(max_length=20, required=False)
     last_name = forms.CharField(max_length=20, required=False)
+    document = forms.IntegerField(required=False)
     email = forms.EmailField(max_length=30, required=False)
     phone = forms.CharField(max_length=20, min_length=10, required=False)
     birthdate = forms.DateField(required=False)
     gender = forms.CharField(max_length=1, required=False)
     manager = forms.ChoiceField(choices=MANAGER_CHOICES, required=False)
+    team = forms.CharField(max_length=30, required=False)
+    sport = forms.CharField(max_length=30, required=False)
+    size = forms.CharField(max_length=10, required=False)
+    weight = forms.CharField(max_length=6, required=False)
+    eps = forms.CharField(max_length=30, required=False)
 
