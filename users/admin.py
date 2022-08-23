@@ -7,6 +7,7 @@ class AthleteAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {'fields': ('user', 'manager', 'birthdate', 'gender', 'age', 'created', 'modified')}),
+        ('Información Básica', {'fields': ('team', 'sport', 'size', 'weight', 'eps')})
     )
 
     readonly_fields = ('created', 'modified')
@@ -16,7 +17,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ('first_name', 'last_name', 'email',)
 
     fieldsets = (
-        (None, {'fields': ('first_name', 'last_name', 'email', 'phone', 'password')}),
+        (None, {'fields': ('first_name', 'last_name', 'document', 'email', 'phone')}),
         ('Role', {'fields': ('role',)}),
     )
     

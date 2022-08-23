@@ -2,7 +2,7 @@
 
 {% block container %}
 
-    {% if request.user.role != 'MANAGER' %}
+    {% if request.user.role == 'ADMIN' %}
     <h1>Empresarios</h1>
 
     {% if users %}

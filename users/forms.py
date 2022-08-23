@@ -1,5 +1,5 @@
 from django import forms
-from users.models import Athlete, User
+from users.models import User
 
 
 class UpdateUserForm(forms.Form):
@@ -15,8 +15,3 @@ class UpdateUserForm(forms.Form):
     gender = forms.CharField(max_length=1, required=False)
     manager = forms.ChoiceField(choices=MANAGER_CHOICES, required=False)
 
-
-# class UpdateAthleteForm(forms.Form):
-#     age = forms.IntegerField(required=False)
-#     birthdate = forms.DateField(required=False)
-#     gender = forms.CharField(max_length=1, required=False)

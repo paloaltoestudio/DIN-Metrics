@@ -20,6 +20,7 @@ class User(AbstractUser):
     first_name = models.CharField(("first name"), max_length=150, blank=False)
     last_name = models.CharField(("last name"), max_length=150, blank=False)
     phone = models.CharField('Teléfono', max_length=11, blank=True, null=True)
+    document = models.IntegerField('Cédula', blank=True, null=True)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -34,10 +35,15 @@ class Athlete(models.Model):
         ('O', 'Otro'),
     )
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     birthdate = models.DateField('Fecha de Nacimiento',blank=True, null=True)
     gender = models.CharField('Género', max_length=1, choices=GENDER_CHOICES)
     age = models.PositiveIntegerField('Edad', blank=True, null=True)
+    team = models.CharField('Equipo', max_length=30, blank=True, null=True)
+    sport = models.CharField('Deporte', max_length=30, blank=True, null=True)
+    size = models.CharField('Talla', max_length=10, blank=True, null=True)
+    weight = models.CharField('Peso', max_length=6, blank=True, null=True)
+    eps = models.CharField('EPS', max_length=30, blank=True, null=True)
     manager = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='Athlete', null=True)
     created = models.DateTimeField('Fecha de creación', auto_now_add=True)
     modified = models.DateTimeField('Fecha de modificación', auto_now=True)

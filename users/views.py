@@ -1,7 +1,6 @@
 """Users views."""
 # Django
-from email import message
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -26,6 +25,7 @@ class Index(ListView):
     paginate_by = 15
     template_name = 'users/index.html'
     context_object_name = 'users'
+    queryset = User.objects.filter(role = 'ATHLETE')
     extra_context = {
         'page': 'user_list_detail'
     }
