@@ -11,7 +11,7 @@
     {% endif %}
 
     
-    <form action="{% url 'users:signup' %}" method="POST">
+    <form action="{% url 'users:new_manager' %}" method="POST">
         {% csrf_token %}
 
         
@@ -45,3 +45,4 @@
     </form>
 
 {% endblock %}
+

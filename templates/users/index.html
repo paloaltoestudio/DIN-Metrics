@@ -7,13 +7,31 @@
     {% if users %}
         <ul>
             {% for user in users %}
-                {% if user.role == 'ATHLETE' %}
+                {% if user.role == 'ATHLETE' and user.athlete.manager == request.user or request.user.role != 'MANAGER' %}
                     <li><a href="{% url 'users:user_detail' user.id %}">{{ user.first_name }} {{ user.last_name }}</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
     {% endif %}
-{% endblock %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; primera</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previa</a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">última &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endblock %}
 
 
 {% block extrajs %}
@@ -32,3 +50,5 @@
         {% endfor %}
     {% endif %}
 {% endblock %}
+
+    

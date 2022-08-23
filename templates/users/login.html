@@ -1,4 +1,4 @@
-{% extends 'manager/manager_base_auth.html' %}
+{% extends 'layout/base_auth.html' %}
 
 {% load static %}
 
@@ -6,12 +6,12 @@
 
         <div class="box rounded">
             <div class="logo rounded">
-                <img src="{% static 'images/american-logo.jpg' %}" alt="">
+                {% comment %} <img src="{% static 'images/american-logo.jpg' %}" alt=""> {% endcomment %}
             </div>
             <h1>Login</h1>
             {% if form.errors %}
             <p class="p-2 alert alert-danger">
-               Invalid username or password
+                Username o contraseña inválida
             </p>
             {% endif %}
             <form action="{% url 'login' %}" method="POST">
@@ -22,9 +22,9 @@
                 <div class="form-group">
                     <input type="password" name="password" class="form-control" value="{% if errors %}{{ form.password.value }}{% endif %}" placeholder="Contraseña">
                 </div>
-                {% if request.GET.next %}
+                {% comment %} {% if request.GET.next %}
                     <input type="hidden" name="next" value="{{ request.GET.next }}"/>
-                {% endif %}
+                {% endif %} {% endcomment %}
                 <button class="btn btn-md btn-primary">Iniciar Sesión</button>
             </form>
         </div>

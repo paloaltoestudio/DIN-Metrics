@@ -2,6 +2,7 @@
 # Django
 from email import message
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
@@ -22,6 +23,7 @@ from users.utils import age
 class Index(ListView):
     model = User
     ordering = ['-date_joined']
+    paginate_by = 15
     template_name = 'users/index.html'
     context_object_name = 'users'
     extra_context = {
@@ -31,8 +33,11 @@ class Index(ListView):
 
 class ManagerView(ListView):
     model = User
+    ordering = ['-date_joined']
+    paginate_by = 15
     template_name = 'users/managers.html'
     context_object_name = 'users'
+    queryset = User.objects.filter(role = 'MANAGER')
     extra_context = {
         'page': 'manager_list_detail'
     }
@@ -97,6 +102,8 @@ def user_update(request, id):
                 messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado/a')
                 return redirect('users:user_detail', id=id)
 
+            messages.add_message(request, messages.SUCCESS, 'Empresario Actualizado')
+
         else:
             messages.add_message(request, messages.ERROR, form.errors)
             if role and role == 'ATHLETE':
@@ -106,23 +113,12 @@ def user_update(request, id):
 
         if role and role == 'ATHLETE':
             return redirect('users:user_detail', id)
-        elif role and role == 'MANAGER':
+        else:
             return redirect('users:manager_detail', id)
 
-
-def login_view(request):
-    """Login view."""
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return redirect('feed')
-        else:
-            return render(request, 'users/login.html', {'error': 'Invalid username and password'})
-
-    return render(request, 'users/login.html')
+class UserLoginView(LoginView):
+    next_page = 'users:index'
+    template_name = 'users/login.html'
 
 
 def signup(request):
@@ -170,7 +166,7 @@ def new_manager(request):
         passwd_confirmation = request.POST['passwd_confirmation']
 
         if passwd != passwd_confirmation:
-            return render(request, 'users/new_manager.html', {'error': 'Password confirmation does not match'})
+            return render(request, 'users/new_manager.html', {'error': 'Las contraseñas no coinciden'})
 
         try:
             user = User.objects.create_user(username=request.POST['email'], password=passwd)

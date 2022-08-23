@@ -1,14 +1,12 @@
 {% extends 'layout/base.html' %}
 
 {% block container %}
-
-
-
     <a class="mb-3 btn btn-sm" href="{% url 'users:index' %}">
         <i class="material-icons">arrow_back</i>
-        Deportistas
+        deportistas
     </a>
 
+    {% if user.athlete.manager == request.user or request.user.role != 'MANAGER' %}
     <h2>{{user.first_name}} {{user.last_name}}</h2>
     
     <ul>
@@ -32,10 +30,13 @@
         </ul>
     {% endif %}
 
+    {% if request.user.role != 'MANAGER' %}
     <form action="{% url 'users:user_update' user.id %}" method='post'>
         {% csrf_token %}
-        <input type="number" placeholder="Edad" name="age" value="{{ user.athlete.age }}">
-        <input type="number" placeholder="Teléfono" name="phone" value="{{ user.athlete.phone }}">
+        <input type="text" placeholder="text" name="first_name" value="{{ user.first_name }}">
+        <input type="text" placeholder="text" name="last_name" value="{{ user.last_name }}">
+        <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
+        <input type="text" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
         <input type="date" name="birthdate" value="{{ user.athlete.birthdate| date:'Y-m-d' }}">
         <select name="gender" id="gender">
             <option value="">Género</option>
@@ -43,24 +44,35 @@
             <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
             <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
         </select>
+
+        <select name="manager" id="manager">
+            <option value="">Escoge el empresario</option>
+            {% if user.athlete.manager %}
+                <option value="{{ user.athlete.manager.id }}" selected>{{ user.athlete.manager }}</option>
+            {% endif %}
+
+            {% if managers %}
+            {% for manager in managers %}
+                {% if manager.id != user.athlete.manager.id %}
+                <option value="{{ manager.id }}">{{ manager }}</option>
+                {% endif %}
+            {% endfor %}
+            {% else %}
+                no managers
+            {% endif %}
+        </select>
+
         <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
         <button>Enviar</button>
     </form>
+    {% endif %}
+    {% comment %} end if edit user permission {% endcomment %}
+
+    {% else %}
+    <h2>No tienes permiso de ver este usuario</h2>
+    {% endif %} 
+    {% comment %} end if user permission {% endcomment %}
+
 {% endblock  %}
 
-{% block extrajs %}
-    {% if messages %}
-        {% for message in messages %}
-            {% if 'success' in message.tags %}
-            <div class="success-message">{{ message }}</div>
-            <script>
-                swal({
-                    icon: 'success',
-                    title: "{{ message }}",
-                    timer: 1500
-                  });
-            </script>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-{% endblock %}
+

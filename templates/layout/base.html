@@ -43,6 +43,8 @@
                     <p>Deportistas</p>
                   </a>
                 </li>
+
+                {% if request.user.role != 'MANAGER' %}
                 <li class="nav-item {% if page == 'user_signup' %} active {% endif %}">
                   <a class="nav-link" href="{% url 'users:signup' %}">
                     <i class="material-symbols-outlined">add</i>
@@ -61,6 +63,7 @@
                     <p>Agregar Empresario</p>
                   </a>
                 </li>
+                {% endif %}
               </ul>
             </div>
           </div>
@@ -131,10 +134,15 @@
                     </li>
                     </ul> -->
                     <ul class="navbar-nav">
+                      <li>
+                        <a class="nav-item" href="{% url 'users:manager_detail' request.user.id %}">
+                          <span class="material-icons">person</span>
+                        </a>
+                      </li>
                       <li class="nav-item dropdown">
-                        {% comment %} <a class="" href="{% url 'logout' %}">
+                        <a class="" href="{% url 'logout' %}">
                           <span class="material-icons">logout</span>
-                        </a> {% endcomment %}
+                        </a>
                       </li>
                     </ul>
                 </div>
@@ -160,6 +168,20 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     {% block extrajs %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'success' in message.tags %}
+            <div class="success-message">{{ message }}</div>
+            <script>
+                swal({
+                    icon: 'success',
+                    title: "{{ message }}",
+                    timer: 1500
+                  });
+            </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     {% endblock %}
 
   </body>

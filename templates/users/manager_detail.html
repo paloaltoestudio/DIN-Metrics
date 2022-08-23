@@ -2,10 +2,14 @@
 
 {% block container %}
 
+    {% if user == request.user or request.user.role != 'MANAGER' %}
+
+    {% if request.user.role != 'MANAGER' %}
     <a class="mb-3 btn btn-sm" href="{% url 'users:managers' %}">
         <i class="material-icons">arrow_back</i>
         Empresarios
     </a>
+    {% endif %}
 
     <h2>{{user.first_name}} {{user.last_name}}</h2>
     
@@ -22,22 +26,16 @@
         {% endfor %}
     </ul>
 
-
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
     <form action="{% url 'users:user_update' user.id %}" method='post'>
         {% csrf_token %}
         <input type="text" placeholder="text" name="first_name" value="{{ user.first_name }}">
         <input type="text" placeholder="text" name="last_name" value="{{ user.last_name }}">
-        <input type="number" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
+        <input type="text" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
         <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
         <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
         <button>Enviar</button>
     </form>
+    {% else %}
+    <h2>No tienes acceso a este usuario</h2>
+    {% endif %}
 {% endblock  %}
