@@ -1882,6 +1882,7 @@ select.form-control:focus::-ms-value {
   border-radius: 0.2rem;
 }
 
+
 select.form-control-sm:not([size]):not([multiple]),
 .input-group-sm>select.form-control:not([size]):not([multiple]),
 .input-group-sm>.input-group-prepend>select.input-group-text:not([size]):not([multiple]),
@@ -3804,7 +3805,7 @@ tbody.collapse.show {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  background: #ccc;
+  background: #2f3a48;
 }
 
 .navbar-brand {
@@ -3828,6 +3829,15 @@ tbody.collapse.show {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+}
+
+.navbar-nav a {
+  color: #fff;
+  margin-left: 5px;
+}
+
+.navbar-nav a:hover {
+  color: #da682c;
 }
 
 .navbar-nav .nav-link {
@@ -7222,6 +7232,10 @@ button.bg-dark:focus {
   margin-left: 1.5rem !important;
 }
 
+.mt-n4 {
+  margin-top: -1.5rem !important;
+}
+
 .m-5 {
   margin: 3rem !important;
 }
@@ -9837,6 +9851,10 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
   color: #333333;
   background-color: rgba(204, 204, 204, 0.25);
   border-color: rgba(204, 204, 204, 0.25);
+}
+
+.bg-gradient-primary {
+  background-image: linear-gradient(195deg, #da682c 0%, #da682c 100%);
 }
 
 .open>.bg-inverse .btn.btn-outline.dropdown-toggle.bmd-btn-icon {
@@ -13279,7 +13297,7 @@ fieldset[disabled] .form-group .form-control {
 
 .navbar .navbar-brand {
   position: relative;
-  color: inherit;
+  color: #fff;
   height: 50px;
   font-size: 1.125rem;
   line-height: 30px;
@@ -14492,6 +14510,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   transition: opacity 0.1s linear 0s !important;
 }
 
+
+
 .footer {
   padding: 0.9375rem 0;
   text-align: center;
@@ -14607,7 +14627,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 2;
+  z-index: 10000;
   width: 260px;
   background: #fff;
   box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
@@ -14636,6 +14656,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   width: 260px;
   z-index: 4;
   padding-bottom: 30px;
+  background: #2f3a48;
 }
 
 .sidebar .sidebar-wrapper .dropdown .dropdown-backdrop {
@@ -14728,8 +14749,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .sidebar .nav li .dropdown-menu a:hover,
 .sidebar .nav li .dropdown-menu a:focus,
 .sidebar .nav li.active>[data-toggle="collapse"] {
-  background-color: rgba(200, 200, 200, 0.2);
-  color: #3C4858;
+  background-color: #da682c;
+  color: #fff;
   box-shadow: none;
 }
 
@@ -14777,19 +14798,20 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   line-height: 30px;
   width: 30px;
   text-align: center;
-  color: #a9afbb;
+  color: #fff;
 }
 
 .sidebar .nav li a,
 .sidebar .nav li .dropdown-menu a {
   margin: 10px 15px 0;
   border-radius: 3px;
-  color: #3C4858;
+  color: #fff;
   padding-left: 10px;
   padding-right: 10px;
   text-transform: capitalize;
   font-size: 13px;
   padding: 10px 15px;
+  font-weight: normal;
 }
 
 .sidebar .sidebar-background {
@@ -14911,8 +14933,8 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar[data-color="azure"] li.active>a {
-  background-color: #00bcd4;
-  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(0, 188, 212, 0.4);
+  background-color: #da682c;
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(46, 46, 46, 0.4);
 }
 
 .sidebar[data-color="green"] li.active>a {
@@ -15019,7 +15041,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
   margin-top: 70px;
   padding: 30px 15px;
   padding-top: 10px;
-  min-height: calc(100vh - 123px);
+  min-height: calc(100vh - 70px);
 }
 
 .main-panel>.footer {
@@ -16301,13 +16323,13 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 .table>thead>tr>td,
 .table>tbody>tr>td,
 .table>tfoot>tr>td {
-  padding: 12px 8px;
+  padding: 12px 20px;
   vertical-align: middle;
   border-color: #ddd;
 }
 
 .table thead tr th {
-  font-size: 1.063rem;
+  font-size: 0.763rem;
 }
 
 .table .th-description {
@@ -16897,6 +16919,10 @@ html[dir="rtl"] .form-check .form-check-sign .check:before {
 .card .card-header {
   border-bottom: none;
   background: transparent;
+}
+
+.card-header h6 {
+  font-size: 16px;
 }
 
 .card .card-header .title {

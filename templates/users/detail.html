@@ -9,23 +9,55 @@
     {% endif %}
 
     {% if user.athlete.manager == request.user or request.user.role != 'MANAGER' %}
-    <h2>{{user.first_name}} {{user.last_name}}</h2>
-    
-    <ul>
-        <li>Edad: {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
-        <li>Género: {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
-        <li>Email: {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
-        <li>Teléfono: {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
-        <li>Fecha de nacimiento: {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
-        <li>Cédula: {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
-        <li>Equipo: {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
-        <li>Deporte: {% if user.athlete.sport %} {{ user.athlete.sport }} {% else %} --- {% endif %}</li>
-        <li>Talla: {% if user.athlete.size %} {{ user.athlete.size }} {% else %} --- {% endif %}</li>
-        <li>Peso: {% if user.athlete.weight %} {{ user.athlete.weight }} {% else %} --- {% endif %}</li>
-        <li>EPS: {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>
-        <li>Manager: {% if user.athlete.manager %}<a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a>{% else %}No Asignado{% endif %}</li>
+
+    <div class="card card-body p-4">
+        <h3 class="title">{{user.first_name}} {{user.last_name}}</h3>
         
-    </ul>
+        
+        <div class="row">
+            <div class="col-sm-4">
+                <h6>Información Personal</h6>
+                <ul class="list-group">
+                    <li class="list-group-item p-0"><strong>Cédula:</strong> {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Nacimiento:</strong> {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Edad:</strong> {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Género:</strong> {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Teléfono:</strong> {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Email:</strong> {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
+                </ul>
+            </div>
+
+            <div class="col-sm-4">
+                <h6>Información Deportiva</h6>
+                <ul class="list-group">
+                <li class="list-group-item p-0"><strong>Equipo:</strong> {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Deporte:</strong> {% if user.athlete.sport %} {{ user.athlete.sport }} {% else %} --- {% endif %}</li>
+                </ul>
+
+                <ul class="list-group">
+                <h6>Medidas</h6>
+                <li class="list-group-item p-0"><strong>Talla:</strong> {% if user.athlete.size %} {{ user.athlete.size }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Peso:</strong> {% if user.athlete.weight %} {{ user.athlete.weight }} {% else %} --- {% endif %}</li>
+                </ul>
+            </div>
+            
+            <div class="col-sm-4">
+                <h6>Salud</h6>
+                <ul class="list-group">
+                <li class="list-group-item p-0"><strong>EPS:</strong> {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>
+                </ul>
+
+                <h6>Legal</h6>
+                <ul class="list-group">
+                <li class="list-group-item p-0"><strong>Manager:</strong> {% if user.athlete.manager %}<a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a>{% else %}No Asignado{% endif %}</li>
+                </ul>
+            </div>
+        </div>
+        
+            
+            
+        </ul>
+    </div>
 
     {% if messages %}
         <ul class="messages">
@@ -33,53 +65,83 @@
                 {% if 'error' in message.tags %}
                 <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
                 {% endif %}
-
             {% endfor %}
         </ul>
     {% endif %}
 
     {% if request.user.role != 'MANAGER' %}
-    <form action="{% url 'users:user_update' user.id %}" method='post'>
-        {% csrf_token %}
-        <input type="text" placeholder="text" name="first_name" value="{{ user.first_name }}">
-        <input type="text" placeholder="text" name="last_name" value="{{ user.last_name }}">
-        <input type="text" placeholder="Cédula" name="document" value="{{ user.document }}">
-        <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
-        <input type="text" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
-        <input type="date" name="birthdate" value="{{ user.athlete.birthdate| date:'Y-m-d' }}">
-        <select name="gender" id="gender">
-            <option value="">Género</option>
-            <option {% if user.athlete.gender == 'M' %} selected {% endif %} value="M">Masculino</option>
-            <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
-            <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
-        </select>
-        <input type="text" placeholder="Talla" name="size" value="{{ user.athlete.size }}">
-        <input type="text" placeholder="Peso" name="weight" value="{{ user.athlete.weight }}">
-        <input type="text" placeholder="EPS" name="eps" value="{{ user.athlete.eps }}">
-        
-        <input type="text" placeholder="Equipo" name="team" value="{{ user.athlete.team }}">
-        <input type="text" placeholder="Deporte" name="sport" value="{{ user.athlete.sport }}">
-        
-        <select name="manager" id="manager">
-            <option value="">Escoge el empresario</option>
-            {% if user.athlete.manager %}
-                <option value="{{ user.athlete.manager.id }}" selected>{{ user.athlete.manager }}</option>
-            {% endif %}
+    <div class="card p-4">
+        <form action="{% url 'users:user_update' user.id %}" method='post'>
+            {% csrf_token %}
 
-            {% if managers %}
-            {% for manager in managers %}
-                {% if manager.id != user.athlete.manager.id %}
-                <option value="{{ manager.id }}">{{ manager }}</option>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="input-group input-group-outline mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input class="form-control" type="text" name="first_name" value="{{ user.first_name }}">
+                    </div>
+                </div>
+                
+                <div class="col-sm-4">
+                    <div class="input-group input-group-outline mb-3">
+                        <label class="form-label">Apellido</label>
+                        <input class="form-control" type="text" name="last_name" value="{{ user.last_name }}">
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="input-group input-group-outline mb-3">
+                        <label class="form-label">Cédula</label>
+                        <input class="form-control" type="text" name="document" value="{{ user.document }}">
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                        <label class="form-label">Género</label>
+                        <select class="form-control" name="gender" id="gender" value="{{ user.athlete.gender }}">
+                            <option value=""></option>
+                            <option {% if user.athlete.gender == 'M' %} selected {% endif %} value="M">Masculino</option>
+                            <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
+                            <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+            <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
+            <input type="text" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
+            <input type="date" name="birthdate" value="{{ user.athlete.birthdate| date:'Y-m-d' }}">
+
+            
+
+            <input type="text" placeholder="Talla" name="size" value="{{ user.athlete.size }}">
+            <input type="text" placeholder="Peso" name="weight" value="{{ user.athlete.weight }}">
+            <input type="text" placeholder="EPS" name="eps" value="{{ user.athlete.eps }}">
+            
+            <input type="text" placeholder="Equipo" name="team" value="{{ user.athlete.team }}">
+            <input type="text" placeholder="Deporte" name="sport" value="{{ user.athlete.sport }}">
+            
+            <select name="manager" id="manager">
+                <option value="">Escoge el empresario</option>
+                {% if user.athlete.manager %}
+                    <option value="{{ user.athlete.manager.id }}" selected>{{ user.athlete.manager }}</option>
                 {% endif %}
-            {% endfor %}
-            {% else %}
-                no managers
-            {% endif %}
-        </select>
 
-        <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
-        <button>Enviar</button>
-    </form>
+                {% if managers %}
+                {% for manager in managers %}
+                    {% if manager.id != user.athlete.manager.id %}
+                    <option value="{{ manager.id }}">{{ manager }}</option>
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                    no managers
+                {% endif %}
+            </select>
+
+            <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
+            <button>Enviar</button>
+        </form>
+    </div>
     {% endif %}
     {% comment %} end if edit user permission {% endcomment %}
 
