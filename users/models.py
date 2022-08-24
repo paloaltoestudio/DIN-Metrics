@@ -30,6 +30,7 @@ class Athlete(models.Model):
     """Class for Athlete profile, extending User model"""
     
     GENDER_CHOICES = (
+        ('', ''),
         ('M', 'Masculino'),
         ('F', 'Femenino'),
         ('O', 'Otro'),
@@ -44,7 +45,7 @@ class Athlete(models.Model):
     size = models.CharField('Talla', max_length=10, blank=True, null=True)
     weight = models.CharField('Peso', max_length=6, blank=True, null=True)
     eps = models.CharField('EPS', max_length=30, blank=True, null=True)
-    manager = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='Athlete', null=True)
+    manager = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='Athlete', blank=True, null=True)
     created = models.DateTimeField('Fecha de creación', auto_now_add=True)
     modified = models.DateTimeField('Fecha de modificación', auto_now=True)
 

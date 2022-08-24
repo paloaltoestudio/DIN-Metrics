@@ -13,7 +13,12 @@ from django.db.utils import IntegrityError
 
 # Models
 from users.models import Athlete, User
-from users.forms import UpdateUserForm
+from users.forms import (UpdateUserForm, 
+                         UpdateAthletePersonal, 
+                         UpdateAthleteSport, 
+                         UpdateAthleteMeasures,
+                         UpdateAthleteHealth,
+                         UpdateAthleteLegal)
 
 #Utils
 from users.utils import age
@@ -79,56 +84,92 @@ class ManagerDetail(LoginRequiredMixin, DetailView):
 
 def user_update(request, id):
     if request.method == 'POST':
+        print(request.POST)
 
         user = User.objects.get(id=request.POST['id'])
-        form = UpdateUserForm(request.POST)
-        
+
         if user:
             role = user.role
 
-        if form.is_valid():
-            data = form.cleaned_data
+        if request.POST['type'] == 'basic':
+            #Get a copy of request post to add calculated age
+            data = request.POST.copy()
+
+            # Calculate age and add it to data list
+            if 'birthdate' in data:
+                if data['birthdate'] != '':
+                    data['age'] = age(data['birthdate'])
+
+            form = UpdateUserForm(data=request.POST, instance=user)
+            form_profile_info = UpdateAthletePersonal(data=data, instance=user.athlete)
+
+            if form.is_valid() and form_profile_info.is_valid():
+                form.save()
+                form_profile_info.save()
+                messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
+
+            else:
+                messages.add_message(request, messages.ERROR, form.errors)
+                if role and role == 'ATHLETE':
+                    return redirect('users:user_detail', id)
+                elif role and role == 'MANAGER':
+                    return redirect('users:manager_detail', id)
+
+        if request.POST['type'] == 'sport':
+            form_profile_sport = UpdateAthleteSport(data=request.POST, instance=user.athlete)
             
-            user.phone = data['phone']
-            user.first_name = data['first_name']
-            user.last_name = data['last_name']
-            user.document = data['document']
-            user.email = data['email']
-            user.save()
+            if form_profile_sport.is_valid():
+                form_profile_sport.save()
+                messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
+
+            else:
+                messages.add_message(request, messages.ERROR, form.errors)
+                if role and role == 'ATHLETE':
+                    return redirect('users:user_detail', id)
+                elif role and role == 'MANAGER':
+                    return redirect('users:manager_detail', id)
+        
+        if request.POST['type'] == 'measures':
+            form_profile_measures = UpdateAthleteMeasures(data=request.POST, instance=user.athlete)
             
-            if role and role == 'ATHLETE':
+            if form_profile_measures.is_valid():
+                form_profile_measures.save()
+                messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
 
-                athlete = Athlete.objects.get_or_create(user=user)
-                athlete = athlete[0]
+            else:
+                messages.add_message(request, messages.ERROR, form.errors)
+                if role and role == 'ATHLETE':
+                    return redirect('users:user_detail', id)
+                elif role and role == 'MANAGER':
+                    return redirect('users:manager_detail', id)
+        
+        if request.POST['type'] == 'health':
+            form_profile_health = UpdateAthleteHealth(data=request.POST, instance=user.athlete)
+            
+            if form_profile_health.is_valid():
+                form_profile_health.save()
+                messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
 
-                if data['birthdate']:
-                    athlete.age = age(data['birthdate'])
+            else:
+                messages.add_message(request, messages.ERROR, form.errors)
+                if role and role == 'ATHLETE':
+                    return redirect('users:user_detail', id)
+                elif role and role == 'MANAGER':
+                    return redirect('users:manager_detail', id)
+        
+        if request.POST['type'] == 'legal':
+            form_profile_legal = UpdateAthleteLegal(data=request.POST, instance=user.athlete)
+            
+            if form_profile_legal.is_valid():
+                form_profile_legal.save()
+                messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
 
-                athlete.birthdate = data['birthdate']
-                athlete.gender = data['gender']
-                athlete.team = data['team']
-                athlete.sport = data['sport']
-                athlete.size = data['size']
-                athlete.weight = data['weight']
-                athlete.eps = data['eps']
-
-                if data['manager']:
-                    manager = User.objects.get(id = data['manager'])
-                    athlete.manager = manager
-
-                athlete.save()
-
-                messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado/a')
-                return redirect('users:user_detail', id=id)
-
-            messages.add_message(request, messages.SUCCESS, 'Empresario Actualizado')
-
-        else:
-            messages.add_message(request, messages.ERROR, form.errors)
-            if role and role == 'ATHLETE':
-                return redirect('users:user_detail', id)
-            elif role and role == 'MANAGER':
-                return redirect('users:manager_detail', id)
+            else:
+                messages.add_message(request, messages.ERROR, form_profile_legal.errors)
+                if role and role == 'ATHLETE':
+                    return redirect('users:user_detail', id)
+                elif role and role == 'MANAGER':
+                    return redirect('users:manager_detail', id)
 
         if role and role == 'ATHLETE':
             return redirect('users:user_detail', id)
