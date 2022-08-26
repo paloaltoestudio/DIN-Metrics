@@ -160,7 +160,7 @@
                       <li>
                         <a class="nav-item mr-3" href="{% url 'users:manager_detail' request.user.id %}">
                           <span class="material-icons">person</span>
-                          {{ request.user }}
+                          {{ request.user }}{% if request.user.role != 'ATHLETE' %} | {{ request.user.role | title }}{% endif %}
                         </a>
                       </li>
                       <li class="nav-item dropdown">

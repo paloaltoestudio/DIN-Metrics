@@ -1,4 +1,14 @@
 
+/* Login styles */
+.auth {
+  background: #2f3a48;
+}
+
+.login.card .card-header {
+  margin-top: -60px;
+}
+
+
 /* Form error msg */
 .msg {
   width: 100%;

@@ -83,6 +83,7 @@ class ManagerDetail(LoginRequiredMixin, DetailView):
         'page': 'manager_list_detail'
     }
 
+@login_required
 def manager_update(request, id):
     user = User.objects.get(id = id)
 
