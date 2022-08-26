@@ -213,7 +213,7 @@ def signup(request):
         try:
             user = User.objects.create_user(username=request.POST['email'], password=passwd)
         except IntegrityError:
-            return render(request, 'users/signup.html', {'error': 'Ya existe un usuario con el mismo email'})
+            return render(request, 'users/signup.html', {'error': 'Ya existe un usuario con el mismo email', 'form': request.POST})
 
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']
@@ -226,8 +226,12 @@ def signup(request):
         role = request.POST['role']
         if role and role == 'ATHLETE':
             athlete = Athlete(user=user)
-            athlete.age = age(request.POST['birthdate'])
-            athlete.birthdate = request.POST['birthdate']
+
+            if 'birthdate' in request.POST:
+                if request.POST['birthdate'] != '':
+                    athlete.age = age(request.POST['birthdate'])
+                    athlete.birthdate = request.POST['birthdate']
+
             athlete.gender = request.POST['gender']
             athlete.save()
 
