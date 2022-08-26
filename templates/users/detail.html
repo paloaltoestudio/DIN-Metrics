@@ -49,26 +49,26 @@
                     </div>
         
                     <div class="col-sm-6 col-lg-4">
-                        <h6>Información Deportiva <a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#sportModal"><i class="fs-6 material-icons">edit</i></a></h6>
+                        <h6>Información Deportiva {% if request.user.role == 'ADMIN' %}<a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#sportModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <ul class="list-group">
                         <li class="list-group-item p-0"><strong>Equipo:</strong> {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
                         <li class="list-group-item p-0"><strong>Deporte:</strong> {% if user.athlete.sport %} {{ user.athlete.sport }} {% else %} --- {% endif %}</li>
                         </ul>
         
                         <ul class="list-group">
-                        <h6>Medidas <a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#measuresModal"><i class="fs-6 material-icons">edit</i></a></h6>
+                        <h6>Medidas {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#measuresModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <li class="list-group-item p-0"><strong>Talla:</strong> {% if user.athlete.size %} {{ user.athlete.size }} {% else %} --- {% endif %}</li>
                         <li class="list-group-item p-0"><strong>Peso:</strong> {% if user.athlete.weight %} {{ user.athlete.weight }} {% else %} --- {% endif %}</li>
                         </ul>
                     </div>
                     
                     <div class="col-sm-6 col-lg-4">
-                        <h6>Salud <a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#healthModal"><i class="fs-6 material-icons">edit</i></a></h6>
+                        <h6>Salud {% if request.user.role == 'ADMIN' %}<a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#healthModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <ul class="list-group">
                         <li class="list-group-item p-0"><strong>EPS:</strong> {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>
                         </ul>
         
-                        <h6>Legal <a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#legalModal"><i class="fs-6 material-icons">edit</i></a></h6>
+                        <h6>Legal {% if request.user.role == 'ADMIN' %}<a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#legalModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <ul class="list-group">
                         <li class="list-group-item p-0"><strong>Manager:</strong> {% if user.athlete.manager %}<a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a>{% else %}No Asignado{% endif %}</li>
                         </ul>

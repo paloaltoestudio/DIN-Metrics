@@ -3,46 +3,54 @@
 
 
 {% block container %}
-
-    <h1>Registro de empresario</h1>
+    <a class="mb-3 btn btn-sm" href="{% url 'users:managers' %}">
+        <i class="material-icons">arrow_back</i>
+        empresarios
+    </a>
 
     {% if error %}
         <p class="alert alert-danger">{{ error }}</p>
     {% endif %}
 
-    
-    <form action="{% url 'users:new_manager' %}" method="POST">
-        {% csrf_token %}
+    <div class="card signup p-4">
+        <div class="card-header">
+            <h5>Registro de empresario</h5>
+        </div>
 
-        
-        <div class="form-group">
-            <input class="form-control" type="text" placeholder="Nombre" name="first_name" required="true" />
-        </div>
-        
-        <div class="form-group">
-            <input class="form-control" type="text" placeholder="Apellido" name="last_name" required="true" />
-        </div>
-        
-        <div class="form-group">
-            <input class="form-control" type="email" placeholder="Email" name="email" required="true" />
+        <form action="{% url 'users:new_manager' %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Nombre</label>
+                        <input class="form-control" type="text" name="first_name" value="{{ form.first_name }}" required="true" />
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Email</label>
+                        <input class="form-control" type="email" name="email" value="{{ form.email }}" required="true" />
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Cédula</label>
+                        <input class="form-control" type="text" name="document" value="{{ form.document }}" required="true" />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Apellido</label>
+                        <input class="form-control" type="text" name="last_name" value="{{ form.last_name }}" required="true" />
+                    </div>
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Teléfono</label>
+                        <input class="form-control" type="text" name="phone" value="{{ form.phone }}" />
+                    </div>
+                </div>
+            </div>
+            
             <input class="form-control" type="text" name="role" value="MANAGER" hidden />
-        </div>
-        
-        <div class="form-group">
-            <input class="form-control" type="text" placeholder="Teléfono" name="phone" />
-        </div>
-        
-        <div class="form-group">
-            <input class="form-control" type="password" placeholder="Contraseña" name="passwd" required="true" />
-        </div>
-
-        <div class="form-group">
-            <input class="form-control" type="password" placeholder="Confirmar contraseña" name="passwd_confirmation" required="true" />
-        </div>
-
-        <button class="btn btn-primary btn-block mt-5" type="submit">Agregar Empresario</button>
-
-    </form>
+            <button class="btn btn-primary btn-block mt-5" type="submit">Agregar Empresario</button>
+        </form>
+    </div>
 
 {% endblock %}
 

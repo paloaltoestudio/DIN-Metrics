@@ -11,50 +11,99 @@
     </a>
     {% endif %}
 
-    <h2>{{user.first_name}} {{user.last_name}}</h2>
-    
-    <ul>
-        <li>Email: {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
-        <li>Teléfono: {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
-        <li>Cédula: {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
-    </ul>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card user card-body p-4">
+                <h3 class="title">{{user.first_name}} {{user.last_name}}</h3>
+                
+                <h6>Información de ususario {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#managerModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
+                <ul class="list-group">
+                    <li class="list-group-item p-0"><strong>Email:</strong> {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Teléfono:</strong> {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Cédula:</strong> {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
+                </ul>
+            </div>
+            <div class="card user card-body p-4">
+                <h3>Jugadores</h3>
+                {% if not user.Athlete.all %}
+                    No hay jugadores asignados
+                {% endif %}
+            
+                <ul class="list-group">
+                    {% for Athlete in user.Athlete.all %}
+                        <li class="list-group-item p-0"><a href="{% url 'users:user_detail' Athlete.user.id %}">{{ Athlete.user }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 
-    <h3>Jugadores</h3>
-    {% if not user.Athlete.all %}
-        No hay jugadores asignados
-    {% endif %}
+    <!-- Modal -->
+    <div class="modal fade" id="managerModal" tabindex="-1" aria-labelledby="managerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="managerModalLabel">Información básica</h5>
+                    <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+                </div>
+                    <div class="modal-body">
+                        <form action="{% url 'users:manager_detail' user.id %}" method='post'>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label for="" class="form-label">Nombre</label>
+                                        <input class="form-control" type="text" name="first_name" value="{{ user.first_name }}">
+                                    </div>
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label for="" class="form-label">Apellido</label>
+                                        <input class="form-control" type="text" name="last_name" value="{{ user.last_name }}">
+                                    </div>
+                        
+                                    <div class="input-group input-group-outline mb-3 {% if form.document.errors %}alert_field{% endif %}">
+                                        <label for="" class="form-label">Cédula</label>
+                                        <input class="form-control" type="text" name="document" value="{{ user.document }}">
+                                        {% if form.document.errors %}
+                                            {% for e in form.document.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label for="" class="form-label">Teléfono</label>
+                                        <input class="form-control" type="text" name="phone" value="{{ user.phone }}">
+                                    </div>
+                        
+                                    <div class="input-group input-group-outline mb-3">
+                                        <label for="" class="form-label">Email</label>
+                                        <input class="form-control" type="email" name="email" value="{{ user.email }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="text" name="type" value="manager_info" hidden>
+                            <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
+                            <button class="btn btn-primary">Enviar</button>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
 
-    <ul>
-        {% for Athlete in user.Athlete.all %}
-            <li><a href="{% url 'users:user_detail' Athlete.user.id %}">{{ Athlete.user }}</a></li>
-        {% endfor %}
-    </ul>
 
-    {% if messages %}
-        {% for message in messages %}
-        {% if 'error' in message.tags %}
-        {{ message }}
-        {% endif %}
-        {% endfor %}
-    {% endif %}
-
-    {{form.document.errors}}
-
-    <form action="{% url 'users:manager_detail' user.id %}" method='post'>
-        {% csrf_token %}
-        <input type="text" placeholder="text" name="first_name" value="{{ user.first_name }}">
-        <input type="text" placeholder="text" name="last_name" value="{{ user.last_name }}">
-        <input type="text" placeholder="Cédula" name="document" value="{{ user.document }}">
-        <input type="text" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
-        <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
-
-        <input type="text" name="type" value="manager_info" hidden>
-        <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
-        <button>Enviar</button>
-    </form>
     {% else %}
     <h2>No tienes acceso a este usuario</h2>
     {% endif %}
 {% endblock  %}
 
 
+{% block extrajs %}
+    {% if form.errors %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            $("#managerModal").modal('show');
+        })
+    </script>
+    {% endif %}
+{% endblock %}

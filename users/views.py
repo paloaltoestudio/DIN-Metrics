@@ -33,7 +33,7 @@ class Index(LoginRequiredMixin, ListView):
     paginate_by = 15
     template_name = 'users/index.html'
     context_object_name = 'users'
-    queryset = User.objects.filter(role = 'ATHLETE')
+    queryset = User.objects.filter(role = 'ATHLETE', athlete__isnull = False)
     extra_context = {
         'page': 'user_list_detail'
     }
@@ -87,9 +87,6 @@ def manager_update(request, id):
     user = User.objects.get(id = id)
 
     if request.method == 'POST':
-        print(request.POST)
-
-        user = User.objects.get(id=request.POST['id'])
         form = UpdateUserForm(data=request.POST, instance=user)
             
         if form.is_valid():
@@ -98,8 +95,6 @@ def manager_update(request, id):
             return redirect('users:manager_detail', id)
 
         else:
-            print(form.errors)
-            messages.add_message(request, messages.ERROR, 'form')
             return render(request, 'users/manager_detail.html', {'user': user, 'id': id, 'form': form})
 
     return render(request, 'users/manager_detail.html', {'user': user, 'id': id})
@@ -113,19 +108,6 @@ def user_update(request, id):
 
         if user:
             role = user.role
-
-        # if request.POST['type'] == 'manager_info':
-        #     form = UpdateUserForm(data=request.POST, instance=user)
-            
-        #     if form.is_valid():
-        #         form.save()
-        #         messages.add_message(request, messages.SUCCESS, 'Empresario Actualizado')
-        #         return redirect('users:manager_detail', id)
-
-        #     else:
-        #         print(form.errors)
-        #         messages.add_message(request, messages.ERROR, form)
-        #         return redirect('users:manager_detail', id)
 
         if request.POST['type'] == 'basic':
             #Get a copy of request post to add calculated age
@@ -216,7 +198,6 @@ class UserLoginView(LoginView):
 def signup(request):
     """Sign up view."""
     if request.method == 'POST':
-        print(request.POST)
         passwd = request.POST['document']
 
         # Check if user with same document exists
@@ -260,12 +241,16 @@ def signup(request):
 def new_manager(request):
     """Manager register up view."""
     if request.method == 'POST':
-        print(request.POST)
-        passwd = request.POST['passwd']
-        passwd_confirmation = request.POST['passwd_confirmation']
+        passwd = request.POST['document']
 
-        if passwd != passwd_confirmation:
-            return render(request, 'users/new_manager.html', {'error': 'Las contraseñas no coinciden'})
+        # Check if user with same document exists
+        document_check = User.objects.filter(document=passwd).first()
+
+        if document_check:
+            return render(request, 'users/new_manager.html', {
+                            'error': 'Ya existe un usuario con la misma cédula',
+                            'form': request.POST
+                            })
 
         try:
             user = User.objects.create_user(username=request.POST['email'], password=passwd)
@@ -276,6 +261,7 @@ def new_manager(request):
         user.last_name = request.POST['last_name']
         user.phone = request.POST['phone']
         user.email = request.POST['email']
+        user.document = request.POST['document']
         user.role = request.POST['role']
         user.save()
 
