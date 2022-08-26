@@ -204,6 +204,17 @@
                   });
             </script>
             {% endif %}
+
+            {% if 'error' in message.tags %}
+            <div class="success-message">{{ message }}</div>
+            <script>
+                swal({
+                    icon: 'error',
+                    title: "{{ message }}",
+                    timer: 1100
+                  });
+            </script>
+            {% endif %}
         {% endfor %}
     {% endif %}
     {% endblock %}

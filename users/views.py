@@ -5,10 +5,12 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib import messages
 
 # Exception
+from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 
 # Models
@@ -81,6 +83,27 @@ class ManagerDetail(LoginRequiredMixin, DetailView):
         'page': 'manager_list_detail'
     }
 
+def manager_update(request, id):
+    user = User.objects.get(id = id)
+
+    if request.method == 'POST':
+        print(request.POST)
+
+        user = User.objects.get(id=request.POST['id'])
+        form = UpdateUserForm(data=request.POST, instance=user)
+            
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Empresario Actualizado')
+            return redirect('users:manager_detail', id)
+
+        else:
+            print(form.errors)
+            messages.add_message(request, messages.ERROR, 'form')
+            return render(request, 'users/manager_detail.html', {'user': user, 'id': id, 'form': form})
+
+    return render(request, 'users/manager_detail.html', {'user': user, 'id': id})
+
 
 def user_update(request, id):
     if request.method == 'POST':
@@ -90,6 +113,19 @@ def user_update(request, id):
 
         if user:
             role = user.role
+
+        # if request.POST['type'] == 'manager_info':
+        #     form = UpdateUserForm(data=request.POST, instance=user)
+            
+        #     if form.is_valid():
+        #         form.save()
+        #         messages.add_message(request, messages.SUCCESS, 'Empresario Actualizado')
+        #         return redirect('users:manager_detail', id)
+
+        #     else:
+        #         print(form.errors)
+        #         messages.add_message(request, messages.ERROR, form)
+        #         return redirect('users:manager_detail', id)
 
         if request.POST['type'] == 'basic':
             #Get a copy of request post to add calculated age
@@ -110,10 +146,7 @@ def user_update(request, id):
 
             else:
                 messages.add_message(request, messages.ERROR, form.errors)
-                if role and role == 'ATHLETE':
-                    return redirect('users:user_detail', id)
-                elif role and role == 'MANAGER':
-                    return redirect('users:manager_detail', id)
+                return redirect('users:user_detail', id)
 
         if request.POST['type'] == 'sport':
             form_profile_sport = UpdateAthleteSport(data=request.POST, instance=user.athlete)
@@ -124,10 +157,7 @@ def user_update(request, id):
 
             else:
                 messages.add_message(request, messages.ERROR, form.errors)
-                if role and role == 'ATHLETE':
-                    return redirect('users:user_detail', id)
-                elif role and role == 'MANAGER':
-                    return redirect('users:manager_detail', id)
+                return redirect('users:user_detail', id)
         
         if request.POST['type'] == 'measures':
             form_profile_measures = UpdateAthleteMeasures(data=request.POST, instance=user.athlete)
@@ -187,11 +217,16 @@ def signup(request):
     """Sign up view."""
     if request.method == 'POST':
         print(request.POST)
-        passwd = request.POST['passwd']
-        passwd_confirmation = request.POST['passwd_confirmation']
+        passwd = request.POST['document']
 
-        if passwd != passwd_confirmation:
-            return render(request, 'users/signup.html', {'error': 'Password confirmation does not match'})
+        # Check if user with same document exists
+        document_check = User.objects.filter(document=passwd).first()
+
+        if document_check:
+            return render(request, 'users/signup.html', {
+                            'error': 'Ya existe un usuario con la misma cédula',
+                            'form': request.POST
+                            })
 
         try:
             user = User.objects.create_user(username=request.POST['email'], password=passwd)
@@ -202,6 +237,7 @@ def signup(request):
         user.last_name = request.POST['last_name']
         user.phone = request.POST['phone']
         user.email = request.POST['email']
+        user.document = request.POST['document']
         user.role = request.POST['role']
         user.save()
 

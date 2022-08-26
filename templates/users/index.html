@@ -8,7 +8,7 @@
 
     <div class="row">
         <div class="col-12">
-          <div class="card my-4">
+          <div class="card">
             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
               <div class="bg-gradient-primary shadow-primary rounded pt-4 pb-3">
                 <h6 class="text-white text-capitalize ps-3">Listado de deportistas</h6>
@@ -41,7 +41,11 @@
                                 <p class="text-xs font-weight-bold mb-0">{{ user.phone }}</p>
                             </td>
                             <td>
+                                {% if user.athlete.manager.id %}
                                 <p class="text-xs font-weight-bold mb-0"><a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a></p>
+                                {% else %}
+                                No asignado
+                                {% endif %}
                             </td>
                             <td>
                                 <a href="{% url 'users:user_detail' user.id %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">

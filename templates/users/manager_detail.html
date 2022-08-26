@@ -30,13 +30,25 @@
         {% endfor %}
     </ul>
 
-    <form action="{% url 'users:user_update' user.id %}" method='post'>
+    {% if messages %}
+        {% for message in messages %}
+        {% if 'error' in message.tags %}
+        {{ message }}
+        {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {{form.document.errors}}
+
+    <form action="{% url 'users:manager_detail' user.id %}" method='post'>
         {% csrf_token %}
         <input type="text" placeholder="text" name="first_name" value="{{ user.first_name }}">
         <input type="text" placeholder="text" name="last_name" value="{{ user.last_name }}">
         <input type="text" placeholder="Cédula" name="document" value="{{ user.document }}">
         <input type="text" placeholder="Teléfono" name="phone" value="{{ user.phone }}">
         <input type="email" placeholder="Email" name="email" value="{{ user.email }}">
+
+        <input type="text" name="type" value="manager_info" hidden>
         <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
         <button>Enviar</button>
     </form>
@@ -44,3 +56,5 @@
     <h2>No tienes acceso a este usuario</h2>
     {% endif %}
 {% endblock  %}
+
+

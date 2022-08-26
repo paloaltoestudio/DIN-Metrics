@@ -3,58 +3,75 @@
 
 
 {% block container %}
-
-    <h1>Registro de deportista</h1>
+    <a class="mb-3 btn btn-sm" href="{% url 'users:index' %}">
+        <i class="material-icons">arrow_back</i>
+        deportistas
+    </a>
 
     {% if error %}
         <p class="alert alert-danger">{{ error }}</p>
     {% endif %}
 
+    <div class="card signup p-4">
+
+        <form action="{% url 'users:signup' %}" method="POST">
+            {% csrf_token %}
+            
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group input-group-outline mb-3">
+                        <label class="form-label" for="">Nombre</label>
+                        <input class="form-control" type="text" name="first_name" required="true" value="{{ form.first_name }}" />
+                    </div>
+                    
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Apellido</label>
+                        <input class="form-control" type="text" name="last_name" required="true" value="{{ form.last_name }}" />
+                    </div>
+                    
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Email</label>
+                        <input class="form-control" type="email" name="email" required="true" value="{{ form.email }}" />
+                    </div>
+
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Cédula</label>
+                        <input class="form-control" type="text" name="document" required="true" value="{{ form.document }}" />
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="input-group input-group-outline mb-3">
+                        <label for="" class="form-label">Teléfono</label>
+                        <input class="form-control" type="text" name="phone" value="{{ form.phone }}" />
+                    </div>
+            
+                    <div class="input-group input-group-outline mb-3 is-upper">
+                        <label for="" class="form-label">Fecha de nacimiento</label>
+                        <input class="form-control" type="date" name="birthdate" value="{{ form.birthdate }}">
+                    </div>
+            
+                    <div class="input-group input-group-outline mb-3 is-upper">
+                        <label for="" class="form-label">Género</label>
+                        <select class="form-control" name="gender" id="gender">
+                            <option value="">Selecciona</option>
+                            <option {% if form.gender == 'M' %} selected {% endif %} value="M">Masculino</option>
+                            <option {% if form.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
+                            <option {% if form.gender == 'O' %} selected {% endif %} value="O">Otro</option>
+                        </select>
+                    </div>
+                </div>
+                    <input class="form-control" type="text" name="role" value="ATHLETE" hidden />
+                    <button class="btn btn-primary btn-block mt-5" type="submit">Agregar Deportista</button>
+                </div>
+            </div>
+            
+            
+            
     
-    <form action="{% url 'users:signup' %}" method="POST">
-        {% csrf_token %}
+        </form>
+    </div>
 
-        
-        <div class="form-group">
-            <input class="form-control" type="text" placeholder="Nombre" name="first_name" required="true" />
-        </div>
-        
-        <div class="form-group">
-            <input class="form-control" type="text" placeholder="Apellido" name="last_name" required="true" />
-        </div>
-        
-        <div class="form-group">
-            <input class="form-control" type="email" placeholder="Email" name="email" required="true" />
-            <input class="form-control" type="text" name="role" value="ATHLETE" hidden />
-        </div>
-        
-        <div class="form-group">
-            <input class="form-control" type="text" placeholder="Teléfono" name="phone" />
-        </div>
-
-        <div class="form-group">
-            <input class="form-control" type="date" name="birthdate" value="{{ user.athlete.birthdate| date:'Y-m-d' }}">
-        </div>
-
-        <div class="form-group">
-            <select class="form-control" name="gender" id="gender">
-                <option value="">Género</option>
-                <option {% if user.athlete.gender == 'M' %} selected {% endif %} value="M">Masculino</option>
-                <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
-                <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <input class="form-control" type="password" placeholder="Contraseña" name="passwd" required="true" />
-        </div>
-
-        <div class="form-group">
-            <input class="form-control" type="password" placeholder="Confirmar contraseña" name="passwd_confirmation" required="true" />
-        </div>
-
-        <button class="btn btn-primary btn-block mt-5" type="submit">Agregar Deportista</button>
-
-    </form>
+    
 
 {% endblock %}
