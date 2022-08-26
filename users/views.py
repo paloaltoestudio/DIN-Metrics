@@ -21,6 +21,7 @@ from users.forms import (UpdateUserForm,
                          UpdateAthleteMeasures,
                          UpdateAthleteHealth,
                          UpdateAthleteLegal)
+from osteo.models import Osteo
 
 #Utils
 from users.utils import age
@@ -65,7 +66,6 @@ class ManagerView(LoginRequiredMixin, ListView):
 
 class UserDetail(LoginRequiredMixin, DetailView):
     managers = User.objects.filter(role = 'MANAGER')
-
     model = User
     pk_url_kwarg = 'id'
     template_name = 'users/detail.html'
@@ -73,6 +73,14 @@ class UserDetail(LoginRequiredMixin, DetailView):
         'page': 'user_list_detail',
         'managers': managers
     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context['user'].athlete)
+        osteo = Osteo.objects.filter(athlete = context['user'].athlete)
+        if len(osteo) > 0:
+            context['osteo'] = osteo[0]
+        return context
 
 
 class ManagerDetail(LoginRequiredMixin, DetailView):
