@@ -3,18 +3,27 @@ from django.urls import reverse_lazy
 
 #Models
 from osteo.models import Osteo
+from users.models import Athlete
 
 class OsteoBase:
     model = Osteo
     pk_url_kwarg = 'id'
-    success_url = reverse_lazy('users:user_detail', kwargs = {'id': 10})
+
+    def get_object(self, queryset=None):
+        athlete = Athlete.objects.get(id = self.kwargs.get(self.pk_url_kwarg))
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        obj = queryset.get_or_create(athlete = athlete)[0]
+        return obj
 
     def get_success_url(self):
-        if self.success_url:
-            url = self.success_url.format(**self.object.__dict__)
-            url = url + '?tab=osteo'
-        
+        id = self.request.POST['id']
+        success_url = reverse_lazy('users:user_detail', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        url = url + '?tab=osteo'
         return url
+
 
 class FlexUpdate(OsteoBase, UpdateView):
     fields = ['pectoralis_minor_l', 'pectoralis_minor_r', 
@@ -43,12 +52,11 @@ class MeasuresUpdate(OsteoBase, UpdateView):
               'leg_l_mt', 'leg_r_mt'
              ]
 class PainUpdate(OsteoBase, UpdateView):
-    # fields = ['pain', 'resting',
-    #           'moving', 'on_palpitation',
-    #           'zone', 'intensity',
-    #           'superficial_sensitivity', 'deep_sensitivity',
-    #           'inflammation', 'edema',
-    #           'observations'
-    #          ]
+    fields = ['pain', 'resting',
+              'moving', 'on_palpitation',
+              'zone', 'intensity',
+              'superficial_sensitivity', 'deep_sensitivity',
+              'inflammation', 'edema',
+              'observations'
+             ]
 
-    fields = ['zone', 'intensity', 'observations']

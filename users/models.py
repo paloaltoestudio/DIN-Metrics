@@ -38,7 +38,7 @@ class Athlete(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     birthdate = models.DateField('Fecha de Nacimiento',blank=True, null=True)
-    gender = models.CharField('Género', max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField('Género', max_length=1, choices=GENDER_CHOICES, blank=True)
     age = models.PositiveIntegerField('Edad', blank=True, null=True)
     team = models.CharField('Equipo', max_length=30, blank=True, null=True)
     sport = models.CharField('Deporte', max_length=30, blank=True, null=True)

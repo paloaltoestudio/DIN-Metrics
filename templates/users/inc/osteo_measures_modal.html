@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">MEDIDAS REALES, APARENTES Y CIRCUNFERENCIAS</h5>
                 <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
             </div>
-            <form action="{% if osteo.id %}{% url 'users:measures_update' osteo.id %}{% endif %}" method='post'>
+            <form action="{% if user.athlete.id %}{% url 'users:measures_update' user.athlete.id %}{% endif %}" method='post'>
             <div class="modal-body">
                     {% csrf_token %}
                     <h3>Medidas Reales | CM</h3>

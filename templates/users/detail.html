@@ -86,6 +86,7 @@
                             <li><strong>Dolor:</strong> {{ osteo.pain }}</li>
                             <li><strong>En reposo:</strong> {{ osteo.resting }}</li>
                             <li><strong>En movimiento:</strong> {{ osteo.moving }}</li>
+                            <li><strong>A la palpación:</strong> {{ osteo.on_palpitation }}</li>
                         </ul>
                     </div>
                     <div class="col-sm-4">
@@ -286,7 +287,15 @@
 
                 
             </div>
-            <div class="tab-pane fade" id="fms" role="tabpanel" aria-labelledby="fms-tab">...</div>
+            <div class="tab-pane fade" id="fms" role="tabpanel" aria-labelledby="fms-tab">
+                FMS
+            </div>
+            <div class="tab-pane fade" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
+                {{ fig|safe }}
+            </div>
+            <div class="tab-pane fade" id="deficit" role="tabpanel" aria-labelledby="deficit-tab">
+                Deficit
+            </div>
         </div>
 
         

@@ -13,6 +13,9 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 
+#third party
+import plotly.graph_objects as go
+
 # Models
 from users.models import Athlete, User
 from users.forms import (UpdateUserForm, 
@@ -81,6 +84,13 @@ class UserDetail(LoginRequiredMixin, DetailView):
         osteo = Osteo.objects.filter(athlete = context['user'].athlete)
         if len(osteo) > 0:
             context['osteo'] = osteo[0]
+
+        fig = go.Figure(
+        data=go.Bar(y=[2, 3, 1], 
+                    marker_color='LightGreen'))
+
+        context['fig'] = fig.to_html()
+
         return context
 
 
@@ -137,6 +147,7 @@ def user_update(request, id):
                 messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
 
             else:
+                print('not valid')
                 messages.add_message(request, messages.ERROR, form.errors)
                 return redirect('users:user_detail', id)
 
