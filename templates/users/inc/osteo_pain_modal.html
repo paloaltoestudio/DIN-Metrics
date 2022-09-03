@@ -1,0 +1,43 @@
+<!-- Modal -->
+<div class="modal fade" id="painModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">EVALUACIÓN DOLOR, SENSIBILIDAD, INFLAMACIÓN, EDEMA</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <form action="{% if osteo.id %}{% url 'users:pain_update' osteo.id %}{% endif %}" method='post'>
+            <div class="modal-body">
+                    {% csrf_token %}
+                    
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Zona</label>
+                                <input type="text" class="form-control" name="zone" value="{% if osteo.zone %}{{osteo.zone}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Intensidad</label>
+                                <input type="text" class="form-control" name="intensity" value="{% if osteo.intensity %}{{osteo.intensity}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Observaciones</label>
+                                <textarea class="form-control" name="observations" cols="30" rows="10">{% if osteo.observations %}{{osteo.observations}}{% endif %}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Guardar</button>
+                    <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
