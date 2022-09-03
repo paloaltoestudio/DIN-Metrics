@@ -1,0 +1,160 @@
+<!-- Modal -->
+<div class="modal fade" id="measuresOsteoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">MEDIDAS REALES, APARENTES Y CIRCUNFERENCIAS</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <form action="{% url 'users:measures_update' osteo.id %}" method='post'>
+            <div class="modal-body">
+                    {% csrf_token %}
+                    <h3>Medidas Reales | CM</h3>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Miembro superior</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                <input type="text" class="form-control" name="real_upper_l" value="{% if osteo.real_upper_l %}{{osteo.real_upper_l}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <input type="text" class="form-control" name="real_upper_r" value="{% if osteo.real_upper_r %}{{osteo.real_upper_r}}{% endif %}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12">
+                            <h4>Miembro inferior</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                <input type="text" class="form-control" name="real_lower_l" value="{% if osteo.real_lower_l %}{{osteo.real_lower_l}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <input type="text" class="form-control" name="real_lower_r" value="{% if osteo.real_lower_r %}{{osteo.real_lower_r}}{% endif %}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Medidas Aparentes | CM</h3>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Miembro superior</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                <input type="text" class="form-control" name="apparent_upper_l" value="{% if osteo.apparent_upper_l %}{{osteo.apparent_upper_l}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <input type="text" class="form-control" name="apparent_upper_r" value="{% if osteo.apparent_upper_r %}{{osteo.apparent_upper_r}}{% endif %}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12">
+                            <h4>Miembro inferior</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                <input type="text" class="form-control" name="apparent_lower_l" value="{% if osteo.apparent_lower_l %}{{osteo.apparent_lower_l}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <input type="text" class="form-control" name="apparent_lower_r" value="{% if osteo.apparent_lower_r %}{{osteo.apparent_lower_r}}{% endif %}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Trofismo muscular | CM</h3>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h4>Brazo</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                <input type="text" class="form-control" name="arm_l_mt" value="{% if osteo.arm_l_mt %}{{osteo.arm_l_mt}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <input type="text" class="form-control" name="arm_r_mt" value="{% if osteo.arm_r_mt %}{{osteo.arm_r_mt}}{% endif %}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12">
+                            <h4>Antebrazo</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                <input type="text" class="form-control" name="forearm_l_mt" value="{% if osteo.forearm_l_mt %}{{osteo.forearm_l_mt}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <input type="text" class="form-control" name="forearm_r_mt" value="{% if osteo.forearm_r_mt %}{{osteo.forearm_r_mt}}{% endif %}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <h4>Muslo</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                <input type="text" class="form-control" name="thigh_l_mt" value="{% if osteo.thigh_l_mt %}{{osteo.thigh_l_mt}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <input type="text" class="form-control" name="thigh_r_mt" value="{% if osteo.thigh_r_mt %}{{osteo.thigh_r_mt}}{% endif %}">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <h4>Pierna</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                <input type="text" class="form-control" name="leg_l_mt" value="{% if osteo.leg_l_mt %}{{osteo.leg_l_mt}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <input type="text" class="form-control" name="leg_r_mt" value="{% if osteo.leg_r_mt %}{{osteo.leg_r_mt}}{% endif %}">
+                            </div>
+                        </div>
+                    </div>
+        
+                    <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Guardar</button>
+                    <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

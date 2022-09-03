@@ -1,0 +1,289 @@
+<!-- Modal -->
+<div class="modal fade" id="flexModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">EVALUACIÓN DE FLEXIBILIDAD | RETRACCIÓN</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <form action="{% url 'users:flex_update' osteo.id %}" method='post'>
+            <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Pectoral Menor</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="pectoralis_minor_l" id="pectoralis_minor_l" value="{% if osteo.pectoralis_minor_l %}{{ osteo.pectoralis_minor_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.pectoralis_minor_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="pectoralis_minor_r" id="pectoralis_minor_r" value="{% if osteo.pectoralis_minor_r %}{{ osteo.pectoralis_minor_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.pectoralis_minor_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Pectoral Mayor</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="pectoralis_major_l" id="pectoralis_major_l" value="{% if osteo.pectoralis_major_l %}{{ osteo.pectoralis_major_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.pectoralis_major_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="pectoralis_major_r" id="pectoralis_major_r" value="{% if osteo.pectoralis_major_r %}{{ osteo.pectoralis_major_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.pectoralis_major_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Rotador Interno Hombro	</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="shoulder_internal_rotator_l" id="shoulder_internal_rotator_l" value="{% if osteo.shoulder_internal_rotator_l %}{{ osteo.shoulder_internal_rotator_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.shoulder_internal_rotator_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="shoulder_internal_rotator_r" id="shoulder_internal_rotator_r" value="{% if osteo.shoulder_internal_rotator_r %}{{ osteo.shoulder_internal_rotator_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.shoulder_internal_rotator_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Rotador Externo Hombro	</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="shoulder_external_rotator_l" id="shoulder_external_rotator_l" value="{% if osteo.shoulder_external_rotator_l %}{{ osteo.shoulder_external_rotator_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.shoulder_external_rotator_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="shoulder_external_rotator_r" id="shoulder_external_rotator_r" value="{% if osteo.shoulder_external_rotator_r %}{{ osteo.shoulder_external_rotator_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.shoulder_external_rotator_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>PSOAS Ilíaco</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="psoas_iliaco_l" id="psoas_iliaco_l" value="{% if osteo.psoas_iliaco_l %}{{ osteo.psoas_iliaco_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.psoas_iliaco_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="psoas_iliaco_r" id="psoas_iliaco_r" value="{% if osteo.psoas_iliaco_r %}{{ osteo.psoas_iliaco_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.psoas_iliaco_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Aductores de Cadera</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="hip_adductors_l" id="hip_adductors_l" value="{% if osteo.hip_adductors_l %}{{ osteo.hip_adductors_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.hip_adductors_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="hip_adductors_r" id="hip_adductors_r" value="{% if osteo.hip_adductors_r %}{{ osteo.hip_adductors_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.hip_adductors_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Tensor de la Fascia Lata</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="tensioner_fascia_liata_l" id="tensioner_fascia_liata_l" value="{% if osteo.tensioner_fascia_liata_l %}{{ osteo.tensioner_fascia_liata_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.tensioner_fascia_liata_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="tensioner_fascia_liata_r" id="tensioner_fascia_liata_r" value="{% if osteo.tensioner_fascia_liata_r %}{{ osteo.tensioner_fascia_liata_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.tensioner_fascia_liata_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Espinales bajos</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="low_spinal_l" id="low_spinal_l" value="{% if osteo.low_spinal_l %}{{ osteo.low_spinal_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.low_spinal_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="low_spinal_r" id="low_spinal_r" value="{% if osteo.low_spinal_r %}{{ osteo.low_spinal_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.low_spinal_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Isquiotibiales</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="hamstrings_l" id="hamstrings_l" value="{% if osteo.hamstrings_l %}{{ osteo.hamstrings_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.hamstrings_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="hamstrings_r" id="hamstrings_r" value="{% if osteo.hamstrings_r %}{{ osteo.hamstrings_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.hamstrings_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Cuadriceps</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="quadriceps_l" id="quadriceps_l" value="{% if osteo.quadriceps_l %}{{ osteo.quadriceps_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.quadriceps_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="quadriceps_r" id="quadriceps_r" value="{% if osteo.quadriceps_r %}{{ osteo.quadriceps_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.quadriceps_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Talón de Aquiles</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="achilles_tendon_l" id="achilles_tendon_l" value="{% if osteo.achilles_tendon_l %}{{ osteo.achilles_tendon_l }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.achilles_tendon_l %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3">
+                                <label class="form-label">Derecho</label>
+                                <select class="form-control" name="achilles_tendon_r" id="achilles_tendon_r" value="{% if osteo.achilles_tendon_r %}{{ osteo.achilles_tendon_r }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.achilles_tendon_r %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Columna Vertebral Lumbar</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Izquierdo</label>
+                                
+                                <select class="form-control" name="spine_lumbar" id="spine_lumbar" value="{% if osteo.spine_lumbar %}{{ osteo.spine_lumbar }}{% endif %}">
+                                    {% include '../utils/flex_choices.html' with field=osteo.spine_lumbar %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">Guardar</button>
+                    <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

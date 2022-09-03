@@ -24,11 +24,12 @@ class Osteo(models.Model):
     moving = models.CharField('En movimiento', max_length=2, choices=PAIN_CHOICES, blank=True)
     on_palpitation = models.CharField('A la palpación', max_length=2, choices=PAIN_CHOICES, blank=True)
     zone = models.CharField('Zona', max_length=30, blank=True)
-    intensity = models.CharField('Intensidad', max_length=2, choices=PAIN_CHOICES, blank=True)
+    intensity = models.CharField('Intensidad', max_length=30, blank=True)
     superficial_sensitivity = models.CharField('Sensibilidad superficial', max_length=2, choices=PAIN_CHOICES, blank=True)
     deep_sensitivity = models.CharField('Sensibilidad profunda', max_length=2, choices=PAIN_CHOICES, blank=True)
     inflammation = models.CharField('Inflamación', max_length=2, choices=PAIN_CHOICES, blank=True)
     edema = models.CharField('Edema', max_length=2, choices=PAIN_CHOICES, blank=True)
+    observations = models.TextField('Observaciones',blank=True)
     pectoralis_minor_l = models.CharField('Pectoral menor - Izquierdo', max_length=2, choices=FLEX_CHOICES, blank=True)
     pectoralis_minor_r = models.CharField('Pectoral menor - Derecho', max_length=2, choices=FLEX_CHOICES, blank=True)
     pectoralis_major_l = models.CharField('Pectoral mayor - Izquierdo', max_length=2, choices=FLEX_CHOICES, blank=True)
@@ -70,4 +71,7 @@ class Osteo(models.Model):
     leg_l_mt = models.CharField('Pierna izquierda | TM', max_length=10, blank=True)
 
     def __str__(self):
-        return f'{self.athlete.user.first_name} {self.athlete.user.last_name}'
+        if hasattr(self, 'athlete'):
+            return f'{self.athlete.user.first_name} {self.athlete.user.last_name}'
+        else:
+            return self.zone

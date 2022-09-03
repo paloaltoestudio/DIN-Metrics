@@ -15,10 +15,10 @@
         
         <ul class="nav nav-pills" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">Básico</button>
+                <button class="nav-link {% if not request.GET.tab %} active {% endif %}" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">Básico</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="osteo-tab" data-bs-toggle="tab" data-bs-target="#osteo" type="button" role="tab" aria-controls="osteo" aria-selected="false">Osteomuscular</button>
+                <button class="nav-link {% if request.GET.tab == 'osteo' %} active {% endif %}" id="osteo-tab" data-bs-toggle="tab" data-bs-target="#osteo" type="button" role="tab" aria-controls="osteo" aria-selected="false">Osteomuscular</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="fms-tab" data-bs-toggle="tab" data-bs-target="#fms" type="button" role="tab" aria-controls="fms" aria-selected="false">FMS</button>
@@ -34,7 +34,7 @@
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+            <div class="tab-pane fade {% if not request.GET.tab %} show active {% endif %}" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                 <div class="row">
                     <div class="col-6 col-lg-4">
                         <h6>Información Personal {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
@@ -76,9 +76,9 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade show active" id="osteo" role="tabpanel" aria-labelledby="osteo-tab">
+            <div class="tab-pane fade {% if request.GET.tab == 'osteo' %} show active {% endif %}" id="osteo" role="tabpanel" aria-labelledby="osteo-tab">
                 <hr>
-                <h6>Evaluación dolor, sensibilidad, inflamación, edema</h6>
+                <h6>Evaluación dolor, sensibilidad, inflamación, edema {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#painModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                 <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
                 <div class="row">
                     <div class="col-sm-4">
@@ -102,13 +102,18 @@
                             <li><strong>Edema:</strong> {{ osteo.edema }}</li>
                         </ul>
                     </div>
+                    <div class="col-sm-12">
+                        <ul class="mb-0">
+                            <li><strong>Observaciones:</strong> {{ osteo.observations }}</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <hr>
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <h6>Evaluación de flexibilidad | Retracción</h6>
+                        <h6>Evaluación de flexibilidad | Retracción {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#flexModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <h5><strong class="badge badge-pill badge-warning text-dark">leve (L)</strong><strong class="badge badge-pill badge-warning-2 text-dark">Moderada (M)</strong><strong class="badge badge-pill badge-danger text-white">Severa (S)</strong><strong class="badge badge-pill badge-secondary-2 text-dark">No evaluado (NE)</strong><strong class="badge badge-pill badge-success text-white">No retracción (NR)</strong></h5>
                         
                         <div class="table-responsive">
@@ -187,7 +192,7 @@
                     </div>
 
                     <div class="col-sm-6">
-                        <h6>Medidas reales, aparentes y circunferencias</h6>
+                        <h6>Medidas reales, aparentes y circunferencias {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#measuresOsteoModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <p>No evaluado (NE).</p>
 
                         <div class="table-responsive mb-4">
@@ -510,6 +515,10 @@
             </div>
         </div>
     </div>
+
+    {% include './inc/osteo_pain_modal.html' %}
+    {% include './inc/osteo_measures_modal.html' %}
+    {% include './inc/osteo_flex_modal.html' %}
 
     
     {% endif %}

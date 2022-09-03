@@ -66,6 +66,7 @@ class ManagerView(LoginRequiredMixin, ListView):
 
 class UserDetail(LoginRequiredMixin, DetailView):
     managers = User.objects.filter(role = 'MANAGER')
+
     model = User
     pk_url_kwarg = 'id'
     template_name = 'users/detail.html'
@@ -234,8 +235,10 @@ def signup(request):
         role = request.POST['role']
         if role and role == 'ATHLETE':
             athlete = Athlete(user=user)
-            athlete.age = age(request.POST['birthdate'])
-            athlete.birthdate = request.POST['birthdate']
+            if 'birthdate' in request.POST:
+                if request.POST['birthdate'] != '':
+                    athlete.age = age(request.POST['birthdate'])
+                    athlete.birthdate = request.POST['birthdate']
             athlete.gender = request.POST['gender']
             athlete.save()
 
