@@ -77,6 +77,7 @@
             </div>
 
             <div class="tab-pane fade {% if request.GET.tab == 'osteo' %} show active {% endif %}" id="osteo" role="tabpanel" aria-labelledby="osteo-tab">
+
                 <hr>
                 <h6>Evaluación dolor, sensibilidad, inflamación, edema {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#painModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                 <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
@@ -291,15 +292,91 @@
                 FMS
             </div>
             <div class="tab-pane fade" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
-                {{ fig|safe }}
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-3">
+                        <thead>
+                            <tr>
+                                <th>Salto</th>
+                                <th>Mes 1</th>
+                                <th>Mes 2</th>
+                                <th>Mes 3</th>
+                                <th>Mes 4</th>
+                                <th>Mes 5</th>
+                                <th>Mes 6</th>
+                                <th>Mes 7</th>
+                                <th>Mes 8</th>
+                                <th>Mes 9</th>
+                                <th>Mes 10</th>
+                                <th>Mes 11</th>
+                                <th>Mes 12</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td><strong>SJ</strong></td>
+                                <td>{{ jumps.SJ.m1 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CMJ</strong></td>
+                                <td>{{ jumps.CMJ.m1 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="graph_inner"></div>
+
             </div>
             <div class="tab-pane fade" id="deficit" role="tabpanel" aria-labelledby="deficit-tab">
                 Deficit
             </div>
         </div>
+        
+        
+        <div style="width:90%; position: absolute; z-index:-1; visibility: hidden;" class="graph_wrapper">
+            {{ fig|safe }}
+        </div>
 
         
-        
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const neuroBtn = document.querySelector('#neuro-tab')
+                const graphWrapper = document.querySelector('.graph_wrapper')
+                const graphInner = document.querySelector('.graph_inner')
+    
+                console.log(graphWrapper)
+                
+                neuroBtn.addEventListener('click', function(){
+                    graphWrapper.style.visibility = 'visible'
+                    graphWrapper.style.position = 'relative'
+                    graphWrapper.style.zIndex = '1'
+                    graphInner.appendChild(graphWrapper);
+                })
+            });
+        </script>
         
             
             
