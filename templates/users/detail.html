@@ -15,10 +15,10 @@
         
         <ul class="nav nav-pills" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">Básico</button>
+                <button class="nav-link {% if not request.GET.tab %} active {% endif %}" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic" type="button" role="tab" aria-controls="basic" aria-selected="true">Básico</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="osteo-tab" data-bs-toggle="tab" data-bs-target="#osteo" type="button" role="tab" aria-controls="osteo" aria-selected="false">Osteomuscular</button>
+                <button class="nav-link {% if request.GET.tab == 'osteo' %} active {% endif %}" id="osteo-tab" data-bs-toggle="tab" data-bs-target="#osteo" type="button" role="tab" aria-controls="osteo" aria-selected="false">Osteomuscular</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="fms-tab" data-bs-toggle="tab" data-bs-target="#fms" type="button" role="tab" aria-controls="fms" aria-selected="false">FMS</button>
@@ -34,9 +34,9 @@
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+            <div class="tab-pane fade {% if not request.GET.tab %} show active {% endif %}" id="basic" role="tabpanel" aria-labelledby="basic-tab">
                 <div class="row">
-                    <div class="col-sm-6 col-lg-4">
+                    <div class="col-6 col-lg-4">
                         <h6>Información Personal {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <ul class="list-group">
                             <li class="list-group-item p-0"><strong>Cédula:</strong> {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
@@ -48,7 +48,7 @@
                         </ul>
                     </div>
         
-                    <div class="col-sm-6 col-lg-4">
+                    <div class="col-6 col-lg-4">
                         <h6>Información Deportiva {% if request.user.role == 'ADMIN' %}<a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#sportModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <ul class="list-group">
                         <li class="list-group-item p-0"><strong>Equipo:</strong> {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
@@ -62,7 +62,7 @@
                         </ul>
                     </div>
                     
-                    <div class="col-sm-6 col-lg-4">
+                    <div class="col-6 col-lg-4">
                         <h6>Salud {% if request.user.role == 'ADMIN' %}<a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#healthModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                         <ul class="list-group">
                         <li class="list-group-item p-0"><strong>EPS:</strong> {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>
@@ -76,12 +76,337 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="osteo" role="tabpanel" aria-labelledby="osteo-tab">...</div>
-            <div class="tab-pane fade" id="fms" role="tabpanel" aria-labelledby="fms-tab">...</div>
+            <div class="tab-pane fade {% if request.GET.tab == 'osteo' %} show active {% endif %}" id="osteo" role="tabpanel" aria-labelledby="osteo-tab">
+
+                <hr>
+                <h6>Evaluación dolor, sensibilidad, inflamación, edema {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#painModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
+                <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <ul class="mb-0">
+                            <li><strong>Dolor:</strong> {{ osteo.pain }}</li>
+                            <li><strong>En reposo:</strong> {{ osteo.resting }}</li>
+                            <li><strong>En movimiento:</strong> {{ osteo.moving }}</li>
+                            <li><strong>A la palpación:</strong> {{ osteo.on_palpitation }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul class="mb-0">
+                            <li><strong>Zona:</strong> {{ osteo.zone }}</li>
+                            <li><strong>Intensidad:</strong> {{ osteo.intensity }}</li>
+                            <li><strong>Sensibilidad superficial:</strong> {{ osteo.superficial_sensitivity }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-4">
+                        <ul class="mb-0">
+                            <li><strong>Sensibilidad profunda:</strong> {{ osteo.deep_sensitivity }}</li>
+                            <li><strong>Inflamación:</strong> {{ osteo.inflammation }}</li>
+                            <li><strong>Edema:</strong> {{ osteo.edema }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-12">
+                        <ul class="mb-0">
+                            <li><strong>Observaciones:</strong> {{ osteo.observations }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h6>Evaluación de flexibilidad | Retracción {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#flexModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
+                        <h5><strong class="badge badge-pill badge-warning text-dark">leve (L)</strong><strong class="badge badge-pill badge-warning-2 text-dark">Moderada (M)</strong><strong class="badge badge-pill badge-danger text-white">Severa (S)</strong><strong class="badge badge-pill badge-secondary-2 text-dark">No evaluado (NE)</strong><strong class="badge badge-pill badge-success text-white">No retracción (NR)</strong></h5>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped user_info_table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th><strong>Grupo Muscular</strong></th>
+                                        <th><strong>Izquierdo</strong></th>
+                                        <th><strong>Derecho</strong></th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    <tr>
+                                        <td>Pectoral Menor</td>
+                                        <td class="osteo_bg_{{ osteo.pectoralis_minor_l }}">{{ osteo.pectoralis_minor_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.pectoralis_minor_r }}">{{ osteo.pectoralis_minor_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pectoral Mayor</td>
+                                        <td class="osteo_bg_{{ osteo.pectoralis_major_l }}">{{ osteo.pectoralis_major_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.pectoralis_major_r }}">{{ osteo.pectoralis_major_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rotador Interno Hombro</td>
+                                        <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_l }}">{{ osteo.shoulder_internal_rotator_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_r }}">{{ osteo.shoulder_internal_rotator_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rotador Externo Hombro</td>
+                                        <td class="osteo_bg_{{ osteo.shoulder_external_rotator_l }}">{{ osteo.shoulder_external_rotator_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.shoulder_external_rotator_r }}">{{ osteo.shoulder_external_rotator_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PSOAS Ilíaco</td>
+                                        <td class="osteo_bg_{{ osteo.psoas_iliaco_l }}">{{ osteo.psoas_iliaco_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.psoas_iliaco_r }}">{{ osteo.psoas_iliaco_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Aductores de cadera</td>
+                                        <td class="osteo_bg_{{ osteo.hip_adductors_l }}">{{ osteo.hip_adductors_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.hip_adductors_r }}">{{ osteo.hip_adductors_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tensor de la fascia lata</td>
+                                        <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_l }}">{{ osteo.tensioner_fascia_liata_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_r }}">{{ osteo.tensioner_fascia_liata_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Espinales bajos</td>
+                                        <td class="osteo_bg_{{ osteo.low_spinal_l }}">{{ osteo.low_spinal_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.low_spinal_r }}">{{ osteo.low_spinal_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Isquitibiales</td>
+                                        <td class="osteo_bg_{{ osteo.hamstrings_l }}">{{ osteo.hamstrings_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.hamstrings_r }}">{{ osteo.hamstrings_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cuadriceps</td>
+                                        <td class="osteo_bg_{{ osteo.quadriceps_l }}">{{ osteo.quadriceps_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.quadriceps_r }}">{{ osteo.quadriceps_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tendón de Aquiles</td>
+                                        <td class="osteo_bg_{{ osteo.achilles_tendon_l }}">{{ osteo.achilles_tendon_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.achilles_tendon_r }}">{{ osteo.achilles_tendon_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Columna vertebral lumbar</td>
+                                        <td  class="osteo_bg_{{ osteo.spine_lumbar }}" colspan="2">{{ osteo.spine_lumbar }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <h6>Medidas reales, aparentes y circunferencias {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#measuresOsteoModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
+                        <p>No evaluado (NE).</p>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-striped user_info_table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th><strong>Medidas Reales | CM</strong></th>
+                                        <th><strong>Izquierdo</strong></th>
+                                        <th><strong>Derecho</strong></th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    <tr>
+                                        <td>Miembro superior</td>
+                                        <td>{{ osteo.real_upper_l }}</td>
+                                        <td>{{ osteo.real_upper_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Miembro inferior</td>
+                                        <td>{{ osteo.real_lower_l }}</td>
+                                        <td>{{ osteo.real_lower_r }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-striped user_info_table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th><strong>Medidas Aparentes | CM</strong></th>
+                                        <th><strong>Izquierdo</strong></th>
+                                        <th><strong>Derecho</strong></th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    <tr>
+                                        <td>Miembro superior</td>
+                                        <td>{{ osteo.apparent_upper_l }}</td>
+                                        <td>{{ osteo.apparent_upper_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Miembro inferior</td>
+                                        <td>{{ osteo.apparent_lower_l }}</td>
+                                        <td>{{ osteo.apparent_lower_r }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped user_info_table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th><strong>Trofismo muscular | CM</strong></th>
+                                        <th><strong>Izquierdo</strong></th>
+                                        <th><strong>Derecho</strong></th>
+                                    </tr>
+                                </thead>
+    
+                                <tbody>
+                                    <tr>
+                                        <td>Brazo</td>
+                                        <td>{{ osteo.arm_l_mt }}</td>
+                                        <td>{{ osteo.arm_r_mt }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Antebrazo</td>
+                                        <td>{{ osteo.forearm_l_mt }}</td>
+                                        <td>{{ osteo.forearm_r_mt }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Muslo</td>
+                                        <td>{{ osteo.thigh_l_mt }}</td>
+                                        <td>{{ osteo.thigh_r_mt }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pierna</td>
+                                        <td>{{ osteo.leg_l_mt }}</td>
+                                        <td>{{ osteo.leg_r_mt }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                
+            </div>
+            <div class="tab-pane fade" id="fms" role="tabpanel" aria-labelledby="fms-tab">
+                FMS
+            </div>
+            <div class="tab-pane fade" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
+                <div class="table-responsive p-0">
+                    <table class="table align-items-center mb-3">
+                        <thead>
+                            <tr>
+                                <th>Salto</th>
+                                <th>Mes 1</th>
+                                <th>Mes 2</th>
+                                <th>Mes 3</th>
+                                <th>Mes 4</th>
+                                <th>Mes 5</th>
+                                <th>Mes 6</th>
+                                <th>Mes 7</th>
+                                <th>Mes 8</th>
+                                <th>Mes 9</th>
+                                <th>Mes 10</th>
+                                <th>Mes 11</th>
+                                <th>Mes 12</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td><strong>SJ</strong></td>
+                                <td>{{ jumps.SJ.m1 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.m2 }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CMJ</strong></td>
+                                <td>{{ jumps.CMJ.m1 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DROPS</strong></td>
+                                <td>{{ jumps.CMJ.m1 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q</strong></td>
+                                <td>{{ jumps.CMJ.m1 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.m2 }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="graph_inner"></div>
+
+            </div>
+            <div class="tab-pane fade" id="deficit" role="tabpanel" aria-labelledby="deficit-tab">
+                Deficit
+            </div>
+        </div>
+        
+        
+        <div style="width:90%; position: absolute; z-index:-1; visibility: hidden;" class="graph_wrapper">
+            {{ fig|safe }}
         </div>
 
         
-        
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                const neuroBtn = document.querySelector('#neuro-tab')
+                const graphWrapper = document.querySelector('.graph_wrapper')
+                const graphInner = document.querySelector('.graph_inner')
+    
+                console.log(graphWrapper)
+                
+                neuroBtn.addEventListener('click', function(){
+                    graphWrapper.style.visibility = 'visible'
+                    graphWrapper.style.position = 'relative'
+                    graphWrapper.style.zIndex = '1'
+                    graphInner.appendChild(graphWrapper);
+                })
+            });
+        </script>
         
             
             
@@ -306,6 +631,10 @@
             </div>
         </div>
     </div>
+
+    {% include './inc/osteo_pain_modal.html' %}
+    {% include './inc/osteo_measures_modal.html' %}
+    {% include './inc/osteo_flex_modal.html' %}
 
     
     {% endif %}

@@ -1,3 +1,5 @@
+/* General */
+
 
 /* Login styles */
 .auth {
@@ -37,7 +39,39 @@
 .card tbody a:hover {
     color: #da682c;
 }
+.table.user_info_table th {
+  font-size: 14px;
+}
 
+.table.user_info_table td,
+.table.user_info_table th {
+  text-align: center;
+}
+
+/* osteo */
+.osteo_bg_NR {
+  background: green !important;
+}
+
+.osteo_bg_L {
+  background: yellow !important;
+}
+
+.osteo_bg_M {
+  background: orange !important;
+}
+
+.osteo_bg_S {
+  background: red !important;
+}
+
+.badge-secondary-2 {
+  background-color: rgb(216, 216, 216);
+}
+
+.badge-warning-2 {
+  background-color: orange;
+}
 
 .card .title {
     margin: 0;
@@ -166,6 +200,7 @@
   border-top-color: #2f3a48;
   box-shadow: inset 0 1px #2f3a48;
 }
+
 
 
 /* footer */

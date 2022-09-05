@@ -21,9 +21,13 @@ from users.forms import (UpdateUserForm,
                          UpdateAthleteMeasures,
                          UpdateAthleteHealth,
                          UpdateAthleteLegal)
+from osteo.models import Osteo
 
 #Utils
 from users.utils import age
+
+#data
+from users.data.jumps_data import jump_data
 
 
 
@@ -73,6 +77,18 @@ class UserDetail(LoginRequiredMixin, DetailView):
         'page': 'user_list_detail',
         'managers': managers
     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context['user'].athlete)
+        osteo = Osteo.objects.filter(athlete = context['user'].athlete)
+        if len(osteo) > 0:
+            context['osteo'] = osteo[0]
+
+        #Get data from jumps and make chart
+        jump_data(context)
+
+        return context
 
 
 class ManagerDetail(LoginRequiredMixin, DetailView):
@@ -128,6 +144,7 @@ def user_update(request, id):
                 messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
 
             else:
+                print('not valid')
                 messages.add_message(request, messages.ERROR, form.errors)
                 return redirect('users:user_detail', id)
 
@@ -226,12 +243,10 @@ def signup(request):
         role = request.POST['role']
         if role and role == 'ATHLETE':
             athlete = Athlete(user=user)
-
             if 'birthdate' in request.POST:
                 if request.POST['birthdate'] != '':
                     athlete.age = age(request.POST['birthdate'])
                     athlete.birthdate = request.POST['birthdate']
-
             athlete.gender = request.POST['gender']
             athlete.save()
 

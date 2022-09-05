@@ -1,5 +1,8 @@
 .venv
 db.sqlite3
 metrics/__pycache__/
-users/__pycache__/*
+users/__pycache__/
 users/migrations/*
+osteo/__pycache__/
+osteo/migrations/*
+users/data/__pycache__/*
