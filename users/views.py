@@ -96,6 +96,8 @@ class UserDetail(LoginRequiredMixin, DetailView):
             fms.leg_total = get_sum(fms.leg_raise_l_score, fms.leg_raise_r_score)
             fms.trunk_total = get_sum(fms.trunk_l_score, fms.trunk_r_score)
             fms.trunk_rot_total = get_sum(fms.trunk_rot_l_score, fms.trunk_rot_r_score)
+            fms.total = sum([fms.squat_score, fms.fence_total, fms.lunge_total, fms.shoulder_total, 
+                                   fms.leg_total, fms.trunk_total, fms.trunk_rot_total])
 
             context['fms'] = fms
 
