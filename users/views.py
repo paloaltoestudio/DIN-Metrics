@@ -25,7 +25,7 @@ from osteo.models import Osteo
 from fms.models import Fms
 
 #Utils
-from users.utils import age
+from users.utils import age, get_sum
 
 #data
 from users.data.jumps_data import jump_data
@@ -89,7 +89,14 @@ class UserDetail(LoginRequiredMixin, DetailView):
         fms = Fms.objects.filter(athlete = context['user'].athlete)
         if len(fms) > 0:
             fms = fms[0]
-            fms.fence_total = fms.fence_step_l_score + fms.fence_step_l_score
+
+            fms.fence_total = get_sum(fms.fence_step_l_score, fms.fence_step_r_score)
+            fms.lunge_total = get_sum(fms.lunge_l_score, fms.lunge_r_score)
+            fms.shoulder_total = get_sum(fms.shoulder_l_score, fms.shoulder_r_score)
+            fms.leg_total = get_sum(fms.leg_raise_l_score, fms.leg_raise_r_score)
+            fms.trunk_total = get_sum(fms.trunk_l_score, fms.trunk_r_score)
+            fms.trunk_rot_total = get_sum(fms.trunk_rot_l_score, fms.trunk_rot_r_score)
+
             context['fms'] = fms
 
         #Get data from jumps and make chart

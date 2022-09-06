@@ -640,20 +640,6 @@
     {% include './inc/osteo_flex_modal.html' %}
     {% include './inc/fms_modal.html' %}
 
-
-{% comment %} {% for test in fms %}
-<form action="{% url 'users:fms_update' user.athlete.id %}" method='post'>
-    <h3>{{ test.get_name_display }}</h3>
-    {% csrf_token %}
-    <input type="text" name="name" value="{{ test.name }}">
-    <input type="text" name="test_slug" value="{{ test.test_slug }}">
-    <input type="text" name="score" value="{{ test.score }}">
-    <textarea name="observations" id="" cols="30" rows="10">{{ test.observations }}</textarea>
-    <input type="text" name="id" value="{{ user.athlete.id }}">
-    <button class="btn btn-primary">Guardar</button>
-</form>
-{% endfor %} {% endcomment %}
-
     
     {% endif %}
     {% comment %} end if edit user permission {% endcomment %}

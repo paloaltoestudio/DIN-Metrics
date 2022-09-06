@@ -7,3 +7,5 @@ osteo/__pycache__/
 osteo/migrations/*
 users/data/__pycache__/
 users/data/__pycache__/*
+fms/migrations/*
+fms/__pycache__/

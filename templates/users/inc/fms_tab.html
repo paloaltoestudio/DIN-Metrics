@@ -1,6 +1,6 @@
-<div class="table-responsive p-0">
+<div class="table-responsive table-striped p-0">
     <table class="table align-items-center mb-3">
-        <thead>
+        <thead class="table-dark">
             <tr>
                 <th><strong>Prueba</strong></th>
                 <th><strong>Puntuación Parcial</strong></th>
@@ -25,10 +25,55 @@
                 <td>Paso de valla</td>
                 <td>
                     <p>I: {{ fms.fence_step_l_score|stringformat:".2f" }}</p>
-                    <p>D: {{ fms.fence_step_l_score|stringformat:".2f" }}</p>
+                    <p>D: {{ fms.fence_step_r_score|stringformat:".2f" }}</p>
                 </td>
                 <td>{{ fms.fence_total|stringformat:".2f" }}</td>
-                <td>{{ fms.fence_step_l_observations }}</td>
+                <td>{{ fms.fence_step_observations }}</td>
+            </tr>
+            <tr>
+                <td>Estocada</td>
+                <td>
+                    <p>I: {{ fms.lunge_l_score|stringformat:".2f" }}</p>
+                    <p>D: {{ fms.lunge_r_score|stringformat:".2f" }}</p>
+                </td>
+                <td>{{ fms.lunge_total|stringformat:".2f" }}</td>
+                <td>{{ fms.lunge_observations }}</td>
+            </tr>
+            <tr>
+                <td>Movilidad de hombros</td>
+                <td>
+                    <p>I: {{ fms.shoulder_l_score|stringformat:".2f" }}</p>
+                    <p>D: {{ fms.shoulder_r_score|stringformat:".2f" }}</p>
+                </td>
+                <td>{{ fms.shoulder_total|stringformat:".2f" }}</td>
+                <td>{{ fms.shoulder_l_observations }}</td>
+            </tr>
+            <tr>
+                <td>Elevación activa con la pierna recta</td>
+                <td>
+                    <p>I: {{ fms.leg_raise_l_score|stringformat:".2f" }}</p>
+                    <p>D: {{ fms.leg_raise_r_score|stringformat:".2f" }}</p>
+                </td>
+                <td>{{ fms.leg_total|stringformat:".2f" }}</td>
+                <td>{{ fms.leg_raise_observations }}</td>
+            </tr>
+            <tr>
+                <td>Estabilidad de tronco en flexión</td>
+                <td>
+                    <p>I: {{ fms.trunk_l_score|stringformat:".2f" }}</p>
+                    <p>D: {{ fms.trunk_l_score|stringformat:".2f" }}</p>
+                </td>
+                <td>{{ fms.trunk_total|stringformat:".2f" }}</td>
+                <td>{{ fms.trunk_observations }}</td>
+            </tr>
+            <tr>
+                <td>Estabilidad de tronco en rotación</td>
+                <td>
+                    <p>I: {{ fms.trunk_rot_l_score|stringformat:".2f" }}</p>
+                    <p>D: {{ fms.trunk_rot_l_score|stringformat:".2f" }}</p>
+                </td>
+                <td>{{ fms.trunk_rot_total|stringformat:".2f" }}</td>
+                <td>{{ fms.trunk_rot_observations }}</td>
             </tr>
         </tbody>
     </table>
