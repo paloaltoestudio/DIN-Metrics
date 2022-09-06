@@ -288,10 +288,9 @@
 
                 
             </div>
-            <div class="tab-pane fade{% if request.GET.tab == 'fms' %} show active {% endif %}" id="fms" role="tabpanel" aria-labelledby="fms-tab">
-                
-                    
-                {% include './inc/fms_tab.py' with fms=fms athlete=user.athlete %}
+            <div class="tab-pane fade{% if request.GET.tab == 'fms' %} show active {% endif %}" id="fms" role="tabpanel" aria-labelledby="fms-tab">              
+                <h6>FMS {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fmsModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
+                {% include './inc/fms_tab.html' with fms=fms athlete=user.athlete %}
             </div>
             <div class="tab-pane fade" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
                 <div class="table-responsive p-0">
@@ -634,9 +633,12 @@
         </div>
     </div>
 
+    
+
     {% include './inc/osteo_pain_modal.html' %}
     {% include './inc/osteo_measures_modal.html' %}
     {% include './inc/osteo_flex_modal.html' %}
+    {% include './inc/fms_modal.html' %}
 
 
 {% comment %} {% for test in fms %}

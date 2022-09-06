@@ -1,0 +1,20 @@
+<!-- Modal -->
+<div class="modal fade" id="fmsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">FMS</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <form action="{% url 'users:fms_update' user.athlete.id %}" method='post'>
+                {% csrf_token %}
+                <h6>Sentadilla con brazos estirados</h6>
+                <input type="number" step="0.01" name="squat_score" value="{{ fms.squat_score|stringformat:".2f" }}">
+                <textarea name="squat_observations" id="" cols="30" rows="10">{{ fms.squat_observations }}</textarea>
+                <input type="text" name="uid" value="{{ user.id }}" hidden>
+                <input type="text" name="id" value="{{ user.athlete.id }}" hidden>
+                <button class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>

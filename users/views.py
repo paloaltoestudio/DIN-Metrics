@@ -88,6 +88,8 @@ class UserDetail(LoginRequiredMixin, DetailView):
 
         fms = Fms.objects.filter(athlete = context['user'].athlete)
         if len(fms) > 0:
+            fms = fms[0]
+            fms.fence_total = fms.fence_step_l_score + fms.fence_step_l_score
             context['fms'] = fms
 
         #Get data from jumps and make chart

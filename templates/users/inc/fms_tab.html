@@ -1,0 +1,40 @@
+<div class="table-responsive p-0">
+    <table class="table align-items-center mb-3">
+        <thead>
+            <tr>
+                <th><strong>Prueba</strong></th>
+                <th><strong>Puntuación Parcial</strong></th>
+                <th><strong>Puntuación Total</strong></th>
+                <th><strong>Observaciones</strong></th>
+            </tr>
+            {% comment %} <tr>
+                <th></th>
+                <th>Izquierda</th>
+                <th>Derecha</th>
+                <th></th>
+            </tr> {% endcomment %}
+        </thead>
+        <tbody>
+            <tr>
+                <td>Sentadilla con brazos estirados</td>
+                <td>{{ fms.squat_score|stringformat:".2f" }}</td>
+                <td>{{ fms.squat_score|stringformat:".2f" }}</td>
+                <td>{{ fms.squat_observations }}</td>
+            </tr>
+            <tr>
+                <td>Paso de valla</td>
+                <td>
+                    <p>I: {{ fms.fence_step_l_score|stringformat:".2f" }}</p>
+                    <p>D: {{ fms.fence_step_l_score|stringformat:".2f" }}</p>
+                </td>
+                <td>{{ fms.fence_total|stringformat:".2f" }}</td>
+                <td>{{ fms.fence_step_l_observations }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div> 
+{{ form }}
+
+
+
+
