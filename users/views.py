@@ -22,6 +22,7 @@ from users.forms import (UpdateUserForm,
                          UpdateAthleteHealth,
                          UpdateAthleteLegal)
 from osteo.models import Osteo
+from fms.models import Fms
 
 #Utils
 from users.utils import age
@@ -80,10 +81,14 @@ class UserDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(context['user'].athlete)
+        
         osteo = Osteo.objects.filter(athlete = context['user'].athlete)
         if len(osteo) > 0:
             context['osteo'] = osteo[0]
+
+        fms = Fms.objects.filter(athlete = context['user'].athlete)
+        if len(fms) > 0:
+            context['fms'] = fms
 
         #Get data from jumps and make chart
         jump_data(context)

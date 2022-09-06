@@ -21,7 +21,7 @@
                 <button class="nav-link {% if request.GET.tab == 'osteo' %} active {% endif %}" id="osteo-tab" data-bs-toggle="tab" data-bs-target="#osteo" type="button" role="tab" aria-controls="osteo" aria-selected="false">Osteomuscular</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="fms-tab" data-bs-toggle="tab" data-bs-target="#fms" type="button" role="tab" aria-controls="fms" aria-selected="false">FMS</button>
+                <button class="nav-link {% if request.GET.tab == 'fms' %} active {% endif %}" id="fms-tab" data-bs-toggle="tab" data-bs-target="#fms" type="button" role="tab" aria-controls="fms" aria-selected="false">FMS</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="neuro-tab" data-bs-toggle="tab" data-bs-target="#neuro" type="button" role="tab" aria-controls="neuro" aria-selected="false">Perfil Neuromuscular</button>
@@ -288,8 +288,10 @@
 
                 
             </div>
-            <div class="tab-pane fade" id="fms" role="tabpanel" aria-labelledby="fms-tab">
-                FMS
+            <div class="tab-pane fade{% if request.GET.tab == 'fms' %} show active {% endif %}" id="fms" role="tabpanel" aria-labelledby="fms-tab">
+                
+                    
+                {% include './inc/fms_tab.py' with fms=fms athlete=user.athlete %}
             </div>
             <div class="tab-pane fade" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
                 <div class="table-responsive p-0">
@@ -635,6 +637,20 @@
     {% include './inc/osteo_pain_modal.html' %}
     {% include './inc/osteo_measures_modal.html' %}
     {% include './inc/osteo_flex_modal.html' %}
+
+
+{% comment %} {% for test in fms %}
+<form action="{% url 'users:fms_update' user.athlete.id %}" method='post'>
+    <h3>{{ test.get_name_display }}</h3>
+    {% csrf_token %}
+    <input type="text" name="name" value="{{ test.name }}">
+    <input type="text" name="test_slug" value="{{ test.test_slug }}">
+    <input type="text" name="score" value="{{ test.score }}">
+    <textarea name="observations" id="" cols="30" rows="10">{{ test.observations }}</textarea>
+    <input type="text" name="id" value="{{ user.athlete.id }}">
+    <button class="btn btn-primary">Guardar</button>
+</form>
+{% endfor %} {% endcomment %}
 
     
     {% endif %}

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'users.apps.UsersConfig',
     'osteo.apps.OsteoConfig',
+    'fms.apps.FmsConfig',
 ]
 
 MIDDLEWARE = [

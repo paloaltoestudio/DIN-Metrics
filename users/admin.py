@@ -1,6 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from users.models import Athlete, User
+from fms.models import Fms
+
+class Fms_inline(admin.TabularInline):
+    model = Fms
 
 @admin.register(Athlete)
 class AthleteAdmin(admin.ModelAdmin):
@@ -11,6 +15,10 @@ class AthleteAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = ('created', 'modified')
+
+    inlines = [
+        Fms_inline,
+    ]
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
