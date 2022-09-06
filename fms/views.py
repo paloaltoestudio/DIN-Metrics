@@ -31,5 +31,12 @@ class FmsBase:
         url = url + '?tab=fms'
         return url
 
+
 class FmsUpdate(FmsBase, UpdateView):
-    fields = ['squat_score', 'squat_observations']
+    fields = ['squat_score', 'squat_observations',
+              'fence_step_l_score', 'fence_step_r_score', 'fence_step_observations',
+              'lunge_l_score', 'lunge_r_score', 'lunge_observations',
+              'shoulder_l_score', 'shoulder_r_score', 'shoulder_observations',
+              'leg_raise_l_score', 'leg_raise_r_score', 'leg_raise_observations',
+              'trunk_l_score', 'trunk_r_score', 'trunk_observations',
+              'trunk_rot_l_score', 'trunk_rot_r_score', 'trunk_rot_observations']
