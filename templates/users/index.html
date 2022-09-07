@@ -5,6 +5,7 @@
     <h5>Deportistas</h5>
 
     {% if has_athletes or request.user.role == 'ADMIN' %}
+ 
 
     <div class="row">
         <div class="col-12">
@@ -15,6 +16,41 @@
               </div>
             </div>
             <div class="card-body px-0 pb-2">
+
+              <div class="filter px-3">
+                <form method="get">
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="input-group input-group-outline mb-3">
+                        <label class="form-label">Nombre</label>
+                        {{ filter.form.first_name}}
+                      </div>  
+                    </div>
+
+                    <div class="col-3">
+                      <div class="input-group input-group-outline mb-3">
+                        <label class="form-label">Apellido</label>
+                        {{ filter.form.last_name}}
+                      </div>  
+                    </div>
+
+                    <div class="col-3">
+                      <div class="input-group input-group-outline mb-3">
+                        <label class="form-label">Email</label>
+                        {{ filter.form.email}}
+                      </div>  
+                    </div>
+                    <div class="col-3">
+                      <button style="height: 35px;" class="mt-0 py-2 px-4 btn btn-primary">Buscar</button>
+                    </div>
+                  </div>
+                </form>
+            
+                {% comment %} {% for obj in filter.qs %}
+                    {{ obj.first_name }} {{ obj.last_name }}<br />
+                {% endfor %} {% endcomment %}
+              </div>
+
               <div class="table-responsive p-0">
                 <table class="table align-items-center mb-0">
                   <thead>
@@ -27,8 +63,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% if users %}
-                        {% for user in users %}
+                    
+                    {% if filter.qs %}
+                        {% for user in filter.qs %}
                             {% if user.athlete.manager == request.user or request.user.role == 'ADMIN' %}
                             <tr>
                             <td>

@@ -30,6 +30,9 @@ from users.utils import age, get_sum
 #data
 from users.data.jumps_data import jump_data
 
+#filters
+from users.filters import UserFilter
+
 
 
 class Index(LoginRequiredMixin, ListView):
@@ -47,6 +50,10 @@ class Index(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         athletes = Athlete.objects.filter(manager = self.request.user)
         context["has_athletes"] = len(athletes) > 0
+
+        f = UserFilter(self.request.GET, User.objects.filter(role = 'ATHLETE', athlete__isnull = False))
+        context['filter'] = f
+
         return context
 
     def get(self, *args, **kwargs):
