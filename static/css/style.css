@@ -3,7 +3,7 @@
 
 /* Login styles */
 .auth {
-  background: #2f3a48;
+  background: #2f3a48 url('../img/login_bg.jpg');
 }
 
 .login.card .card-header {

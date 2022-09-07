@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #Third party
+    'django_filters',
+
+    #Project apps
     'users.apps.UsersConfig',
     'osteo.apps.OsteoConfig',
     'fms.apps.FmsConfig',
