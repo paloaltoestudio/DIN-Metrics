@@ -31,7 +31,7 @@ from users.utils import age, get_sum
 from users.data.jumps_data import jump_data
 
 #filters
-from users.filters import UserFilter
+from users.filters import UserFilter, ManagerFilter
 
 
 
@@ -73,6 +73,15 @@ class ManagerView(LoginRequiredMixin, ListView):
     extra_context = {
         'page': 'manager_list_detail'
     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        f = ManagerFilter(self.request.GET, User.objects.filter(role = 'MANAGER'))
+        context['filter'] = f
+
+        return context
+    
 
 
 class UserDetail(LoginRequiredMixin, DetailView):
