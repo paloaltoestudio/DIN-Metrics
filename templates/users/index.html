@@ -77,7 +77,7 @@
                   <tbody>
                     
                     {% if filter.qs %}
-                        {% for user in filter.qs %}
+                        {% for user in users %}
                             {% if user.athlete.manager == request.user or request.user.role == 'ADMIN' %}
                             <tr>
                             <td>

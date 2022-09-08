@@ -16,7 +16,7 @@
                     <h1 class="mx-auto mb-3"><img src="{% static 'img/dinametrics-logo.png' %}" alt="Dinametrics logo" width="250"></h1>
                     {% if form.errors %}
                     <p class="p-2 alert alert-danger">
-                        Username o contraseña inválida
+                        Email o contraseña inválida
                     </p>
                     {% endif %}
 
@@ -25,7 +25,7 @@
                         <div class="card-body">
                             {% csrf_token %}
                             <div class="input-group input-group-outline mb-3">
-                                <label for="" class="form-label">usuario</label>
+                                <label for="" class="form-label">Email</label>
                                 <input type="text" name="username" class="form-control" value="{% if form.errors %}{{ form.username.value }}{% endif %}">
                             </div>
                             <div class="input-group mb-3">

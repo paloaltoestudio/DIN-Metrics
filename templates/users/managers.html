@@ -64,7 +64,7 @@
                             </thead>
                             <tbody>
                                 {% if filter.qs %}
-                                {% for user in filter.qs %}
+                                {% for user in users %}
                                 <tr>
                                     <td>
                                         <p class="text-xs font-weight-bold mb-0"><a href="{% url 'users:manager_detail' user.id %}">{{ user.first_name }} {{ user.last_name }}</a></p>

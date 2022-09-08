@@ -22,10 +22,19 @@ class AthleteAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class CustomUserAdmin(UserAdmin):
+    ordering = ('email',)
+
     list_display = ('first_name', 'last_name', 'email',)
+
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),}),)
 
     fieldsets = (
         (None, {'fields': ('first_name', 'last_name', 'document', 'email', 'phone')}),
         ('Role', {'fields': ('role',)}),
     )
+
+    exclude = ['username',]
     

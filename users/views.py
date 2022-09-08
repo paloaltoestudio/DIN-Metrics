@@ -41,7 +41,6 @@ class Index(LoginRequiredMixin, ListView):
     paginate_by = 15
     template_name = 'users/index.html'
     context_object_name = 'users'
-    queryset = User.objects.filter(role = 'ATHLETE', athlete__isnull = False)
     extra_context = {
         'page': 'user_list_detail'
     }
@@ -51,10 +50,13 @@ class Index(LoginRequiredMixin, ListView):
         athletes = Athlete.objects.filter(manager = self.request.user)
         context["has_athletes"] = len(athletes) > 0
 
-        f = UserFilter(self.request.GET, User.objects.filter(role = 'ATHLETE', athlete__isnull = False))
+        f = UserFilter(self.request.GET, User.objects.filter(role = 'ATHLETE', athlete__isnull = False).order_by('-date_joined'))
         context['filter'] = f
 
         return context
+
+    def get_queryset(self):
+        return ManagerFilter(self.request.GET, User.objects.filter(role = 'ATHLETE', athlete__isnull = False).order_by('-date_joined')).qs
 
     def get(self, *args, **kwargs):
         if self.request.user.role == 'ATHLETE':
@@ -69,19 +71,21 @@ class ManagerView(LoginRequiredMixin, ListView):
     paginate_by = 15
     template_name = 'users/managers.html'
     context_object_name = 'users'
-    queryset = User.objects.filter(role = 'MANAGER')
     extra_context = {
         'page': 'manager_list_detail'
     }
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        f = ManagerFilter(self.request.GET, User.objects.filter(role = 'MANAGER'))
+        f = ManagerFilter(self.request.GET, User.objects.filter(role = 'MANAGER').order_by('-date_joined'))
         context['filter'] = f
 
         return context
     
+    def get_queryset(self):
+        return ManagerFilter(self.request.GET, User.objects.filter(role = 'MANAGER').order_by('-date_joined')).qs
 
 
 class UserDetail(LoginRequiredMixin, DetailView):
@@ -260,7 +264,7 @@ def signup(request):
                             })
 
         try:
-            user = User.objects.create_user(username=request.POST['email'], password=passwd)
+            user = User.objects.create_user(email=request.POST['email'], password=passwd)
         except IntegrityError:
             return render(request, 'users/signup.html', {'error': 'Ya existe un usuario con el mismo email', 'form': request.POST})
 
@@ -305,9 +309,9 @@ def new_manager(request):
                             })
 
         try:
-            user = User.objects.create_user(username=request.POST['email'], password=passwd)
+            user = User.objects.create_user(email=request.POST['email'], password=passwd)
         except IntegrityError:
-            return render(request, 'users/new_manager.html', {'error': 'Ya existe un usuario con el mismo email'})
+            return render(request, 'users/new_manager.html', {'error': 'Ya existe un usuario con el mismo email', 'form': request.POST})
 
         user.first_name = request.POST['first_name']
         user.last_name = request.POST['last_name']

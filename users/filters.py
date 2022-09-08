@@ -8,7 +8,7 @@ class UserFilter(django_filters.FilterSet):
 
     first_name = django_filters.CharFilter(lookup_expr='icontains', widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = django_filters.CharFilter(lookup_expr='icontains', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = django_filters.CharFilter(lookup_expr='iexact', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = django_filters.CharFilter(lookup_expr='icontains', widget=forms.TextInput(attrs={'class': 'form-control'}))
     document = django_filters.CharFilter(lookup_expr='iexact', widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     manager = django_filters.CharFilter( method='get_manager', widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -27,7 +27,7 @@ class ManagerFilter(django_filters.FilterSet):
 
     first_name = django_filters.CharFilter(lookup_expr='icontains', widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = django_filters.CharFilter(lookup_expr='icontains', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = django_filters.CharFilter(lookup_expr='iexact', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = django_filters.CharFilter(lookup_expr='icontains', widget=forms.TextInput(attrs={'class': 'form-control'}))
     document = django_filters.CharFilter(lookup_expr='iexact', widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:

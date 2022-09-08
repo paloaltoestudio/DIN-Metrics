@@ -21,7 +21,6 @@ class FmsBase:
     def form_invalid(self, form):
         """If the form is invalid, render the invalid form."""
         #return render(self.request, 'users/detail.html', self.get_context_data(form=form))
-        print(form.errors)
         return redirect('users:user_detail', self.request.POST['uid'])
 
     def get_success_url(self):
