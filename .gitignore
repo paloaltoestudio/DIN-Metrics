@@ -9,3 +9,5 @@ users/data/__pycache__/
 users/data/__pycache__/*
 fms/migrations/*
 fms/__pycache__/
+neuro/migrations/*
+neuro/__pycache__/

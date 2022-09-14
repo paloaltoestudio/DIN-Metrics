@@ -292,7 +292,7 @@
                 <h6>FMS {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fmsModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                 {% include './inc/fms_tab.html' with fms=fms athlete=user.athlete %}
             </div>
-            <div class="tab-pane fade" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
+            <div class="tab-pane fade {% if request.GET.tab == 'neuro' %} show active {% endif %}" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
                 <div class="table-responsive p-0">
                     <table class="table table-striped align-items-center mb-3">
                         <thead class="table-dark">
@@ -316,63 +316,63 @@
                         <tbody>
                             <tr>
                                 <td><strong>SJ</strong></td>
-                                <td>{{ jumps.SJ.m1 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
-                                <td>{{ jumps.SJ.m2 }}</td>
+                                <td>{{ jumps.SJ.0 }}</td>
+                                <td>{{ jumps.SJ.1 }}</td>
+                                <td>{{ jumps.SJ.2 }}</td>
+                                <td>{{ jumps.SJ.3 }}</td>
+                                <td>{{ jumps.SJ.4 }}</td>
+                                <td>{{ jumps.SJ.5 }}</td>
+                                <td>{{ jumps.SJ.6 }}</td>
+                                <td>{{ jumps.SJ.7 }}</td>
+                                <td>{{ jumps.SJ.8 }}</td>
+                                <td>{{ jumps.SJ.9 }}</td>
+                                <td>{{ jumps.SJ.10 }}</td>
+                                <td>{{ jumps.SJ.11 }}</td>
                             </tr>
                             <tr>
                                 <td><strong>CMJ</strong></td>
-                                <td>{{ jumps.CMJ.m1 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.CMJ.0 }}</td>
+                                <td>{{ jumps.CMJ.1 }}</td>
+                                <td>{{ jumps.CMJ.2 }}</td>
+                                <td>{{ jumps.CMJ.3 }}</td>
+                                <td>{{ jumps.CMJ.4 }}</td>
+                                <td>{{ jumps.CMJ.5 }}</td>
+                                <td>{{ jumps.CMJ.6 }}</td>
+                                <td>{{ jumps.CMJ.7 }}</td>
+                                <td>{{ jumps.CMJ.8 }}</td>
+                                <td>{{ jumps.CMJ.9 }}</td>
+                                <td>{{ jumps.CMJ.10 }}</td>
+                                <td>{{ jumps.CMJ.11 }}</td>
                             </tr>
                             <tr>
                                 <td><strong>DROPS</strong></td>
-                                <td>{{ jumps.CMJ.m1 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.DROPS.0 }}</td>
+                                <td>{{ jumps.DROPS.1 }}</td>
+                                <td>{{ jumps.DROPS.2 }}</td>
+                                <td>{{ jumps.DROPS.3 }}</td>
+                                <td>{{ jumps.DROPS.4 }}</td>
+                                <td>{{ jumps.DROPS.5 }}</td>
+                                <td>{{ jumps.DROPS.6 }}</td>
+                                <td>{{ jumps.DROPS.7 }}</td>
+                                <td>{{ jumps.DROPS.8 }}</td>
+                                <td>{{ jumps.DROPS.9 }}</td>
+                                <td>{{ jumps.DROPS.10 }}</td>
+                                <td>{{ jumps.DROPS.11 }}</td>
                             </tr>
                             <tr>
                                 <td><strong>Q</strong></td>
-                                <td>{{ jumps.CMJ.m1 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
-                                <td>{{ jumps.CMJ.m2 }}</td>
+                                <td>{{ jumps.Q.0 }}</td>
+                                <td>{{ jumps.Q.1 }}</td>
+                                <td>{{ jumps.Q.2 }}</td>
+                                <td>{{ jumps.Q.3 }}</td>
+                                <td>{{ jumps.Q.4 }}</td>
+                                <td>{{ jumps.Q.5 }}</td>
+                                <td>{{ jumps.Q.6 }}</td>
+                                <td>{{ jumps.Q.7 }}</td>
+                                <td>{{ jumps.Q.8 }}</td>
+                                <td>{{ jumps.Q.9 }}</td>
+                                <td>{{ jumps.Q.10 }}</td>
+                                <td>{{ jumps.Q.11 }}</td>
                             </tr>
                         </tbody>
                     </table>

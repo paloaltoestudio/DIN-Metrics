@@ -3,6 +3,9 @@ import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 
+#models
+from neuro.models import SJ, CMJ, DROPS, Q
+
 def jump_data(context):
 
     x = ['Mes ' + str(x) for x in range(1, 13)]
@@ -31,14 +34,37 @@ def jump_data(context):
     }
     
     
+    sj = SJ.objects.filter(athlete=context['user'].athlete)
+    cmj = CMJ.objects.filter(athlete=context['user'].athlete)
+    drops = DROPS.objects.filter(athlete=context['user'].athlete)
+    q = Q.objects.filter(athlete=context['user'].athlete)
 
-    d = {'SJ': [30,31,29,30,33,32,34,35,34,33,32,35], 'CMJ': [31.7,33,31,32,32.5,32.7,33,33.2,33.5,33.6,33.7,33.9], 'DROPS': [21.5,23,23,23.5,23.6,23.7,24,24.3,24.3,24.5,24.7,24.8], 'Q': [1.3,1.6,1.4,1.5,1.6,1.7,1.4,1.8,1.8,1.9,2,2.1]}
+    d = {'SJ': [0,0,0,0,0,0,0,0,0,0,0,0], 
+         'CMJ': [0,0,0,0,0,0,0,0,0,0,0,0], 
+         'DROPS': [0,0,0,0,0,0,0,0,0,0,0,0], 
+         'Q': [0,0,0,0,0,0,0,0,0,0,0,0]}
 
-    #d = [['Mes ' + str(x) for x in range(1, 13)], [56, 123, 982, 213, 500, 673, 600, 500, 502, 405, 300, 230]]
+    if len(sj) > 0:
+        sj = sj[0]
+        d['SJ'] = [sj.month1, sj.month2, sj.month3, sj.month4, sj.month5, sj.month6,
+                    sj.month7, sj.month8, sj.month9, sj.month10, sj.month11, sj.month12]
+
+    if len(cmj) > 0:             
+        cmj = cmj[0]
+        d['CMJ'] = [cmj.month1, cmj.month2, cmj.month3, cmj.month4, cmj.month5, cmj.month6,
+                    cmj.month7, cmj.month8, cmj.month9, cmj.month10, cmj.month11, cmj.month12]
+
+    if len(drops) > 0:  
+        drops = drops[0]
+        d['DROPS'] = [drops.month1, drops.month2, drops.month3, drops.month4, drops.month5, drops.month6,
+                    drops.month7, drops.month8, drops.month9, drops.month10, drops.month11, drops.month12]
+
+    if len(q) > 0:  
+        q = q[0]
+        d['Q'] = [q.month1, q.month2, q.month3, q.month4, q.month5, q.month6,
+                    q.month7, q.month8, q.month9, q.month10, q.month11, q.month12]
 
     df = pd.DataFrame(data=d, index=['Mes ' + str(x) for x in range(1, 13)])
-
-
 
     #Bar chart
     #fig = px.bar(df, labels={'index':'Meses', 'value': 'Salto en CM'}, barmode = 'group')
@@ -48,4 +74,4 @@ def jump_data(context):
 
     context['fig'] = fig.to_html()
     context['df'] = df.to_html()
-    context['jumps'] = jumps
+    context['jumps'] = d
