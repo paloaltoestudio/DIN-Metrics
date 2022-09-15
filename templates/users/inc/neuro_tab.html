@@ -1,0 +1,83 @@
+<div class="table-responsive p-0">
+    <table class="table table-striped align-items-center mb-3">
+        <thead class="table-dark">
+            <tr>
+                <th><strong>Salto</strong></th>
+                <th><strong>Mes 1</strong></th>
+                <th><strong>Mes 2</strong></th>
+                <th><strong>Mes 3</strong></th>
+                <th><strong>Mes 4</strong></th>
+                <th><strong>Mes 5</strong></th>
+                <th><strong>Mes 6</strong></th>
+                <th><strong>Mes 7</strong></th>
+                <th><strong>Mes 8</strong></th>
+                <th><strong>Mes 9</strong></th>
+                <th><strong>Mes 10</strong></th>
+                <th><strong>Mes 11</strong></th>
+                <th><strong>Mes 12</strong></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><strong>SJ</strong></td>
+                {% for jump in jumps.SJ %}
+                    <td>{{ jump }}</td>
+                {% endfor %}
+                <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#sjModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</td>
+            </tr>
+            <tr>
+                <td><strong>CMJ</strong></td>
+                {% for jump in jumps.CMJ %}
+                    <td>{{ jump }}</td>
+                {% endfor %}
+                <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#cmjModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</td>
+            </tr>
+            <tr>
+                <td><strong>DROPS</strong></td>
+                {% for jump in jumps.DROPS %}
+                <td>{{ jump }}</td>
+                {% endfor %}
+                <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#dropsModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</td>
+            </tr>
+            <tr>
+                <td><strong>Q</strong></td>
+                {% for jump in jumps.Q %}
+                <td>{{ jump }}</td>
+                {% endfor %}
+                <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#qModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="graph_inner"></div>
+
+{% include './neuro_sj_modal.html' %}
+{% include './neuro_cmj_modal.html' %}
+{% include './neuro_drops_modal.html' %}
+{% include './neuro_q_modal.html' %}
+
+<script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+        const neuroBtn = document.querySelector('#neuro-tab')
+        const graphWrapper = document.querySelector('.graph_wrapper')
+        const graphInner = document.querySelector('.graph_inner')
+
+        function appendGraph(){
+            graphWrapper.style.visibility = 'visible'
+            graphWrapper.style.position = 'relative'
+            graphWrapper.style.zIndex = '1'
+            graphInner.appendChild(graphWrapper);
+        }
+
+        if(neuroBtn.classList.contains('active')){
+            appendGraph()
+        }
+        
+        neuroBtn.addEventListener('click', function(){
+            appendGraph()
+        })
+    });
+</script>

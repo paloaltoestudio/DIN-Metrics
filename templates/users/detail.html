@@ -24,7 +24,7 @@
                 <button class="nav-link {% if request.GET.tab == 'fms' %} active {% endif %}" id="fms-tab" data-bs-toggle="tab" data-bs-target="#fms" type="button" role="tab" aria-controls="fms" aria-selected="false">FMS</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="neuro-tab" data-bs-toggle="tab" data-bs-target="#neuro" type="button" role="tab" aria-controls="neuro" aria-selected="false">Perfil Neuromuscular</button>
+                <button class="nav-link {% if request.GET.tab == 'neuro' %} active {% endif %}" id="neuro-tab" data-bs-toggle="tab" data-bs-target="#neuro" type="button" role="tab" aria-controls="neuro" aria-selected="false">Perfil Neuromuscular</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="deficit-tab" data-bs-toggle="tab" data-bs-target="#deficit" type="button" role="tab" aria-controls="deficit" aria-selected="false">Deficit Bilateral</button>
@@ -293,93 +293,7 @@
                 {% include './inc/fms_tab.html' with fms=fms athlete=user.athlete %}
             </div>
             <div class="tab-pane fade {% if request.GET.tab == 'neuro' %} show active {% endif %}" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
-                <div class="table-responsive p-0">
-                    <table class="table table-striped align-items-center mb-3">
-                        <thead class="table-dark">
-                            <tr>
-                                <th><strong>Salto</strong></th>
-                                <th><strong>Mes 1</strong></th>
-                                <th><strong>Mes 2</strong></th>
-                                <th><strong>Mes 3</strong></th>
-                                <th><strong>Mes 4</strong></th>
-                                <th><strong>Mes 5</strong></th>
-                                <th><strong>Mes 6</strong></th>
-                                <th><strong>Mes 7</strong></th>
-                                <th><strong>Mes 8</strong></th>
-                                <th><strong>Mes 9</strong></th>
-                                <th><strong>Mes 10</strong></th>
-                                <th><strong>Mes 11</strong></th>
-                                <th><strong>Mes 12</strong></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td><strong>SJ</strong></td>
-                                <td>{{ jumps.SJ.0 }}</td>
-                                <td>{{ jumps.SJ.1 }}</td>
-                                <td>{{ jumps.SJ.2 }}</td>
-                                <td>{{ jumps.SJ.3 }}</td>
-                                <td>{{ jumps.SJ.4 }}</td>
-                                <td>{{ jumps.SJ.5 }}</td>
-                                <td>{{ jumps.SJ.6 }}</td>
-                                <td>{{ jumps.SJ.7 }}</td>
-                                <td>{{ jumps.SJ.8 }}</td>
-                                <td>{{ jumps.SJ.9 }}</td>
-                                <td>{{ jumps.SJ.10 }}</td>
-                                <td>{{ jumps.SJ.11 }}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>CMJ</strong></td>
-                                <td>{{ jumps.CMJ.0 }}</td>
-                                <td>{{ jumps.CMJ.1 }}</td>
-                                <td>{{ jumps.CMJ.2 }}</td>
-                                <td>{{ jumps.CMJ.3 }}</td>
-                                <td>{{ jumps.CMJ.4 }}</td>
-                                <td>{{ jumps.CMJ.5 }}</td>
-                                <td>{{ jumps.CMJ.6 }}</td>
-                                <td>{{ jumps.CMJ.7 }}</td>
-                                <td>{{ jumps.CMJ.8 }}</td>
-                                <td>{{ jumps.CMJ.9 }}</td>
-                                <td>{{ jumps.CMJ.10 }}</td>
-                                <td>{{ jumps.CMJ.11 }}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>DROPS</strong></td>
-                                <td>{{ jumps.DROPS.0 }}</td>
-                                <td>{{ jumps.DROPS.1 }}</td>
-                                <td>{{ jumps.DROPS.2 }}</td>
-                                <td>{{ jumps.DROPS.3 }}</td>
-                                <td>{{ jumps.DROPS.4 }}</td>
-                                <td>{{ jumps.DROPS.5 }}</td>
-                                <td>{{ jumps.DROPS.6 }}</td>
-                                <td>{{ jumps.DROPS.7 }}</td>
-                                <td>{{ jumps.DROPS.8 }}</td>
-                                <td>{{ jumps.DROPS.9 }}</td>
-                                <td>{{ jumps.DROPS.10 }}</td>
-                                <td>{{ jumps.DROPS.11 }}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Q</strong></td>
-                                <td>{{ jumps.Q.0 }}</td>
-                                <td>{{ jumps.Q.1 }}</td>
-                                <td>{{ jumps.Q.2 }}</td>
-                                <td>{{ jumps.Q.3 }}</td>
-                                <td>{{ jumps.Q.4 }}</td>
-                                <td>{{ jumps.Q.5 }}</td>
-                                <td>{{ jumps.Q.6 }}</td>
-                                <td>{{ jumps.Q.7 }}</td>
-                                <td>{{ jumps.Q.8 }}</td>
-                                <td>{{ jumps.Q.9 }}</td>
-                                <td>{{ jumps.Q.10 }}</td>
-                                <td>{{ jumps.Q.11 }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="graph_inner"></div>
-
+                {% include './inc/neuro_tab.html' with jump=jump athlete=user.athlete %}
             </div>
             <div class="tab-pane fade" id="deficit" role="tabpanel" aria-labelledby="deficit-tab">
                 Deficit
@@ -390,26 +304,6 @@
         <div style="width:90%; position: absolute; z-index:-1; visibility: hidden;" class="graph_wrapper">
             {{ fig|safe }}
         </div>
-
-        
-        <script>
-            window.addEventListener('DOMContentLoaded', (event) => {
-                const neuroBtn = document.querySelector('#neuro-tab')
-                const graphWrapper = document.querySelector('.graph_wrapper')
-                const graphInner = document.querySelector('.graph_inner')
-    
-                console.log(graphWrapper)
-                
-                neuroBtn.addEventListener('click', function(){
-                    graphWrapper.style.visibility = 'visible'
-                    graphWrapper.style.position = 'relative'
-                    graphWrapper.style.zIndex = '1'
-                    graphInner.appendChild(graphWrapper);
-                })
-            });
-        </script>
-        
-            
             
         </ul>
     </div>

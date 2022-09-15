@@ -3,6 +3,7 @@ from django.urls import path
 from .views import signup, new_manager, Index, UserDetail, ManagerView, ManagerDetail, manager_update, user_update
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
 from fms.views import FmsUpdate
+from neuro.views import SJUpdateView, CMJUpdateView, DROPSUpdateView, QUpdateView
 
 app_name = 'users'
 
@@ -18,4 +19,8 @@ urlpatterns = [
     path('<int:id>/editar-medidas', MeasuresUpdate.as_view(), name='measures_update'),
     path('<int:id>/editar-flex', FlexUpdate.as_view(), name='flex_update'),
     path('<int:id>/editar-fms', FmsUpdate.as_view(), name='fms_update'),
+    path('<int:id>/editar-sj', SJUpdateView.as_view(), name='sj_update'),
+    path('<int:id>/editar-cmj', CMJUpdateView.as_view(), name='cmj_update'),
+    path('<int:id>/editar-drops', DROPSUpdateView.as_view(), name='drops_update'),
+    path('<int:id>/editar-q', QUpdateView.as_view(), name='q_update'),
 ]

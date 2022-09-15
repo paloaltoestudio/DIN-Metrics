@@ -1,0 +1,72 @@
+<!-- Modal -->
+<div class="modal fade" id="cmjModal" tabindex="-1" aria-labelledby="cmjModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cmjModalLabel">CMJ</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'users:cmj_update' user.athlete.id %}" method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 1</label>
+                                <input class="form-control" type="number" step="0.01" name="month1" value="{{ jumps.CMJ.0|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 2</label>
+                                <input class="form-control" type="number" step="0.01" name="month2" value="{{ jumps.CMJ.1|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 3</label>
+                                <input class="form-control" type="number" step="0.01" name="month3" value="{{ jumps.CMJ.2|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 4</label>
+                                <input class="form-control" type="number" step="0.01" name="month4" value="{{ jumps.CMJ.3|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 5</label>
+                                <input class="form-control" type="number" step="0.01" name="month5" value="{{ jumps.CMJ.4|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 6</label>
+                                <input class="form-control" type="number" step="0.01" name="month6" value="{{ jumps.CMJ.5|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 7</label>
+                                <input class="form-control" type="number" step="0.01" name="month7" value="{{ jumps.CMJ.6|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 8</label>
+                                <input class="form-control" type="number" step="0.01" name="month8" value="{{ jumps.CMJ.7|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 9</label>
+                                <input class="form-control" type="number" step="0.01" name="month9" value="{{ jumps.CMJ.8|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 10</label>
+                                <input class="form-control" type="number" step="0.01" name="month10" value="{{ jumps.CMJ.9|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 11</label>
+                                <input class="form-control" type="number" step="0.01" name="month11" value="{{ jumps.CMJ.10|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Mes 12</label>
+                                <input class="form-control" type="number" step="0.01" name="month12" value="{{ jumps.CMJ.11|stringformat:".2f" }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="text" name="uid" value="{{ user.id }}" hidden>
+                    <input type="text" name="id" value="{{ user.athlete.id }}" hidden>
+                    <button class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
