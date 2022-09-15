@@ -11,3 +11,5 @@ fms/migrations/*
 fms/__pycache__/
 neuro/migrations/*
 neuro/__pycache__/
+bilateral/__pycache__/
+bilateral/migrations/*

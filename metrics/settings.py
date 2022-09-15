@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'osteo.apps.OsteoConfig',
     'fms.apps.FmsConfig',
     'neuro.apps.NeuroConfig',
+    'bilateral.apps.BilateralConfig',
 ]
 
 MIDDLEWARE = [

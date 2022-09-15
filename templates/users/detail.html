@@ -27,7 +27,7 @@
                 <button class="nav-link {% if request.GET.tab == 'neuro' %} active {% endif %}" id="neuro-tab" data-bs-toggle="tab" data-bs-target="#neuro" type="button" role="tab" aria-controls="neuro" aria-selected="false">Perfil Neuromuscular</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="deficit-tab" data-bs-toggle="tab" data-bs-target="#deficit" type="button" role="tab" aria-controls="deficit" aria-selected="false">Deficit Bilateral</button>
+                <button class="nav-link {% if request.GET.tab == 'bilateral' %} active {% endif %}" id="deficit-tab" data-bs-toggle="tab" data-bs-target="#deficit" type="button" role="tab" aria-controls="deficit" aria-selected="false">Deficit Bilateral</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pfv-tab" data-bs-toggle="tab" data-bs-target="#pfv" type="button" role="tab" aria-controls="pfv" aria-selected="false">Perfil Fuerza / Velocidad</button>
@@ -295,8 +295,8 @@
             <div class="tab-pane fade {% if request.GET.tab == 'neuro' %} show active {% endif %}" id="neuro" role="tabpanel" aria-labelledby="neuro-tab">
                 {% include './inc/neuro_tab.html' with jump=jump athlete=user.athlete %}
             </div>
-            <div class="tab-pane fade" id="deficit" role="tabpanel" aria-labelledby="deficit-tab">
-                Deficit
+            <div class="tab-pane fade {% if request.GET.tab == 'bilateral' %} show active {% endif %}" id="deficit" role="tabpanel" aria-labelledby="deficit-tab">
+                {% include './inc/bilateral_tab.html' with bilaterals=bilaterals athlete=athlete %}
             </div>
         </div>
         

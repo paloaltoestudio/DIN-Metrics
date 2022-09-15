@@ -1,0 +1,35 @@
+<div class="table-responsive p-0">
+    <table class="table table-striped align-items-center mb-3">
+        <thead class="table-dark">
+            <tr>
+                <th><strong>Fecha</strong></th>
+                <th><strong>Salto</strong></th>
+                <th><strong>Izquierda</strong></th>
+                <th><strong>Derecha</strong></th>
+                <th><strong>Déficit</strong></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for bilateral in bilaterals %}
+                <tr>
+                    <td><strong>{{ bilateral.date|date:"m/d/Y" }}</strong></td>            
+                    <td><strong>{{ bilateral.jump }}</strong></td>            
+                    <td><strong>{{ bilateral.left }}</strong></td>            
+                    <td><strong>{{ bilateral.right }}</strong></td>            
+                    <td><strong>{{ bilateral.deficit }}</strong></td>            
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="graph_inner2">
+        <div style="width:90%;" class="graph_wrapper2">
+            {{ graph|safe }}
+        </div>
+    </div>
+
+</div>
+
+
+
