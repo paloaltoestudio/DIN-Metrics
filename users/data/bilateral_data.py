@@ -1,3 +1,6 @@
+#Django
+from django.db.models import Sum, Count, Avg
+
 #third party
 import pandas as pd
 import plotly.graph_objects as go
@@ -9,11 +12,13 @@ from bilateral.models import Bilateral
 def bilateral_data(context):
     
     bilaterals = Bilateral.objects.filter(athlete=context['user'].athlete)
+    bilaterals_total = Bilateral.objects.values('date').annotate(Sum('deficit')).filter(athlete=context['user'].athlete)
 
+    print([bilateral_total['date'] for bilateral_total in bilaterals_total])
 
     d = {
-        'date': [bilateral.date for bilateral in bilaterals],
-        'deficit': [bilateral.deficit for bilateral in bilaterals],
+        'date': [bilateral_total['date'] for bilateral_total in bilaterals_total],
+        'deficit': [bilateral_total['deficit__sum'] for bilateral_total in bilaterals_total],
     }
 
     df = pd.DataFrame(data=d)
