@@ -7,6 +7,7 @@
                 <th><strong>Izquierda</strong></th>
                 <th><strong>Derecha</strong></th>
                 <th><strong>Déficit</strong></th>
+                <th></th>
             </tr>
         </thead>
 
@@ -17,7 +18,11 @@
                     <td><strong>{{ bilateral.jump }}</strong></td>            
                     <td><strong>{{ bilateral.left }}</strong></td>            
                     <td><strong>{{ bilateral.right }}</strong></td>            
-                    <td><strong>{{ bilateral.deficit }}</strong></td>            
+                    <td><strong>{{ bilateral.deficit }}%</strong></td>     
+                    <td>
+                        {% include './bilateral_update_modal.html' with bilateral=bilateral %}
+                        {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#biUpdateModal_{{ bilateral.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                    </td>       
                 </tr>
             {% endfor %}
         </tbody>

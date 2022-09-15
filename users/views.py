@@ -159,7 +159,6 @@ def manager_update(request, id):
 
 def user_update(request, id):
     if request.method == 'POST':
-        print(request.POST)
 
         user = User.objects.get(id=request.POST['id'])
 
