@@ -7,7 +7,8 @@ from .models import Bilateral
 class BilateralBase:
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
-        form.instance.deficit = round(((form.instance.left/form.instance.right)-1)*100, 1)
+        jumps = [form.instance.right, form.instance.left]
+        form.instance.deficit = round(((min(jumps)/max(jumps))-1)*100, 1)
         self.object = form.save()
         return super().form_valid(form)
 
