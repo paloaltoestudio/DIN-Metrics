@@ -5,6 +5,7 @@ from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
 from fms.views import FmsUpdate
 from neuro.views import SJUpdateView, CMJUpdateView, DROPSUpdateView, QUpdateView
 from bilateral.views import BilateralUpdateView, BilateralCreateView
+from profile_fv.views import ProfileUpdateView
 
 app_name = 'users'
 
@@ -26,4 +27,5 @@ urlpatterns = [
     path('<int:id>/editar-q', QUpdateView.as_view(), name='q_update'),
     path('<int:id>/editar-bilateral', BilateralUpdateView.as_view(), name='bilateral_update'),
     path('crear-bilateral', BilateralCreateView.as_view(), name='bilateral_create'),
+    path('<int:id>/editar-perfil', ProfileUpdateView.as_view(), name='profile_update'),
 ]

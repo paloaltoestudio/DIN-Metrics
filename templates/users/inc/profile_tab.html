@@ -1,0 +1,53 @@
+
+<div class="row">
+    <div class="col-6">
+        <h3>Sentadilla</h3>
+        <div class="table-responsive p-0">
+            <table class="table table-striped align-items-center mb-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th><strong>Peso (KG)</strong></th>
+                        <th><strong>Vel(m/s)</strong></th>
+                        <th><strong>Vel(m/s)</strong></th>
+                        <th><strong>Vel(m/s)</strong></th>
+                        <th><strong>Vel(m/s)</strong></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                    {% for profile in profiles %}
+                        <tr>
+                            <td>{{ profile.weight }}</td>
+                            <td>{{ profile.speed1 }}</td>
+                            <td>{{ profile.speed2 }}</td>
+                            <td>{{ profile.speed3 }}</td>
+                            <td>{{ profile.speed4 }}</td>
+                            <td>
+                                {% include './profile_update_modal.html' with profile=profile %}
+                                {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#profileModal_{{ profile.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                            </td> 
+                        </tr>
+                    {% endfor %}
+                <tbody>
+                    
+                </tbody>
+            </table>
+        
+            
+            <h3 class="badge badge-pill badge-success text-white px-3" style="font-size: 20px !important;">RM: {{ rm }}</h3>
+            <div class="graph_inner2">
+                <div style="width:90%;" class="graph_wrapper2">
+                   {% comment %} {{ df|safe }} {% endcomment %}
+                   {{ pgraph|safe }}
+                   {% comment %} {{ pgraph2|safe }} {% endcomment %}
+                </div>
+            </div>
+        
+        </div>
+    </div>
+
+    <div class="col-6">
+    </div>
+</div>
+
+
+

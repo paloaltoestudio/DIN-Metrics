@@ -30,7 +30,7 @@
                 <button class="nav-link {% if request.GET.tab == 'bilateral' %} active {% endif %}" id="deficit-tab" data-bs-toggle="tab" data-bs-target="#deficit" type="button" role="tab" aria-controls="deficit" aria-selected="false">Deficit Bilateral</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pfv-tab" data-bs-toggle="tab" data-bs-target="#pfv" type="button" role="tab" aria-controls="pfv" aria-selected="false">Perfil Fuerza / Velocidad</button>
+                <button class="nav-link {% if request.GET.tab == 'profile' %} active {% endif %}" id="pfv-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="pfv" aria-selected="false">Perfil Fuerza / Velocidad</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
@@ -297,6 +297,9 @@
             </div>
             <div class="tab-pane fade {% if request.GET.tab == 'bilateral' %} show active {% endif %}" id="deficit" role="tabpanel" aria-labelledby="deficit-tab">
                 {% include './inc/bilateral_tab.html' with bilaterals=bilaterals athlete=athlete %}
+            </div>
+            <div class="tab-pane fade {% if request.GET.tab == 'profile' %} show active {% endif %}" id="profile" role="tabpanel" aria-labelledby="deficit-tab">
+                {% include './inc/profile_tab.html' with profiles=profiles athlete=athlete %}
             </div>
         </div>
         

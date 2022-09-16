@@ -30,6 +30,7 @@ from users.utils import age, get_sum
 #data
 from users.data.jumps_data import jump_data
 from users.data.bilateral_data import bilateral_data
+from users.data.profile_data import profile_data
 
 #filters
 from users.filters import UserFilter, ManagerFilter
@@ -127,6 +128,9 @@ class UserDetail(LoginRequiredMixin, DetailView):
 
         #Get data from bilateral and make chart
         bilateral_data(context)
+        
+        #Get data from profile FV and make chart
+        profile_data(context)
 
         return context
 
