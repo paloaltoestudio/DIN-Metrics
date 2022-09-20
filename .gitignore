@@ -13,3 +13,5 @@ neuro/migrations/*
 neuro/__pycache__/
 bilateral/__pycache__/
 bilateral/migrations/*
+profile_fv/__pycache__/
+profile_fv/migrations/*
