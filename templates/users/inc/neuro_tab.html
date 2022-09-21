@@ -52,32 +52,13 @@
     </table>
 </div>
 
-<div class="graph_inner"></div>
+<div class="graph_inner">
+    <div style="width:90%;" class="graph_wrapper">
+        {{ fig|safe }}
+    </div>
+</div>
 
 {% include './neuro_sj_modal.html' %}
 {% include './neuro_cmj_modal.html' %}
 {% include './neuro_drops_modal.html' %}
 {% include './neuro_q_modal.html' %}
-
-<script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-        const neuroBtn = document.querySelector('#neuro-tab')
-        const graphWrapper = document.querySelector('.graph_wrapper')
-        const graphInner = document.querySelector('.graph_inner')
-
-        function appendGraph(){
-            graphWrapper.style.visibility = 'visible'
-            graphWrapper.style.position = 'relative'
-            graphWrapper.style.zIndex = '1'
-            graphInner.appendChild(graphWrapper);
-        }
-
-        if(neuroBtn.classList.contains('active')){
-            appendGraph()
-        }
-        
-        neuroBtn.addEventListener('click', function(){
-            appendGraph()
-        })
-    });
-</script>

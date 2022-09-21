@@ -19,9 +19,8 @@ class OsteoBase:
 
     def get_success_url(self):
         id = self.request.POST['id']
-        success_url = reverse_lazy('users:user_detail', kwargs = {'id': id})
+        success_url = reverse_lazy('users:osteo_detail', kwargs = {'id': id})
         url = success_url.format(**self.object.__dict__)
-        url = url + '?tab=osteo'
         return url
 
 

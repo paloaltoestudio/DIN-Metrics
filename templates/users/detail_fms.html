@@ -1,0 +1,15 @@
+{% extends 'layout/detail_base.html' %}
+
+{% block user %}
+        
+    <h6>FMS {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fmsModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
+    {% include './inc/fms_tab.html' with fms=fms athlete=user.athlete %}
+
+    {% if request.user.role != 'MANAGER' %}
+        {% include './inc/fms_modal.html' %}
+    {% endif %}
+    {% comment %} end if edit user permission {% endcomment %}
+
+{% endblock  %}
+
+

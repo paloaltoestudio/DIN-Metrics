@@ -101,15 +101,6 @@ class UserDetail(LoginRequiredMixin, DetailView):
         'managers': managers
     }
 
-
-class OsteoDetail(LoginRequiredMixin, DetailView):
-    model = User
-    pk_url_kwarg = 'id'
-    template_name = 'users/detail_osteo.html'
-    extra_context = {
-        'page': 'user_list_detail',
-    }
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
@@ -117,95 +108,31 @@ class OsteoDetail(LoginRequiredMixin, DetailView):
         if len(osteo) > 0:
             context['osteo'] = osteo[0]
 
-        return context
-
-
-class FMSDetail(LoginRequiredMixin, DetailView):
-    model = User
-    pk_url_kwarg = 'id'
-    template_name = 'users/detail_fms.html'
-    extra_context = {
-        'page': 'user_list_detail',
-    }
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
         fms = Fms.objects.filter(athlete = context['user'].athlete)
         if len(fms) > 0:
             fms = fms[0]
-            
-            def check_value(value):
-                if type(value) == str:
-                    return 0.0
-                else:
-                    return value
 
-            fms.fence_total = get_sum(check_value(fms.fence_step_l_score), check_value(fms.fence_step_r_score))
-            fms.lunge_total = get_sum(check_value(fms.lunge_l_score), check_value(fms.lunge_r_score))
-            fms.shoulder_total = get_sum(check_value(fms.shoulder_l_score), check_value(fms.shoulder_r_score))
-            fms.leg_total = get_sum(check_value(fms.leg_raise_l_score), check_value(fms.leg_raise_r_score))
-            fms.trunk_total = get_sum(check_value(fms.trunk_l_score), check_value(fms.trunk_r_score))
-            fms.trunk_rot_total = get_sum(check_value(fms.trunk_rot_l_score), check_value(fms.trunk_rot_r_score))
-
-            fms.total = sum([check_value(fms.squat_score), check_value(fms.fence_total), check_value(fms.lunge_total), check_value(fms.shoulder_total), 
-                             check_value(fms.leg_total), check_value(fms.trunk_total), check_value(fms.trunk_rot_total)])
+            fms.fence_total = get_sum(fms.fence_step_l_score, fms.fence_step_r_score)
+            fms.lunge_total = get_sum(fms.lunge_l_score, fms.lunge_r_score)
+            fms.shoulder_total = get_sum(fms.shoulder_l_score, fms.shoulder_r_score)
+            fms.leg_total = get_sum(fms.leg_raise_l_score, fms.leg_raise_r_score)
+            fms.trunk_total = get_sum(fms.trunk_l_score, fms.trunk_r_score)
+            fms.trunk_rot_total = get_sum(fms.trunk_rot_l_score, fms.trunk_rot_r_score)
+            fms.total = sum([fms.squat_score, fms.fence_total, fms.lunge_total, fms.shoulder_total, 
+                                   fms.leg_total, fms.trunk_total, fms.trunk_rot_total])
 
             context['fms'] = fms
 
-        return context
-
-
-class JumpDetail(LoginRequiredMixin, DetailView):
-    model = User
-    pk_url_kwarg = 'id'
-    template_name = 'users/detail_jump.html'
-    extra_context = {
-        'page': 'user_list_detail',
-    }
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
         #Get data from jumps and make chart
         jump_data(context)
 
-        return context
-
-
-class BilateralDetail(LoginRequiredMixin, DetailView):
-    model = User
-    pk_url_kwarg = 'id'
-    template_name = 'users/detail_bilateral.html'
-    extra_context = {
-        'page': 'user_list_detail',
-    }
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        
         #Get data from bilateral and make chart
         bilateral_data(context)
-
-        return context
-
-
-class ProfileFVDetail(LoginRequiredMixin, DetailView):
-    model = User
-    pk_url_kwarg = 'id'
-    template_name = 'users/detail_profile_fv.html'
-    extra_context = {
-        'page': 'user_list_detail',
-    }
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
         
         #Get data from profile FV and make chart
         profile_data(context)
 
         return context
-
 
 
 class ManagerDetail(LoginRequiredMixin, DetailView):

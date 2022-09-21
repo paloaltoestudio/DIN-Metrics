@@ -25,9 +25,8 @@ class FmsBase:
 
     def get_success_url(self):
         id = self.request.POST['uid']
-        success_url = reverse_lazy('users:user_detail', kwargs = {'id': id})
+        success_url = reverse_lazy('users:fms_detail', kwargs = {'id': id})
         url = success_url.format(**self.object.__dict__)
-        url = url + '?tab=fms'
         return url
 
 

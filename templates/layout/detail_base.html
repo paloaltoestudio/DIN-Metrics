@@ -1,0 +1,39 @@
+{% extends 'layout/base.html' %}
+
+{% block container %}
+    {% if request.user.role != 'ATHLETE' %}
+    <a class="mb-3 btn btn-sm" href="{% url 'users:index' %}">
+        <i class="material-icons">arrow_back</i>
+        deportistas
+    </a>
+    {% endif %}
+
+    {% if user.athlete.manager == request.user or request.user.role != 'MANAGER' %}
+
+    <div class="card user card-body p-4">
+        <h3 class="title">{{user.first_name}} {{user.last_name}}</h3>
+        
+        {% include './inc/user_nav.html' %}
+
+        {% block user %}{% endblock %}
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    {% if 'error' in message.tags %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    </div>
+
+    {% else %}
+        <h2>No tienes permiso de ver este usuario</h2>
+    {% endif %} 
+    {% comment %} end if user permission {% endcomment %}
+
+{% endblock  %}
+
+
