@@ -1,5 +1,21 @@
 /* General */
 
+.bg-gray-200 {
+  background-color: #f0f2f5 !important;
+}
+
+.navbar-toggler:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.navbar-toggler-icon.icon-bar {
+  color: #fff !important;
+}
+
+.navbar-toggler:focus .navbar-toggler-icon.icon-bar {
+  background-color: #da682c;
+}
 
 /* Login styles */
 .auth {
@@ -97,6 +113,11 @@
 
 .card ul {
     margin-bottom: 20px;
+}
+
+/* Graph styles */
+.graph_wrapper {
+  width: 90%;
 }
 
 /* Material inputs */
@@ -211,4 +232,57 @@ footer {
     width: 100%;
     margin-left: -15px;
     font-size: 12px;
+}
+
+@media screen and (min-width: 769px){
+  .collapse:not(.show) {
+      display: block;
+      height: auto !important;
+      visibility: visible;
+  }
+}
+
+@media all and (max-width: 768px){
+  .main-panel>.content {
+    padding: 0;
+    padding-top: 20px;
+    margin-bottom: 60px;
+  }
+
+  .graph_wrapper {
+    width: 100%;
+  }
+
+  footer {
+    margin: 0;
+  }
+
+  footer p {
+    margin-bottom: 0;
+  }
+}
+
+@media all and (min-width: 500px){
+  .collapse:not(.show).user_nav {
+    display: block;
+    height: auto !important;
+    visibility: visible;
+  }
+}
+
+@media all and (max-width: 500px){
+  .card.login h1 img {
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    display: block;
+  }
+
+  .user_nav ul {
+    display: block;
+  }
+
+  .user_nav li {
+    display: block;
+  }
 }

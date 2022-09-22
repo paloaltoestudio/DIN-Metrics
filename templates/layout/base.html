@@ -38,8 +38,8 @@
   <script defer src="{% static 'js/scripts.js' %}"></script>
 </head>
 
-<body class="">
-    <div class="wrapper">
+<body class="bg-gray-200">
+    <div class="wrapper sidebar_parent">
         <div class="sidebar" data-color="azure" data-background-color="white" data-image="{% static 'img/dinametrics-logo.png' %}">
             <!--
               Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -102,7 +102,7 @@
                     <a class="navbar-brand" href="{% url 'users:index' %}">Admin Métricas</a>
                 </div>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="navbar-toggler-icon icon-bar"></span>
                     <span class="navbar-toggler-icon icon-bar"></span>
@@ -151,6 +151,18 @@
 
 
     {% block extrajs %}{% endblock %}
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function(){
+        const sidebar_parent = document.querySelector('.sidebar_parent')
+        const navbar_toggler = document.querySelector('.navbar-toggler')
+
+        navbar_toggler.addEventListener('click', function(){
+          sidebar_parent.classList.toggle('nav-open')
+        })
+
+      })
+    </script>
 
     {% if messages %}
         {% for message in messages %}

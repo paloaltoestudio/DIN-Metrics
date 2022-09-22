@@ -32,14 +32,10 @@
         {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#biCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
         {% include './bilateral_create_modal.html' %}
     {% endif %}
-
-    <div class="graph_inner">
-        <div style="width:90%;" class="graph_wrapper">
-            {{ graph|safe }}
-        </div>
-    </div>
-
 </div>
 
+<div class="graph_wrapper">
+    {{ graph|safe }}
+</div>
 
 

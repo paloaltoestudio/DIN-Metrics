@@ -3,19 +3,19 @@
 {% block user %}
         
     <div class="row">
-        <div class="col-6 col-lg-4">
+        <div class="col-sm-6 col-lg-4">
             <h6>Información Personal {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
             <ul class="list-group">
                 <li class="list-group-item p-0"><strong>Cédula:</strong> {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
                 <li class="list-group-item p-0"><strong>Nacimiento:</strong> {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
-            <li class="list-group-item p-0"><strong>Edad:</strong> {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
-            <li class="list-group-item p-0"><strong>Género:</strong> {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
-            <li class="list-group-item p-0"><strong>Teléfono:</strong> {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
-            <li class="list-group-item p-0"><strong>Email:</strong> {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Edad:</strong> {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Género:</strong> {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Teléfono:</strong> {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Email:</strong> {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
             </ul>
         </div>
 
-        <div class="col-6 col-lg-4">
+        <div class="col-sm-6 col-lg-4">
             <h6>Información Deportiva {% if request.user.role == 'ADMIN' %}<a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#sportModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
             <ul class="list-group">
             <li class="list-group-item p-0"><strong>Equipo:</strong> {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
@@ -29,7 +29,7 @@
             </ul>
         </div>
         
-        <div class="col-6 col-lg-4">
+        <div class="col-sm-6 col-lg-4">
             <h6>Salud {% if request.user.role == 'ADMIN' %}<a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#healthModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
             <ul class="list-group">
             <li class="list-group-item p-0"><strong>EPS:</strong> {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>

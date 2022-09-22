@@ -17,40 +17,45 @@
 
                 <div class="card-body px-0 pb-2">
                     <div class="filter px-3">
+                      <a class="btn btn-secondary d-lg-none" style="width:100%;" data-bs-toggle="collapse" href="#filterCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        Filtros <span class="material-icons">filter_list</span>
+                      </a>
+                      <div class="collapse mt-4" id="filterCollapse">
                         <form method="get">
                           <div class="row">
-                            <div class="col-2">
+                            <div class="col-sm-2">
                               <div class="input-group input-group-outline mb-3">
                                 <label class="form-label">Nombre</label>
                                 {{ filter.form.first_name}}
                               </div>  
                             </div>
         
-                            <div class="col-2">
+                            <div class="col-sm-2">
                               <div class="input-group input-group-outline mb-3">
                                 <label class="form-label">Apellido</label>
                                 {{ filter.form.last_name}}
                               </div>  
                             </div>
         
-                            <div class="col-2">
+                            <div class="col-sm-2">
                               <div class="input-group input-group-outline mb-3">
                                 <label class="form-label">Documento</label>
                                 {{ filter.form.document}}
                               </div>  
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-2">
                               <div class="input-group input-group-outline mb-3">
                                 <label class="form-label">Email</label>
                                 {{ filter.form.email}}
                               </div>  
                             </div>
-                            <div class="col-2">
+                            <div class="col-sm-2">
                               <button style="height: 35px;" class="mt-0 py-2 px-4 btn btn-primary">Buscar</button>
                             </div>
                           </div>
                         </form>
                       </div>
+                    </div>
 
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">

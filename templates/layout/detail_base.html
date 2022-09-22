@@ -11,7 +11,13 @@
     {% if user.athlete.manager == request.user or request.user.role != 'MANAGER' %}
 
     <div class="card user card-body p-4">
-        <h3 class="title">{{user.first_name}} {{user.last_name}}</h3>
+        <div class="d-flex justify-content-between">
+            <h3 class="title">{{user.first_name}} {{user.last_name}}</h3>
+            
+            <a class="btn btn-secondary mb-3 p-0 py-2 d-md-none" style="width:40px; top: -5px;" data-bs-toggle="collapse" href="#userNavCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <span class="material-icons">menu</span>
+            </a>
+        </div>
         
         {% include './inc/user_nav.html' %}
 
