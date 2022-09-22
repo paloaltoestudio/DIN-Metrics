@@ -113,7 +113,7 @@
                     <ul class="navbar-nav">
                       <li>
                         <a class="nav-item mr-3" 
-                           href="{% if request.user.role == 'ATHLETE' %}{% url 'users:user_detail' request.user.id %}{% elif request.user.role == 'ATHLETE' or request.user.role == 'ADMIN' %}{% url 'users:manager_detail' request.user.id %}{% endif %}">
+                           href="{% if request.user.role == 'ATHLETE' %}{% url 'users:user_detail' request.user.id %}{% elif request.user.role == 'MANAGER' or request.user.role == 'ADMIN' %}{% url 'users:manager_detail' request.user.id %}{% endif %}">
                           <span class="material-icons">person</span>
                           {{ request.user }}{% if request.user.role != 'ATHLETE' %} | {{ request.user.role | title }}{% endif %}
                         </a>
