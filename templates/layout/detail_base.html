@@ -16,17 +16,6 @@
         {% include './inc/user_nav.html' %}
 
         {% block user %}{% endblock %}
-
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    {% if 'error' in message.tags %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        {% endif %}
-
     </div>
 
     {% else %}

@@ -57,40 +57,70 @@
                         {% csrf_token %}
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.last_name.errors %}alert_field{% endif %}">
                                         <label class="form-label">Nombre</label>
                                         <input class="form-control" type="text" name="first_name" value="{% if user.first_name %}{{ user.first_name }}{% endif %}">
+                                        {% if form.first_name.errors %}
+                                            {% for e in form.first_name.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
 
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.email.errors %}alert_field{% endif %}">
                                         <label class="form-label">Email</label>
                                         <input class="form-control" type="email" name="email" value="{% if user.email %}{{ user.email }}{% endif %}">
+                                        {% if form.email.errors %}
+                                            {% for e in form.email.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
 
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.document.errors %}alert_field{% endif %}">
                                         <label class="form-label">Cédula</label>
                                         <input class="form-control" type="text" name="document" value="{% if user.document %}{{ user.document }}{% endif %}">
+                                        {% if form.document.errors %}
+                                            {% for e in form.document.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
 
-                                    <div class="input-group input-group-outline mb-3 is-focus is-upper">
+                                    <div class="input-group input-group-outline mb-3 is-focus is-upper {% if form.birthdate.errors %}alert_field{% endif %}">
                                         <label class="form-label">Nacimiento</label>
                                         <input class="form-control" type="date" name="birthdate" value="{% if user.athlete.birthdate %}{{ user.athlete.birthdate| date:'Y-m-d' }}{% endif %}">
+                                        {% if form.birthdate.errors %}
+                                            {% for e in form.birthdate.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                 </div>
                                 
                                 <div class="col-sm-6">
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.last_name.errors %}alert_field{% endif %}">
                                         <label class="form-label">Apellido</label>
                                         <input class="form-control" type="text" name="last_name" value="{% if user.last_name %}{{ user.last_name }}{% endif %}">
+                                        {% if form.last_name.errors %}
+                                            {% for e in form.last_name.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
 
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.phone.errors %}alert_field{% endif %}">
                                         <label class="form-label">Teléfono</label>
                                         <input class="form-control" type="text" name="phone" value="{% if user.phone %}{{ user.phone }}{% endif %}">
+                                        {% if form.phone.errors %}
+                                            {% for e in form.phone.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
 
 
-                                    <div class="input-group input-group-outline mb-3 is-upper">
+                                    <div class="input-group input-group-outline mb-3 is-upper {% if form.gender.errors %}alert_field{% endif %}">
                                         <label class="form-label">Género</label>
                                         <select class="form-control" name="gender" id="gender" value="{% if user.athlete.gender %}{{ user.athlete.gender }}{% endif %}">
                                             <option value="">Selecciona</option>
@@ -98,6 +128,11 @@
                                             <option {% if user.athlete.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
                                             <option {% if user.athlete.gender == 'O' %} selected {% endif %} value="O">Otro</option>
                                         </select>
+                                        {% if form.gender.errors %}
+                                            {% for e in form.gender.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -255,5 +290,15 @@
     {% comment %} end if edit user permission {% endcomment %}
 
 {% endblock  %}
+
+{% block extrajs %}
+    {% if form.errors and form_type %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            $("#{{form_type}}").modal('show');
+        })
+    </script>
+    {% endif %}
+{% endblock %}
 
 

@@ -103,7 +103,6 @@ class UserDetail(LoginRequiredMixin, DetailView):
         managers = User.objects.filter(role = 'MANAGER')
 
         context['managers'] = managers
-        print('managers: ', managers)
 
         return context
 
@@ -266,9 +265,9 @@ def user_update(request, id):
                 messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
 
             else:
-                print('not valid')
                 messages.add_message(request, messages.ERROR, form.errors)
-                return redirect('users:user_detail', id)
+                #return redirect('users:user_detail', id)
+                return render(request, 'users/detail.html', {'user': user, 'id': id, 'form': form, 'form_type': 'exampleModal'})
 
         if request.POST['type'] == 'sport':
             form_profile_sport = UpdateAthleteSport(data=request.POST, instance=user.athlete)
@@ -279,7 +278,8 @@ def user_update(request, id):
 
             else:
                 messages.add_message(request, messages.ERROR, form.errors)
-                return redirect('users:user_detail', id)
+                #return redirect('users:user_detail', id)
+                return render(request, 'users/detail.html', {'user': user, 'id': id, 'form': form, 'form_type': 'sportModal'})
         
         if request.POST['type'] == 'measures':
             form_profile_measures = UpdateAthleteMeasures(data=request.POST, instance=user.athlete)
@@ -290,10 +290,9 @@ def user_update(request, id):
 
             else:
                 messages.add_message(request, messages.ERROR, form.errors)
-                if role and role == 'ATHLETE':
-                    return redirect('users:user_detail', id)
-                elif role and role == 'MANAGER':
-                    return redirect('users:manager_detail', id)
+                #return redirect('users:user_detail', id)
+                return render(request, 'users/detail.html', {'user': user, 'id': id, 'form': form, 'form_type': 'measuresModal'})
+
         
         if request.POST['type'] == 'health':
             form_profile_health = UpdateAthleteHealth(data=request.POST, instance=user.athlete)
@@ -304,10 +303,9 @@ def user_update(request, id):
 
             else:
                 messages.add_message(request, messages.ERROR, form.errors)
-                if role and role == 'ATHLETE':
-                    return redirect('users:user_detail', id)
-                elif role and role == 'MANAGER':
-                    return redirect('users:manager_detail', id)
+                #return redirect('users:user_detail', id)
+                return render(request, 'users/detail.html', {'user': user, 'id': id, 'form': form, 'form_type': 'healthModal'})
+
         
         if request.POST['type'] == 'legal':
             form_profile_legal = UpdateAthleteLegal(data=request.POST, instance=user.athlete)
@@ -318,10 +316,9 @@ def user_update(request, id):
 
             else:
                 messages.add_message(request, messages.ERROR, form_profile_legal.errors)
-                if role and role == 'ATHLETE':
-                    return redirect('users:user_detail', id)
-                elif role and role == 'MANAGER':
-                    return redirect('users:manager_detail', id)
+                #return redirect('users:user_detail', id)
+                return render(request, 'users/detail.html', {'user': user, 'id': id, 'form': form, 'form_type': 'legalModal'})
+
 
         if role and role == 'ATHLETE':
             return redirect('users:user_detail', id)
