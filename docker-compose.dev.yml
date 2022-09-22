@@ -4,6 +4,7 @@ services:
     build: .
     volumes:
       - .:/django
+    restart: on-failure
     ports:
       - 80:8000
     image: app:django

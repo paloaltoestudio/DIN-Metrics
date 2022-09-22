@@ -26,6 +26,8 @@ class CustomUserAdmin(UserAdmin):
 
     list_display = ('first_name', 'last_name', 'email',)
 
+    list_display_links = ('email',)
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),

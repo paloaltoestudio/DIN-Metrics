@@ -18,7 +18,7 @@
             <h5>Registro de deportista</h5>
         </div>
 
-        <form action="{% url 'users:signup' %}" method="POST">
+        <form action="{% url 'users:signup' %}" method="post">
             {% csrf_token %}
             
             <div class="row">
