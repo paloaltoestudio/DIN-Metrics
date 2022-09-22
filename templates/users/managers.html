@@ -73,7 +73,7 @@
                                         <p class="text-xs font-weight-bold mb-0"><a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{ user.phone }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{% if user.phone %}{{ user.phone }}{% endif %}</p>
                                     </td>
                                     <td>
                                         <a href="{% url 'users:manager_detail' user.id %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">

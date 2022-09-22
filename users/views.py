@@ -91,15 +91,21 @@ class ManagerView(LoginRequiredMixin, ListView):
 
 
 class UserDetail(LoginRequiredMixin, DetailView):
-    managers = User.objects.filter(role = 'MANAGER')
-
     model = User
     pk_url_kwarg = 'id'
     template_name = 'users/detail.html'
     extra_context = {
         'page': 'user_list_detail',
-        'managers': managers
     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        managers = User.objects.filter(role = 'MANAGER')
+
+        context['managers'] = managers
+        print('managers: ', managers)
+
+        return context
 
 
 class OsteoDetail(LoginRequiredMixin, DetailView):
