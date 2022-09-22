@@ -17,3 +17,4 @@ profile_fv/__pycache__/
 profile_fv/migrations/*
 db
 ._db
+metrics/settings/__pycache__/*
