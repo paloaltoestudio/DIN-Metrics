@@ -15,9 +15,6 @@
         <div class="col-sm-4">
             <div class="card user card-body p-4">
                 <h3 class="title">{{user.first_name}} {{user.last_name}}</h3>
-                {% if form.errors %}
-                    {{form.errors}}
-                {% endif %}
                 
                 <h6>Información de ususario {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#managerModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
                 <ul class="list-group">
@@ -54,13 +51,23 @@
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.first_name.errors %}alert_field{% endif %}">
                                         <label for="" class="form-label">Nombre</label>
                                         <input class="form-control" type="text" name="first_name" value="{{ user.first_name }}">
+                                        {% if form.first_name.errors %}
+                                            {% for e in form.first_name.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.last_name.errors %}alert_field{% endif %}">
                                         <label for="" class="form-label">Apellido</label>
                                         <input class="form-control" type="text" name="last_name" value="{{ user.last_name }}">
+                                        {% if form.last_name.errors %}
+                                            {% for e in form.last_name.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                         
                                     <div class="input-group input-group-outline mb-3 {% if form.document.errors %}alert_field{% endif %}">
@@ -74,14 +81,24 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.phone.errors %}alert_field{% endif %}">
                                         <label for="" class="form-label">Teléfono</label>
                                         <input class="form-control" type="text" name="phone" value="{% if user.phone %}{{ user.phone }}{% endif %}">
+                                        {% if form.phone.errors %}
+                                            {% for e in form.phone.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                         
-                                    <div class="input-group input-group-outline mb-3">
+                                    <div class="input-group input-group-outline mb-3 {% if form.email.errors %}alert_field{% endif %}">
                                         <label for="" class="form-label">Email</label>
                                         <input class="form-control" type="email" name="email" value="{{ user.email }}">
+                                        {% if form.email.errors %}
+                                            {% for e in form.email.errors %}
+                                                <p class="msg text-danger">{{ e }}</p>
+                                            {% endfor %}
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
