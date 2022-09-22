@@ -11,7 +11,7 @@ from profile_fv.views import ProfileUpdateView
 app_name = 'users'
 
 urlpatterns = [
-    path('deportistas/', Index.as_view(), name='index'),
+    path('', Index.as_view(), name='index'),
     path('empresarios/', ManagerView.as_view(), name='managers'),
     path('empresarios/nuevo/', new_manager, name='new_manager'),
     path('empresarios/<int:id>', manager_update, name='manager_detail'),
