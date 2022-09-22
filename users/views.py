@@ -4,7 +4,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib import messages
@@ -223,7 +223,7 @@ class ManagerDetail(LoginRequiredMixin, DetailView):
 
 @login_required
 def manager_update(request, id):
-    user = User.objects.get(id = id)
+    user = get_object_or_404(User, id = id)
 
     if request.method == 'POST':
         form = UpdateUserForm(data=request.POST, instance=user)
