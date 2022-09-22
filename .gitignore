@@ -15,3 +15,5 @@ bilateral/__pycache__/
 bilateral/migrations/*
 profile_fv/__pycache__/
 profile_fv/migrations/*
+db
+._db
