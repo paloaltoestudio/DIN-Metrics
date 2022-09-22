@@ -21,7 +21,7 @@
   
   <!-- CSS Files -->
   <link href="{% static '/css/material-dashboard.css' %}" rel="stylesheet" />
-  <link href="{% static '/css/style.css' %}" rel="stylesheet" />
+  <link href="{% static '/css/style.min.css' %}" rel="stylesheet" />
 
    <!-- JS -->
    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -36,7 +36,7 @@
 <body class="auth">
 
     <div class="wrapper d-flex">
-        <div class="container my-sm-auto mt-5 px-5 px-sm-0">
+        <div class="container my-sm-auto mt-5 px-3 px-md-2">
             {% block content %}{% endblock %}
         </div>
     </div>

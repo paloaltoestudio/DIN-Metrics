@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-sm-12">
         <h3>Sentadilla</h3>
         <div class="table-responsive p-0">
             <table class="table table-striped align-items-center mb-3">
@@ -14,6 +14,7 @@
                         <th></th>
                     </tr>
                 </thead>
+                <tbody>
                     {% for profile in profiles %}
                         <tr>
                             <td>{{ profile.weight }}</td>
@@ -27,25 +28,18 @@
                             </td> 
                         </tr>
                     {% endfor %}
-                <tbody>
-                    
                 </tbody>
             </table>
-        
-            
-            <h3 class="badge badge-pill badge-success text-white px-3" style="font-size: 20px !important;">RM: {{ rm }}</h3>
-            <div class="graph_inner2">
-                <div style="width:90%;" class="graph_wrapper2">
-                   {% comment %} {{ df|safe }} {% endcomment %}
-                   {{ pgraph|safe }}
-                   {% comment %} {{ pgraph2|safe }} {% endcomment %}
-                </div>
-            </div>
-        
         </div>
     </div>
+</div>
 
-    <div class="col-6">
+<div class="row">
+    <div class="col-12">
+        <h3 class="badge badge-pill badge-success text-white px-3" style="font-size: 20px !important;">RM: {{ rm }}</h3>
+        <div class="graph_wrapper">
+            {{ pgraph|safe }}
+        </div>
     </div>
 </div>
 

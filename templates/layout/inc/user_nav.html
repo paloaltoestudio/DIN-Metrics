@@ -1,21 +1,25 @@
-<ul class="nav nav-pills" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-        {% url 'users:user_detail' user.id as url %}
-        <a href="{% url 'users:user_detail' user.id %}" class="nav-link {% if request.path == url %}active{% endif %}">Básico</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a href="{% url 'users:osteo_detail' user.id %}" class="nav-link {% if 'osteo' in request.path %}active{% endif %}">Osteomuscular</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a href="{% url 'users:fms_detail' user.id %}" class="nav-link {% if 'fms' in request.path %}active{% endif %}">FMS</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a href="{% url 'users:jump_detail' user.id %}" class="nav-link {% if 'neuromuscular' in request.path %}active{% endif %}">Neuromuscular</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a href="{% url 'users:bilateral_detail' user.id %}" class="nav-link {% if 'bilateral' in request.path %}active{% endif %}">Déficit Bilateral</a>
-    </li>
-    <li class="nav-item" role="presentation">
-        <a href="{% url 'users:profile_fv_detail' user.id %}" class="nav-link {% if 'perfil_fv' in request.path %}active{% endif %}">Perfil F/V</a>
-    </li>
-</ul>
+
+<div class="collapse user_nav mt-1" id="userNavCollapse">
+
+    <ul class="nav nav-pills" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            {% url 'users:user_detail' user.id as url %}
+            <a href="{% url 'users:user_detail' user.id %}" class="nav-link {% if request.path == url %}active{% endif %}">Básico</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a href="{% url 'users:osteo_detail' user.id %}" class="nav-link {% if 'osteo' in request.path %}active{% endif %}">Osteomuscular</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a href="{% url 'users:fms_detail' user.id %}" class="nav-link {% if 'fms' in request.path %}active{% endif %}">FMS</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a href="{% url 'users:jump_detail' user.id %}" class="nav-link {% if 'neuromuscular' in request.path %}active{% endif %}">Neuromuscular</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a href="{% url 'users:bilateral_detail' user.id %}" class="nav-link {% if 'bilateral' in request.path %}active{% endif %}">Déficit Bilateral</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a href="{% url 'users:profile_fv_detail' user.id %}" class="nav-link {% if 'perfil_fv' in request.path %}active{% endif %}">Perfil F/V</a>
+        </li>
+    </ul>
+</div>
