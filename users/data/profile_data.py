@@ -9,6 +9,9 @@ import plotly.express as px
 #models
 from profile_fv.models import Profile_fv
 
+#utils
+from .data_utils import update_plot
+
 def profile_data(context):
     
     profiles = Profile_fv.objects.filter(athlete=context['user'].athlete)
@@ -50,13 +53,6 @@ def profile_data(context):
     df2 = pd.DataFrame(data=d)
     df2.set_index('Velocidad 1', inplace=True)
 
-    def update_plot(fig):
-        fig.update_xaxes(showgrid=False)
-        fig.update_yaxes(showgrid=False)
-        fig.update_layout({
-            'plot_bgcolor': 'rgba(0,0,0,0)',
-            'paper_bgcolor': 'rgba(0,0,0,0)',
-        })
 
     if len(profiles) > 1:
         bi_fig = px.scatter(df, title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s'}, trendline="ols", trendline_scope="overall")

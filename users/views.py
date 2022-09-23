@@ -212,6 +212,23 @@ class ProfileFVDetail(LoginRequiredMixin, DetailView):
         return context
 
 
+class ProfileFVGraph(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/graph_profile_fv.html'
+    extra_context = {
+        'page': 'user_list_detail',
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        #Get data from profile FV and make chart
+        profile_data(context)
+
+        return context
+
+
 
 class ManagerDetail(LoginRequiredMixin, DetailView):
     model = User
