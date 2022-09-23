@@ -10,13 +10,13 @@
                 <form action="{% url 'users:bilateral_create' %}" method='post'>
                     {% csrf_token %}
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <div class="input-group input-group-outline mb-3 is-upper">
                                 <label class="form-label">Fecha</label>
                                 <input class="form-control" type="date" name="date" value="" required>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <div class="input-group input-group-outline mb-3 is-upper">
                                 <label class="form-label">Salto</label>
                                 <select class="form-control" name="jump" id="" required>
@@ -28,13 +28,13 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <div class="input-group input-group-outline mb-3 is-upper">
                                 <label class="form-label">Izquierda</label>
                                 <input class="form-control" type="number" step="0.01" name="left" value="" required>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <div class="input-group input-group-outline mb-3 is-upper">
                                 <label class="form-label">Derecha</label>
                                 <input class="form-control" type="number" step="0.01" name="right" value="" required>

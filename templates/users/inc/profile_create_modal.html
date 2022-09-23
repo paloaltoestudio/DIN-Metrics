@@ -1,0 +1,44 @@
+<!-- Modal -->
+<div class="modal fade" id="profileCreateModal" tabindex="-1" aria-labelledby="profileCreateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileCreateModalLabel">Perfil F/V</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'users:profile_create' %}" method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Peso</label>
+                                <input class="form-control" type="number" step="0.01" name="weight" value="{{ profile.weight|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Velocidad 1</label>
+                                <input class="form-control" type="number" step="0.01" name="speed1" value="{{ profile.speed1|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Velocidad 2</label>
+                                <input class="form-control" type="number" step="0.01" name="speed2" value="{{ profile.speed2|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Velocidad 3</label>
+                                <input class="form-control" type="number" step="0.01" name="speed3" value="{{ profile.speed3|stringformat:".2f" }}">
+                            </div>
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Velocidad 4</label>
+                                <input class="form-control" type="number" step="0.01" name="speed4" value="{{ profile.speed4|stringformat:".2f" }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="text" name="uid" value="{{ user.id }}" hidden>
+                    <input type="text" name="athlete" value="{{ user.athlete.id }}" hidden>
+                    <button class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
