@@ -42,7 +42,7 @@ def profile_data(context):
             'Peso': [0, 0],
             'Velocidad 1': [0, 0],
         }
-        max_speeds = [0, 0]
+        max_speeds = [0, 0] 
 
     df = pd.DataFrame(data=d)
     df.set_index('Peso', inplace=True)
@@ -51,23 +51,29 @@ def profile_data(context):
     df2.set_index('Velocidad 1', inplace=True)
 
     if len(profiles) > 1:
-        #Bar chart
-        #bi_fig = px.bar(df, labels={'weight':'Peso', 'value': 'Vel'}, barmode = 'group')
         bi_fig = px.scatter(df, title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s'}, trendline="ols", trendline_scope="overall")
-        bi_fig2 = px.scatter(x=max_speeds, y=d['Peso'], title='Perfil F/V', labels={'value':'PESO(KG)', 'Velocidad 1': 'VEL(m/s)'}, trendline="ols", trendline_scope="overall")
+        bi_fig.update_xaxes(showgrid=False)
+        bi_fig.update_yaxes(showgrid=False)
+        bi_fig.update_layout({
+            'plot_bgcolor': 'rgba(0,0,0,0)',
+            'paper_bgcolor': 'rgba(0,0,0,0)',
+        })
         
+        bi_fig2 = px.scatter(x=max_speeds, y=d['Peso'], title='Perfil F/V', labels={'value':'PESO(KG)', 'Velocidad 1': 'VEL(m/s)'}, trendline="ols", trendline_scope="overall")
+        bi_fig2.update_xaxes(showgrid=False)
+        bi_fig2.update_yaxes(showgrid=False)
+
         model = px.get_trendline_results(bi_fig2)
         results = model.iloc[0]["px_fit_results"]
         
         rm = round(results.params[1]*0.3+results.params[0], 2)
 
-        context['pgraph2'] = bi_fig2.to_html
+        context['graph'] = bi_fig.to_html
         context['rm'] = rm
     else:
-        bi_fig = px.scatter(x=[0,], y=[0,], title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s)'}, trendline="ols", trendline_scope="overall")
-
-    context['pgraph'] = bi_fig.to_html
+        bi_fig = px.scatter(x=[0,], y=[0,], title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s)'}, trendline="ols", trendline_scope="overall")        
+        context['graph'] = bi_fig.to_html
+        
     context['profiles'] = profiles
-    context['df'] = df2.to_html
     context['is_limit'] = is_limit
     
