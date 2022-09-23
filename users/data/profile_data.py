@@ -13,6 +13,8 @@ def profile_data(context):
     
     profiles = Profile_fv.objects.filter(athlete=context['user'].athlete)
 
+    is_limit = len(profiles) >= 5
+
     d = {
         'Peso': [profile.weight for profile in profiles],
     }
@@ -56,17 +58,16 @@ def profile_data(context):
         
         model = px.get_trendline_results(bi_fig2)
         results = model.iloc[0]["px_fit_results"]
-
-        #print(results.params)
         
         rm = round(results.params[1]*0.3+results.params[0], 2)
 
         context['pgraph2'] = bi_fig2.to_html
         context['rm'] = rm
     else:
-        bi_fig = px.scatter(x=[0,], y=[0,], title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s'}, trendline="ols", trendline_scope="overall")
+        bi_fig = px.scatter(x=[0,], y=[0,], title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s)'}, trendline="ols", trendline_scope="overall")
 
     context['pgraph'] = bi_fig.to_html
     context['profiles'] = profiles
     context['df'] = df2.to_html
+    context['is_limit'] = is_limit
     

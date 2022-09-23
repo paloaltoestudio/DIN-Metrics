@@ -30,6 +30,10 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% if not is_limit %}
+                {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+                {% include './profile_create_modal.html' %}
+            {% endif %}
         </div>
     </div>
 </div>
