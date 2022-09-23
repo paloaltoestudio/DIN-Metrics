@@ -53,7 +53,13 @@
 </div>
 
 <div class="graph_wrapper">
-    {{ fig|safe }}
+    <div class="loader">
+        <span>Cargando Gráfico</span>
+        <div class="lds-ripple"><div></div><div></div></div>
+    </div>
+    <div class="graph_inner">
+        {{ fig|safe }}
+    </div>
 </div>
 
 {% include './neuro_sj_modal.html' %}

@@ -9,6 +9,9 @@ import plotly.express as px
 #models
 from bilateral.models import Bilateral
 
+#utils
+from .data_utils import update_plot
+
 def bilateral_data(context):
     
     bilaterals = Bilateral.objects.filter(athlete=context['user'].athlete).order_by('date')
@@ -26,6 +29,7 @@ def bilateral_data(context):
 
     #Bar chart
     bi_fig = px.bar(df, labels={'value':'Deficit', 'date': 'Fecha'}, barmode = 'group')
+    update_plot(bi_fig)
 
     context['bilaterals'] = bilaterals
     context['graph'] = bi_fig.to_html

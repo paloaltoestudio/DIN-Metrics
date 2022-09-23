@@ -35,7 +35,13 @@
 </div>
 
 <div class="graph_wrapper">
-    {{ graph|safe }}
+    <div class="loader">
+        <span>Cargando Gráfico</span>
+        <div class="lds-ripple"><div></div><div></div></div>
+    </div>
+    <div class="graph_inner">
+        {{ graph|safe }}
+    </div>
 </div>
 
 

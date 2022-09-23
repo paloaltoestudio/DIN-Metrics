@@ -8,6 +8,9 @@ import plotly.express as px
 #models
 from neuro.models import SJ, CMJ, DROPS, Q
 
+#utils
+from .data_utils import update_plot
+
 def jump_data(context):
 
     x = ['Mes ' + str(x) for x in range(1, 13)]
@@ -73,6 +76,7 @@ def jump_data(context):
 
     #Line chart
     fig = px.line(df, labels={'index':'Meses', 'value': 'Salto en CM'}, markers=True)
+    update_plot(fig)
 
     context['fig'] = fig.to_html()
     context['df'] = df.to_html()
