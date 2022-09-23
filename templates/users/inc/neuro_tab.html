@@ -52,6 +52,7 @@
     </table>
 </div>
 
+{% if fig %}
 <div class="graph_wrapper">
     <div class="loader">
         <span>Cargando Gráfico</span>
@@ -61,6 +62,7 @@
         {{ fig|safe }}
     </div>
 </div>
+{% endif %}
 
 {% include './neuro_sj_modal.html' %}
 {% include './neuro_cmj_modal.html' %}

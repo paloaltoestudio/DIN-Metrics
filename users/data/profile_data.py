@@ -40,21 +40,13 @@ def profile_data(context):
         max_speeds.append(max(max_speed))
 
 
-    if len(profiles) < 1:
-        d = {
-            'Peso': [0, 0],
-            'Velocidad 1': [0, 0],
-        }
-        max_speeds = [0, 0] 
-
-    df = pd.DataFrame(data=d)
-    df.set_index('Peso', inplace=True)
-
-    df2 = pd.DataFrame(data=d)
-    df2.set_index('Velocidad 1', inplace=True)
-
-
     if len(profiles) > 1:
+        df = pd.DataFrame(data=d)
+        df.set_index('Peso', inplace=True)
+
+        df2 = pd.DataFrame(data=d)
+        df2.set_index('Velocidad 1', inplace=True)
+
         bi_fig = px.scatter(df, title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s'}, trendline="ols", trendline_scope="overall")
         update_plot(bi_fig)
         
@@ -68,10 +60,6 @@ def profile_data(context):
 
         context['graph'] = bi_fig.to_html
         context['rm'] = rm
-    else:
-        bi_fig = px.scatter(x=[0,], y=[0,], title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s)'}, trendline="ols", trendline_scope="overall")        
-        update_plot(bi_fig)
-        context['graph'] = bi_fig.to_html
         
     context['profiles'] = profiles
     context['is_limit'] = is_limit

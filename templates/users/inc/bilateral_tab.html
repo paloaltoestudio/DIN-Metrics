@@ -34,6 +34,7 @@
     {% endif %}
 </div>
 
+{% if graph %}
 <div class="graph_wrapper">
     <div class="loader">
         <span>Cargando Gráfico</span>
@@ -43,5 +44,6 @@
         {{ graph|safe }}
     </div>
 </div>
+{% endif %}
 
 

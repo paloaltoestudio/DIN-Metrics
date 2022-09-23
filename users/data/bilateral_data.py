@@ -19,18 +19,19 @@ def bilateral_data(context):
 
     is_limit = len(bilaterals) >= 10
 
-    d = {
-        'date': [bilateral_total['date'] for bilateral_total in bilaterals_total],
-        'deficit': [bilateral_total['deficit__sum'] for bilateral_total in bilaterals_total],
-    }
+    if len(bilaterals) > 0:
+        d = {
+            'date': [bilateral_total['date'] for bilateral_total in bilaterals_total],
+            'deficit': [bilateral_total['deficit__sum'] for bilateral_total in bilaterals_total],
+        }
 
-    df = pd.DataFrame(data=d)
-    df.set_index('date', inplace=True)
+        df = pd.DataFrame(data=d)
+        df.set_index('date', inplace=True)
 
-    #Bar chart
-    bi_fig = px.bar(df, labels={'value':'Deficit', 'date': 'Fecha'}, barmode = 'group')
-    update_plot(bi_fig)
+        #Bar chart
+        bi_fig = px.bar(df, labels={'value':'Deficit', 'date': 'Fecha'}, barmode = 'group')
+        update_plot(bi_fig)
+        context['graph'] = bi_fig.to_html
 
     context['bilaterals'] = bilaterals
-    context['graph'] = bi_fig.to_html
     context['is_limit'] = is_limit
