@@ -1,11 +1,11 @@
 """Users views."""
 # Django
 from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView
 from django.contrib import messages
 
@@ -237,6 +237,24 @@ class ManagerDetail(LoginRequiredMixin, DetailView):
     extra_context = {
         'page': 'manager_list_detail'
     }
+
+
+class AccountDetail(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/account_detail.html'
+    extra_context = {
+        'page': 'account_detail'
+    }
+
+
+class PasswordChange(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'users/password_change.html'
+    success_url = reverse_lazy('users:password_change_done')
+
+class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
+    template_name = 'users/password_change_done.html'
+
 
 @login_required
 def manager_update(request, id):

@@ -1,7 +1,8 @@
 from django.urls import path
 
 from .views import (signup, new_manager, Index, UserDetail, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
-                    ProfileFVGraph, BilateralDetail, ManagerView, ManagerDetail, manager_update, user_update)
+                    ProfileFVGraph, BilateralDetail, ManagerView, ManagerDetail, manager_update, AccountDetail,
+                    PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
 from fms.views import FmsUpdate
 from neuro.views import SJUpdateView, CMJUpdateView, DROPSUpdateView, QUpdateView
@@ -12,6 +13,9 @@ app_name = 'users'
 
 urlpatterns = [
     path('', Index.as_view(), name='index'),
+    path('cuenta/<int:id>', AccountDetail.as_view(), name='account_detail'),
+    path('cuenta/contrasena', PasswordChange.as_view(), name='password_change'),
+    path('cuenta/contrasena-actualizada', PasswordChangeDone.as_view(), name='password_change_done'),
     path('empresarios/', ManagerView.as_view(), name='managers'),
     path('empresarios/nuevo/', new_manager, name='new_manager'),
     path('empresarios/<int:id>', manager_update, name='manager_detail'),
