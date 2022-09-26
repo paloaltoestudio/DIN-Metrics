@@ -58,7 +58,7 @@ def profile_data(context):
         
         rm = round(results.params[1]*0.3+results.params[0], 2)
 
-        context['graph'] = bi_fig.to_html
+        context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
         context['rm'] = rm
         
     context['profiles'] = profiles
