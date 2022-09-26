@@ -63,7 +63,7 @@ class User(AbstractUser):
     first_name = models.CharField(("first name"), max_length=150, blank=False)
     last_name = models.CharField(("last name"), max_length=150, blank=False)
     phone = models.CharField('Teléfono', max_length=11, blank=True, null=True)
-    document = models.IntegerField('Cédula', null=True, unique=True)
+    document = models.IntegerField('Cédula', null=True, blank=True, unique=True)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
