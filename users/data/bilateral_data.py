@@ -31,7 +31,7 @@ def bilateral_data(context):
         #Bar chart
         bi_fig = px.bar(df, labels={'value':'Deficit', 'date': 'Fecha'}, barmode = 'group')
         update_plot(bi_fig)
-        context['graph'] = bi_fig.to_html
+        context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
 
     context['bilaterals'] = bilaterals
     context['is_limit'] = is_limit
