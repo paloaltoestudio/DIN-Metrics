@@ -1,7 +1,11 @@
 
+from distutils.command.upload import upload
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+
+#Third 
+import PIL.Image
 
 
 class UserManager(BaseUserManager):
@@ -54,6 +58,7 @@ class User(AbstractUser):
       )
     username = None
     email = models.EmailField('email', unique=True)
+    picture = models.ImageField(upload_to='users/pictures', blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -64,6 +69,19 @@ class User(AbstractUser):
     last_name = models.CharField(("last name"), max_length=150, blank=False)
     phone = models.CharField('Teléfono', max_length=11, blank=True, null=True)
     document = models.IntegerField('Cédula', null=True, blank=True, unique=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if (self.picture):
+            img = PIL.Image.open(self.picture)
+            width, height = img.size
+            target_width = 100
+            h_coefficient = width/100
+            target_height = height/h_coefficient
+            img = img.resize((int(target_width), int(target_height)), PIL.Image.ANTIALIAS)
+            img.save(self.picture.path, quality=100)
+            img.close()
+            self.picture.close()
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'

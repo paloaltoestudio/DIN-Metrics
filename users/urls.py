@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from .views import (signup, new_manager, Index, UserDetail, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
                     ProfileFVGraph, BilateralDetail, ManagerView, ManagerDetail, manager_update, AccountDetail,
@@ -40,4 +42,4 @@ urlpatterns = [
     path('crear-bilateral', BilateralCreateView.as_view(), name='bilateral_create'),
     path('<int:id>/editar-perfil', ProfileUpdateView.as_view(), name='profile_update'),
     path('crear-perfil', ProfileCreateView.as_view(), name='profile_create'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

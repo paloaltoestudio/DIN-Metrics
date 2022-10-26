@@ -20,6 +20,30 @@
   background-color: #da682c;
 }
 
+/* Profile */
+.picture {
+  width: 100px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.picture img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.picture a {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  color: #fff;
+  background: #da682c;
+  border-radius: 100%;
+}
+
 /* Login styles */
 .auth {
   background: #2f3a48 url('../img/login_bg.jpg');

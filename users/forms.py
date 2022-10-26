@@ -1,6 +1,12 @@
 from django import forms
 from users.models import User, Athlete
 
+class PictureForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['picture',]
+
+
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User

@@ -18,3 +18,4 @@ profile_fv/migrations/*
 db
 ._db
 metrics/settings/__pycache__/*
+media

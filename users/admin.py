@@ -32,7 +32,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2'),}),)
 
     fieldsets = (
-        (None, {'fields': ('first_name', 'last_name', 'document', 'email', 'phone')}),
+        (None, {'fields': ('first_name', 'last_name', 'document', 'email', 'phone', 'picture')}),
         ('Role', {'fields': ('role',)}),
     )
 

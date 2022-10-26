@@ -16,6 +16,7 @@ from django.db.utils import IntegrityError
 # Models
 from users.models import Athlete, User
 from users.forms import (UpdateUserForm, 
+                         PictureForm,
                          UpdateAthletePersonal, 
                          UpdateAthleteSport, 
                          UpdateAthleteMeasures,
@@ -103,7 +104,6 @@ class UserDetail(LoginRequiredMixin, DetailView):
         managers = User.objects.filter(role = 'MANAGER')
 
         context['managers'] = managers
-
         return context
 
 
@@ -282,6 +282,17 @@ def user_update(request, id):
         if user:
             role = user.role
 
+        if request.POST['type'] == 'picture':
+
+            form = PictureForm(request.POST, request.FILES, instance=user)
+            
+            if form.is_valid():
+                form.save()
+                messages.add_message(request, messages.SUCCESS, 'Usuario Actualizado')
+
+            else:
+                messages.add_message(request, messages.ERROR, form.errors)
+                
         if request.POST['type'] == 'basic':
             #Get a copy of request post to add calculated age
             data = request.POST.copy()
