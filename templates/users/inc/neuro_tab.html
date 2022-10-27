@@ -1,56 +1,34 @@
+
+{% if request.user.role == 'ADMIN' %}
 <div class="table-responsive p-0">
-    <table class="table table-striped align-items-center mb-3">
+    <table class="table table-striped align-items-center mb-3 jumps_table">
         <thead class="table-dark">
             <tr>
+                <th><strong>Fecha</strong></th>
                 <th><strong>Salto</strong></th>
-                <th><strong>Mes 1</strong></th>
-                <th><strong>Mes 2</strong></th>
-                <th><strong>Mes 3</strong></th>
-                <th><strong>Mes 4</strong></th>
-                <th><strong>Mes 5</strong></th>
-                <th><strong>Mes 6</strong></th>
-                <th><strong>Mes 7</strong></th>
-                <th><strong>Mes 8</strong></th>
-                <th><strong>Mes 9</strong></th>
-                <th><strong>Mes 10</strong></th>
-                <th><strong>Mes 11</strong></th>
-                <th><strong>Mes 12</strong></th>
-                <th></th>
+                <th><strong>Puntaje</strong></th>
             </tr>
         </thead>
 
         <tbody>
+            {% for item in jumps %}
             <tr>
-                <td><strong>SJ</strong></td>
-                {% for jump in jumps.SJ %}
-                    <td>{{ jump }}</td>
-                {% endfor %}
-                <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#sjModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item }}</td>
+                <td>{{ item.score }}</td>
             </tr>
-            <tr>
-                <td><strong>CMJ</strong></td>
-                {% for jump in jumps.CMJ %}
-                    <td>{{ jump }}</td>
-                {% endfor %}
-                <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#cmjModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</td>
-            </tr>
-            <tr>
-                <td><strong>DROPS</strong></td>
-                {% for jump in jumps.DROPS %}
-                <td>{{ jump }}</td>
-                {% endfor %}
-                <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#dropsModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</td>
-            </tr>
-            <tr>
-                <td><strong>Q</strong></td>
-                {% for jump in jumps.Q %}
-                <td>{{ jump }}</td>
-                {% endfor %}
-                <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#qModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
+{% endif %}
+
+{{ df|safe }}
+
+{% comment %} {% for sj_item in sj %}
+{{ sj_item.date }}
+{{ sj_item.score }}
+{% endfor %} {% endcomment %}
 
 {% if fig %}
 <div class="graph_wrapper">
@@ -68,3 +46,21 @@
 {% include './neuro_cmj_modal.html' %}
 {% include './neuro_drops_modal.html' %}
 {% include './neuro_q_modal.html' %}
+
+
+{% block extrajs %}
+<script type="text/javascript">
+     
+    $(document).ready(function() {
+        $(".jumps_table").fancyTable({
+           sortColumn: 0,
+           sortOrder:0,
+           pagination: true,
+           perPage:2,
+           globalSearch:false,
+           searchable:false
+           });
+                     
+    });
+</script>
+{% endblock %}
