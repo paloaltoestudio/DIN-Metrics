@@ -7,16 +7,15 @@ from users.models import Athlete
 
 class NeuroBase:
     pk_url_kwarg = 'id'
-    fields = ['month1', 'month2', 'month3', 'month4', 'month5', 'month6',
-              'month7', 'month8', 'month9', 'month10', 'month11', 'month12']
+    fields = ['date', 'score', ]
 
-    def get_object(self, queryset=None):
-        athlete = Athlete.objects.get(id = self.kwargs.get(self.pk_url_kwarg))
-        if queryset is None:
-            queryset = self.get_queryset()
+    # def get_object(self, queryset=None):
+    #     athlete = Athlete.objects.get(id = self.kwargs.get(self.pk_url_kwarg))
+    #     if queryset is None:
+    #         queryset = self.get_queryset()
 
-        obj = queryset.get_or_create(athlete = athlete)[0]
-        return obj
+    #     obj = queryset.get_or_create(athlete = athlete)[0]
+    #     return obj
 
     def get_success_url(self):
         id = self.request.POST['uid']

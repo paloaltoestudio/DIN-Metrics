@@ -23,7 +23,8 @@ def jump_data(context):
     d = {
         'date':[],
         'jump':[],
-        'score':[]
+        'score':[],
+        'id':[],
     }
 
     def add_jump(name, jump):
@@ -33,6 +34,7 @@ def jump_data(context):
             d['jump'].append(name)
             d['date'].append(item.date) 
             d['score'].append(item.score)
+            d['id'].append(item.id)
 
     if len(sj) > 0:
         add_jump('SJ', sj)

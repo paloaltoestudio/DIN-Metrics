@@ -5,8 +5,8 @@
         <thead class="table-dark">
             <tr>
                 <th><strong>Fecha</strong></th>
+                <th><strong>Nombre</strong></th>
                 <th><strong>Salto</strong></th>
-                <th><strong>Puntaje</strong></th>
             </tr>
         </thead>
 
@@ -16,6 +16,8 @@
                 <td>{{ item.date }}</td>
                 <td>{{ item }}</td>
                 <td>{{ item.score }}</td>
+                <td> {% include './neuro_update_modal.html' with jump=item user=user %}
+                    {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#neuroUpdateModal_{{ item }}_{{ item.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}{{ item.id }}</td>
             </tr>
             {% endfor %}
         </tbody>
