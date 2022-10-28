@@ -1,4 +1,4 @@
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
 #Models
@@ -6,16 +6,18 @@ from .models import SJ, CMJ, DROPS, Q
 from users.models import Athlete
 
 class NeuroBase:
-    pk_url_kwarg = 'id'
-    fields = ['date', 'score', ]
+    def post(self, request, *args, **kwargs):
+        jump_type = request.POST['jump_type'].lower()
+        if jump_type == 'sj':
+            self.model = SJ
+        elif jump_type == 'cmj':
+            self.model = CMJ
+        elif jump_type == 'drops':
+            self.model = DROPS
+        else:
+            self.model = Q
 
-    # def get_object(self, queryset=None):
-    #     athlete = Athlete.objects.get(id = self.kwargs.get(self.pk_url_kwarg))
-    #     if queryset is None:
-    #         queryset = self.get_queryset()
-
-    #     obj = queryset.get_or_create(athlete = athlete)[0]
-    #     return obj
+        return super().post(request, *args, **kwargs)
 
     def get_success_url(self):
         id = self.request.POST['uid']
@@ -24,18 +26,45 @@ class NeuroBase:
         return url
 
 
-class SJUpdateView(NeuroBase, UpdateView):
-    model = SJ
 
-
-class CMJUpdateView(NeuroBase, UpdateView):
-    model = CMJ
-
-
-class DROPSUpdateView(NeuroBase, UpdateView):
-    model = DROPS
-
-
-class QUpdateView(NeuroBase, UpdateView):
-    model = Q
+class NeuroCreateBase(NeuroBase, CreateView):
+    fields = ['date', 'score', 'athlete']
     
+
+class NeuroBaseUpdate(NeuroBase, UpdateView):
+    pk_url_kwarg = 'id'
+    fields = ['date', 'score', ]
+
+
+class NeuroDelete(DeleteView):
+    pk_url_kwarg = 'id'
+
+    def post(self, request, *args, **kwargs):
+        # Set self.object before the usual form processing flow.
+        # Inlined because having DeletionMixin as the first base, for
+        # get_success_url(), makes leveraging super() with ProcessFormView
+        # overly complex.
+
+        jump_type = request.POST['jump_type'].lower()
+        print('jump: ', jump_type)
+        if jump_type == 'sj':
+            self.model = SJ
+        elif jump_type == 'cmj':
+            self.model = CMJ
+        elif jump_type == 'drops':
+            self.model = DROPS
+        else:
+            self.model = Q
+
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:jump_detail', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        return url

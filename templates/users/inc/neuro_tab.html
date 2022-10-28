@@ -7,6 +7,7 @@
                 <th><strong>Fecha</strong></th>
                 <th><strong>Nombre</strong></th>
                 <th><strong>Salto</strong></th>
+                <th></th>
             </tr>
         </thead>
 
@@ -17,12 +18,24 @@
                 <td>{{ item }}</td>
                 <td>{{ item.score }}</td>
                 <td> {% include './neuro_update_modal.html' with jump=item user=user %}
-                    {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#neuroUpdateModal_{{ item }}_{{ item.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}{{ item.id }}</td>
+                    {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#neuroUpdateModal_{{ item }}_{{ item.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                    
+                    {% include './neuro_delete_modal.html' with jump=item user=user %}
+                    {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#neuroDeleteModal_{{ item }}_{{ item.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %}
+                    
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+<div>
+    {% if not is_limit %}
+        {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#neuroCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+        {% include './neuro_create_modal.html' %}
+    {% endif %}
+</div>
+
 {% endif %}
 
 {{ df|safe }}
@@ -44,10 +57,10 @@
 </div>
 {% endif %}
 
-{% include './neuro_sj_modal.html' %}
+{% comment %} {% include './neuro_sj_modal.html' %}
 {% include './neuro_cmj_modal.html' %}
 {% include './neuro_drops_modal.html' %}
-{% include './neuro_q_modal.html' %}
+{% include './neuro_q_modal.html' %} {% endcomment %}
 
 
 {% block extrajs %}
@@ -58,7 +71,7 @@
            sortColumn: 0,
            sortOrder:0,
            pagination: true,
-           perPage:2,
+           perPage: 10,
            globalSearch:false,
            searchable:false
            });
