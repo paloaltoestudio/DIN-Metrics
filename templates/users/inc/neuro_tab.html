@@ -30,15 +30,13 @@
     </table>
 </div>
 <div>
-    {% if not is_limit %}
-        {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#neuroCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
-        {% include './neuro_create_modal.html' %}
-    {% endif %}
+{% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#neuroCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+{% include './neuro_create_modal.html' %}
 </div>
 
 {% endif %}
 
-{{ df|safe }}
+{% comment %} {{ df|safe }} {% endcomment %}
 
 {% comment %} {% for sj_item in sj %}
 {{ sj_item.date }}

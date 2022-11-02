@@ -1,4 +1,4 @@
-from django.views.generic import UpdateView, CreateView
+from django.views.generic import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
 #Models
@@ -27,6 +27,16 @@ class BilateralUpdateView(BilateralBase, UpdateView):
     fields = ['date', 'left', 'right']
     pk_url_kwarg = 'id'
 
-    
+
+class BilateralDelete(DeleteView):
+    model = Bilateral
+    pk_url_kwarg = 'id'
+
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:bilateral_detail', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        return url
+
 
 
