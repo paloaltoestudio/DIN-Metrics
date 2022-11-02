@@ -200,11 +200,6 @@ class BilateralDetail(LoginRequiredMixin, DetailView):
         return context
 
 
-def bilateral_date(request, id):
-    if request.method == 'POST':
-        return redirect('users:bilateral_detail', id)
-
-
 class ProfileFVDetail(LoginRequiredMixin, DetailView):
     model = User
     pk_url_kwarg = 'id'

@@ -1,5 +1,5 @@
 <div class="table-responsive p-0">
-    <table class="table table-striped align-items-center mb-3">
+    <table class="table table-striped align-items-center mb-3 jumps_table">
         <thead class="table-dark">
             <tr>
                 <th><strong>Fecha</strong></th>
@@ -14,14 +14,17 @@
         <tbody>
             {% for bilateral in bilaterals %}
                 <tr>
-                    <td><strong>{{ bilateral.date|date:"m/d/Y" }}</strong></td>            
-                    <td><strong>{{ bilateral.jump }}</strong></td>            
-                    <td><strong>{{ bilateral.left }}</strong></td>            
-                    <td><strong>{{ bilateral.right }}</strong></td>            
-                    <td><strong>{{ bilateral.deficit }}%</strong></td>     
+                    <td>{{ bilateral.date }}</td>            
+                    <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#biUpdateModal_{{ bilateral.id }}">{{ bilateral.jump }}</a>{% else %}{{ bilateral.jump }}{% endif %}</td>            
+                    <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#biUpdateModal_{{ bilateral.id }}">{{ bilateral.left }}</a>{% else %}{{ bilateral.left }}{% endif %}</td>            
+                    <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#biUpdateModal_{{ bilateral.id }}">{{ bilateral.right }}</a>{% else %}{{ bilateral.right }}{% endif %}</td>            
+                    <td>{% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#biUpdateModal_{{ bilateral.id }}">{{ bilateral.deficit }}</a>{% else %}{{ bilateral.deficit }}{% endif %}</td>     
                     <td>
                         {% include './bilateral_update_modal.html' with bilateral=bilateral %}
                         {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#biUpdateModal_{{ bilateral.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                    
+                        {% include './bilateral_delete_modal.html' with jump=bilateral user=user %}
+                        {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#bilateralDeleteModal_{{ bilateral.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %}
                     </td>       
                 </tr>
             {% endfor %}
@@ -33,6 +36,8 @@
     {% include './bilateral_create_modal.html' %}
 </div>
 
+{% comment %} {{ df|safe }} {% endcomment %}
+{% if graph %}
 <div class="mt-4" style="width: 400px">
     <form action="{% url 'users:bilateral_detail' user.id %}" method="get">
         {% csrf_token %}
@@ -51,9 +56,7 @@
     </form>
 </div>
 
-{% comment %} {{ df|safe }} {% endcomment %}
-{% if graph %}
-<h4 class="mt-3">Fecha: {{ date|date:'Y-m-d'}}</h4>
+<h4 class="mt-3">Fecha: {{ date|date:'j'}} de {{ date|date:'F'}} de {{ date|date:'Y'}}</h4>
 <div class="graph_wrapper">
     <div class="loader">
         <span>Cargando Gráfico</span>
@@ -66,3 +69,18 @@
 {% endif %}
 
 
+{% block extrajs %}
+<script type="text/javascript">
+     
+    $(document).ready(function() {
+        $(".jumps_table").fancyTable({
+           sortOrder:0,
+           pagination: true,
+           perPage: 10,
+           globalSearch:false,
+           searchable:false
+           });
+                     
+    });
+</script>
+{% endblock %}

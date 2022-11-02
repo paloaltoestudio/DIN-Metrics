@@ -3,12 +3,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from .views import (signup, new_manager, Index, UserDetail, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
-                    ProfileFVGraph, BilateralDetail, bilateral_date, ManagerView, ManagerDetail, manager_update, AccountDetail,
+                    ProfileFVGraph, BilateralDetail, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
 from fms.views import FmsUpdate
 from neuro.views import NeuroCreateBase, NeuroBaseUpdate, NeuroDelete
-from bilateral.views import BilateralUpdateView, BilateralCreateView
+from bilateral.views import BilateralUpdateView, BilateralCreateView, BilateralDelete
 from profile_fv.views import ProfileUpdateView, ProfileCreateView
 
 app_name = 'users'
@@ -27,6 +27,7 @@ urlpatterns = [
     path('deportistas/<int:id>/fms', FMSDetail.as_view(), name='fms_detail'),
     path('deportistas/<int:id>/neuromuscular', JumpDetail.as_view(), name='jump_detail'),
     path('deportistas/<int:id>/bilateral', BilateralDetail.as_view(), name='bilateral_detail'),
+    path('<int:id>/eliminar-bilateral', BilateralDelete.as_view(), name='bilateral_delete'),
     path('deportistas/<int:id>/perfil_fv', ProfileFVDetail.as_view(), name='profile_fv_detail'),
     path('deportistas/<int:id>/perfil_fv_graph', ProfileFVGraph.as_view(), name='profile_fv_graph'),
     path('<int:id>/editar-usuario', user_update, name='user_update'),
@@ -38,7 +39,6 @@ urlpatterns = [
     path('<int:id>/editar-neuro', NeuroBaseUpdate.as_view(), name='neuro_update'),
     path('<int:id>/eliminar-neuro', NeuroDelete.as_view(), name='neuro_delete'),
     path('<int:id>/editar-bilateral', BilateralUpdateView.as_view(), name='bilateral_update'),
-    path('<int:id>/fecha-bilateral', bilateral_date, name='bilateral_date'),
     path('crear-bilateral', BilateralCreateView.as_view(), name='bilateral_create'),
     path('<int:id>/editar-perfil', ProfileUpdateView.as_view(), name='profile_update'),
     path('crear-perfil', ProfileCreateView.as_view(), name='profile_create'),

@@ -20,6 +20,21 @@
   background-color: #da682c;
 }
 
+.table td,
+.table td a {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+
+/* Table Filter */
+th[aria-sort="ascending"] .sortArrow {
+  border-top-color: #fff !important;
+}
+th[aria-sort="descending"] .sortArrow {
+  border-bottom-color: #fff !important;
+}
+
 /* Profile */
 .picture {
   width: 100px;

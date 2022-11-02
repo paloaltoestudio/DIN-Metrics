@@ -19,3 +19,4 @@ class Bilateral(models.Model):
     right = models.FloatField('Derecha', null=True, blank=True)
     deficit = models.FloatField('Déficit', null=True, blank=True)
 
+

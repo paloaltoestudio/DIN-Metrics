@@ -51,13 +51,13 @@ def bilateral_data(context, date):
         else:
             date = pd.to_datetime(df['date']).max()
             df = df[(pd.to_datetime(df['date']) == date)]
+        context['df'] = df.to_html(justify='left')
 
         #Bar chart
-        bi_fig = px.bar(df, x= 'jump', y='score', labels={'jump':'Salto', 'score': 'Salto en CM', 'color': 'Pierna'}, color = df['foot'], barmode = 'group')
+        bi_fig = px.bar(df, x= 'jump', y='score', labels={'jump':'Salto', 'score': 'Salto en CM', 'foot': 'Pierna'}, color = df['foot'], barmode = 'group')
         update_plot(bi_fig)
         context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
 
     context['bilaterals'] = bilaterals
-    context['df'] = df.to_html(justify='left')
     context['date'] = date
     #context['is_limit'] = is_limit
