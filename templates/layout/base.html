@@ -112,9 +112,15 @@
                   </button>
                   <ul class="navbar-nav account d-flex flex-row">
                     <li>
-                      <a class="nav-item mr-3" 
+                      <a class="nav-item mr-3 profile_link" 
                         href="{% url 'users:account_detail' request.user.id %}">
-                        <span class="material-icons">person</span>
+                        <span class="top_picture">
+                        {% if request.user.picture.url != '' %}
+                            <img width="30" src="{{ request.user.picture.url }}" alt="">
+                        {% else %}
+                            <span class="material-icons">person</span>
+                        {% endif %}
+                        </span>
                         <span class="d-none d-lg-inline-block">
                           {{ request.user }}{% if request.user.role != 'ATHLETE' %} | {{ request.user.role | title }}{% endif %}
                         </span>

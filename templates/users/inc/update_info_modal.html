@@ -1,0 +1,75 @@
+ <!-- Modal -->
+ <div class="modal fade" id="managerModal" tabindex="-1" aria-labelledby="managerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="managerModalLabel">Información básica</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+                <div class="modal-body">
+                    <form action="{% url 'users:manager_detail' user.id %}" method='post'>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="input-group input-group-outline mb-3 {% if form.first_name.errors %}alert_field{% endif %}">
+                                    <label for="" class="form-label">Nombre</label>
+                                    <input class="form-control" type="text" name="first_name" value="{{ user.first_name }}">
+                                    {% if form.first_name.errors %}
+                                        {% for e in form.first_name.errors %}
+                                            <p class="msg text-danger">{{ e }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                <div class="input-group input-group-outline mb-3 {% if form.last_name.errors %}alert_field{% endif %}">
+                                    <label for="" class="form-label">Apellido</label>
+                                    <input class="form-control" type="text" name="last_name" value="{{ user.last_name }}">
+                                    {% if form.last_name.errors %}
+                                        {% for e in form.last_name.errors %}
+                                            <p class="msg text-danger">{{ e }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                    
+                                <div class="input-group input-group-outline mb-3 {% if form.document.errors %}alert_field{% endif %}">
+                                    <label for="" class="form-label">Cédula</label>
+                                    <input class="form-control" type="text" name="document" value="{{ user.document }}">
+                                    {% if form.document.errors %}
+                                        {% for e in form.document.errors %}
+                                            <p class="msg text-danger">{{ e }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group input-group-outline mb-3 {% if form.phone.errors %}alert_field{% endif %}">
+                                    <label for="" class="form-label">Teléfono</label>
+                                    <input class="form-control" type="text" name="phone" value="{% if user.phone %}{{ user.phone }}{% endif %}">
+                                    {% if form.phone.errors %}
+                                        {% for e in form.phone.errors %}
+                                            <p class="msg text-danger">{{ e }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                    
+                                <div class="input-group input-group-outline mb-3 {% if form.email.errors %}alert_field{% endif %}">
+                                    <label for="" class="form-label">Email</label>
+                                    <input class="form-control" type="email" name="email" value="{{ user.email }}">
+                                    {% if form.email.errors %}
+                                        {% for e in form.email.errors %}
+                                            <p class="msg text-danger">{{ e }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% if referer %}
+                            <input type="text" name="referer" value="{{referer}}" hidden>
+                        {% endif %}
+                        <input type="text" name="type" value="manager_info" hidden>
+                        <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
+                        <button class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>

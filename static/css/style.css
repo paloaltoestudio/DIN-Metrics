@@ -1,4 +1,27 @@
 /* General */
+.profile_link {
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.top_picture {
+  margin-right: 10px;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ccc;
+  transition: all 0.2s ease;
+  border: 1px solid #2f3a48;
+}
+.profile_link:hover .top_picture {
+  border: 1px solid #000;
+}
+
 .navbar-transparent {
   padding-top: 0 !important;
 }

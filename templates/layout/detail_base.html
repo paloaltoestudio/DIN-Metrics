@@ -8,7 +8,7 @@
     </a>
     {% endif %}
 
-    {% if user.athlete.manager == request.user or request.user.role != 'MANAGER' %}
+    {% if user.athlete.manager == request.user or request.user == user or request.user.role == 'ADMIN' %}
 
     <div class="card user card-body p-4">
         <div class="d-flex justify-content-between">

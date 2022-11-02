@@ -1,11 +1,13 @@
 {% extends 'layout/detail_base.html' %}
 
 {% block user %}
-        
+
     <div class="row">
         <div class="col-sm-6 col-lg-4">
             <div class="picture">
-                <a href="#" data-bs-toggle="modal" data-bs-target="#pictureModal"><i class="fs-6 material-icons">edit</i></a>
+                {% if request.user.role == 'ADMIN' %}
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#pictureModal"><i class="fs-6 material-icons">edit</i></a>
+                {% endif %}
                 <img width="100" src="{% if user.picture %}{{ user.picture.url }}{% else %}/static/img/profile_pic.jpg{% endif %}" alt="">
             </div>
             <h6>Información Personal {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
@@ -48,43 +50,7 @@
 
     {% if request.user.role != 'MANAGER' %}
 
-        <!-- Modal -->
-        <div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="pictureModalLabel">Foto</h5>
-                        <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
-                    </div>
-                    <form action="{% url 'users:user_update' user.id %}" enctype="multipart/form-data" method='post'>
-                    <div class="modal-body">
-                        {% csrf_token %}
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="input-group input-group-outline mb-3 {% if form.last_name.errors %}alert_field{% endif %}">
-                                        <label class="form-label">Foto</label>
-                                        <input class="form-control" type="file" name="picture">
-                                        {% if form.picture.errors %}
-                                            {% for e in form.picture.errors %}
-                                                <p class="msg text-danger">{{ e }}</p>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="text" name="type" value="picture" hidden>
-                            <input type="text" placeholder="id" name="id" value="{{ user.id }}" hidden>
-                            
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary">Guardar</button>
-                        <a href="#" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</a>
-                    </div>
-                </form>
-                </div>
-            </div>
-        </div>
+        {% include './inc/picture_modal.html' %}
 
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

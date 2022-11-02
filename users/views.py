@@ -265,16 +265,28 @@ class PasswordChangeDone(LoginRequiredMixin, PasswordChangeDoneView):
 def manager_update(request, id):
     user = get_object_or_404(User, id = id)
 
+    if user:
+        role = user.role
+
     if request.method == 'POST':
         form = UpdateUserForm(data=request.POST, instance=user)
             
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, 'Empresario Actualizado')
-            return redirect('users:manager_detail', id)
 
         else:
             return render(request, 'users/manager_detail.html', {'user': user, 'id': id, 'form': form})
+
+        if 'referer' in request.POST and request.POST['referer'] == 'profile_info':
+                print('referer')
+                return redirect('users:account_detail', id)
+
+        else:
+            if role and role == 'MANAGER':
+                return redirect('users:manager_detail', id)
+            else:
+                return redirect('users:manager_detail', id)
 
     return render(request, 'users/manager_detail.html', {'user': user, 'id': id})
 
@@ -370,11 +382,15 @@ def user_update(request, id):
                 #return redirect('users:user_detail', id)
                 return render(request, 'users/detail.html', {'user': user, 'id': id, 'form': form, 'form_type': 'legalModal'})
 
+        if 'referer' in request.POST and request.POST['referer'] == 'profile_info':
+            print('referer')
+            return redirect('users:account_detail', id)
 
-        if role and role == 'ATHLETE':
-            return redirect('users:user_detail', id)
         else:
-            return redirect('users:manager_detail', id)
+            if role and role == 'ATHLETE':
+                return redirect('users:user_detail', id)
+            else:
+                return redirect('users:manager_detail', id)
 
 class UserLoginView(LoginView):
     next_page = 'users:index'
