@@ -61,4 +61,4 @@ def jump_data(context):
 
     context['fig'] = fig.to_html(include_plotlyjs="cdn", full_html=False)
     context['jumps'] = jumps
-    #context['df'] = df.to_html(justify='left')
+    context['df'] = df.to_html(justify='left')

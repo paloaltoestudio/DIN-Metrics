@@ -1,3 +1,6 @@
+#Python
+import datetime
+
 #Django
 from django.db.models import Sum, Count, Avg
 
@@ -12,26 +15,49 @@ from bilateral.models import Bilateral
 #utils
 from .data_utils import update_plot
 
-def bilateral_data(context):
+def bilateral_data(context, date):
     
     bilaterals = Bilateral.objects.filter(athlete=context['user'].athlete).order_by('date')
-    bilaterals_total = Bilateral.objects.values('date').annotate(Sum('deficit')).filter(athlete=context['user'].athlete)
+    #bilaterals_filter = Bilateral.objects.filter(athlete=context['user'].athlete, date=date).order_by('date')
 
     is_limit = len(bilaterals) >= 10
 
-    if len(bilaterals) > 0:
-        d = {
-            'date': [bilateral_total['date'] for bilateral_total in bilaterals_total],
-            'deficit': [bilateral_total['deficit__sum'] for bilateral_total in bilaterals_total],
-        }
+    data = {
+        'date': [],
+        'jump': [],
+        'foot': [],
+        'score': [],
+    }
 
-        df = pd.DataFrame(data=d)
-        df.set_index('date', inplace=True)
+    if len(bilaterals) > 0:
+        for bilateral in bilaterals:
+            if(bilateral.left >= 0):
+                data['date'].append(bilateral.date)
+                data['jump'].append(bilateral.jump)
+                data['foot'].append('Izquierda')
+                data['score'].append(bilateral.left)
+            
+            if(bilateral.right >= 0):
+                data['date'].append(bilateral.date)
+                data['jump'].append(bilateral.jump)
+                data['foot'].append('Derecha')
+                data['score'].append(bilateral.right)
+
+
+        df = pd.DataFrame(data=data, index=data['date'])
+        if date != '':
+            date = datetime.datetime.strptime(date, '%Y-%m-%d')
+            df = df[(pd.to_datetime(df['date']) == date)]
+        else:
+            date = pd.to_datetime(df['date']).max()
+            df = df[(pd.to_datetime(df['date']) == date)]
 
         #Bar chart
-        bi_fig = px.bar(df, labels={'value':'Deficit', 'date': 'Fecha'}, barmode = 'group')
+        bi_fig = px.bar(df, x= 'jump', y='score', labels={'jump':'Salto', 'score': 'Salto en CM', 'color': 'Pierna'}, color = df['foot'], barmode = 'group')
         update_plot(bi_fig)
         context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
 
     context['bilaterals'] = bilaterals
-    context['is_limit'] = is_limit
+    context['df'] = df.to_html(justify='left')
+    context['date'] = date
+    #context['is_limit'] = is_limit

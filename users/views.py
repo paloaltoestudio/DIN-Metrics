@@ -188,11 +188,21 @@ class BilateralDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        if 'date' in self.request.GET:
+            date = self.request.GET['date']
+        else:
+            date = ''
         
         #Get data from bilateral and make chart
-        bilateral_data(context)
+        bilateral_data(context, date)
 
         return context
+
+
+def bilateral_date(request, id):
+    if request.method == 'POST':
+        return redirect('users:bilateral_detail', id)
 
 
 class ProfileFVDetail(LoginRequiredMixin, DetailView):
