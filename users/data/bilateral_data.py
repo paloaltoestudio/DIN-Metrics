@@ -7,6 +7,7 @@ from django.db.models import Sum, Count, Avg
 #third party
 import pandas as pd
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 import plotly.express as px
 
 #models
@@ -25,23 +26,18 @@ def bilateral_data(context, date):
     data = {
         'date': [],
         'jump': [],
-        'foot': [],
-        'score': [],
+        'score_left': [],
+        'score_right': [],
+        'deficit': [],
     }
 
     if len(bilaterals) > 0:
         for bilateral in bilaterals:
-            if(bilateral.left >= 0):
                 data['date'].append(bilateral.date)
                 data['jump'].append(bilateral.jump)
-                data['foot'].append('Izquierda')
-                data['score'].append(bilateral.left)
-            
-            if(bilateral.right >= 0):
-                data['date'].append(bilateral.date)
-                data['jump'].append(bilateral.jump)
-                data['foot'].append('Derecha')
-                data['score'].append(bilateral.right)
+                data['deficit'].append(bilateral.deficit)
+                data['score_left'].append(bilateral.left)
+                data['score_right'].append(bilateral.right)
 
 
         df = pd.DataFrame(data=data, index=data['date'])
@@ -54,8 +50,66 @@ def bilateral_data(context, date):
         context['df'] = df.to_html(justify='left')
 
         #Bar chart
-        bi_fig = px.bar(df, x= 'jump', y='score', labels={'jump':'Salto', 'score': 'Salto en CM', 'foot': 'Pierna'}, color = df['foot'], barmode = 'group')
+        # bi_fig = px.bar(df, x= 'jump', y='score', labels={'jump':'Salto', 'score': 'Salto en CM', 'foot': 'Pierna'}, color = df['foot'], barmode = 'group')
+
+        bi_fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+        bi_fig.add_trace(
+            go.Bar(x=df['jump'], y=df['score_left'], name="izquierdo"),
+            secondary_y=False,
+        )
+        bi_fig.add_trace(
+            go.Bar(x=df['jump'], y=df['score_right'], name="derecho"),
+            secondary_y=False,
+        )
+
+        bi_fig.update_layout(
+            barmode="group",
+            xaxis_title='Tipo de salto',
+        )
+
+        bi_fig.add_trace(
+            go.Scatter(x=df['jump'], 
+                       y=df['deficit'], 
+                       mode="markers+lines+text", 
+                       name="deficit", 
+                       text=df['deficit'], 
+                       textposition="top center",
+                       textfont=dict(
+                            size=14,
+                        )),
+            secondary_y=True,
+        )
+
+        bi_fig.update_layout(
+            margin=dict(t=50)
+        )
+
+
+        bi_fig['layout']['yaxis']['title']='Salto en cm'
+        bi_fig['layout']['yaxis2']['title']='Déficit'
+
         update_plot(bi_fig)
+
+        # trace1 = go.Bar(x = df['jump'],
+        #         y =df['score_left'],
+        #         name='izquierda',
+        #         marker = {'color':'#FFD700'})
+
+        # trace2 = go.Bar(x = df['jump'],
+        #         y =df['score_right'],
+        #         name='derecha',
+        #         marker = {'color':'#ccc'})
+        # trace3 = go.Scatter(x = df['jump'],
+        #         y =df['deficit'],
+        #         name='deficit',
+        #         marker = {'color':'#000'})
+
+        # data = [trace1,trace2,trace3]
+
+        # layout = go.Layout(title='Medals by Rank (nested)')
+        # bi_fig = go.Figure(data,layout)
+
         context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
 
     context['bilaterals'] = bilaterals
