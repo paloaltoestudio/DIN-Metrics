@@ -6,25 +6,18 @@
             <table class="table table-striped align-items-center mb-3">
                 <thead class="table-dark">
                     <tr>
-                        <th><strong>Peso (KG)</strong></th>
-                        <th><strong>Vel(m/s)</strong></th>
-                        <th><strong>Vel(m/s)</strong></th>
-                        <th><strong>Vel(m/s)</strong></th>
-                        <th><strong>Vel(m/s)</strong></th>
+                        <th><strong>Fecha</strong></th>
+                        <th><strong>RM</strong></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for profile in profiles %}
                         <tr>
-                            <td>{{ profile.weight }}</td>
-                            <td>{{ profile.speed1 }}</td>
-                            <td>{{ profile.speed2 }}</td>
-                            <td>{{ profile.speed3 }}</td>
-                            <td>{{ profile.speed4 }}</td>
+                            <td><a href="{% url 'users:fv_detail' user.id %}?fv_id={{profile.id}}" class="badge rounded-circle">{{ profile.date }}</a></td>
+                            <td>{{ profile.rm }}</td>
                             <td>
-                                {% include './profile_update_modal.html' with profile=profile %}
-                                {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#profileModal_{{ profile.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                                {% if request.user.role == 'ADMIN' %}<a href="{% url 'users:fv_detail' user.id %}?fv_id={{profile.id}}" class="badge rounded-circle"><i class="fs-6 material-icons">edit</i></a>{% endif %}
                             </td> 
                         </tr>
                     {% endfor %}
@@ -40,9 +33,6 @@
 
 <div class="row">
     <div class="col-12">
-        <h3 class="badge badge-pill badge-success text-white px-3" style="font-size: 20px !important;">RM: {{ rm }}</h3>
-        {% comment %} <iframe src = "{% url 'users:profile_fv_graph' id=user.id %}" width = "768" height = "500" frameBorder="0"></iframe> {% endcomment %}
-
         {% if graph %}
         <div class="graph_wrapper">
             <div class="loader">

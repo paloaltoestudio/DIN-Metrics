@@ -7,14 +7,16 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 #models
-from profile_fv.models import FV
+from profile_fv.models import FV, FV_register
 
 #utils
 from .data_utils import update_plot
 
-def profile_data(context):
-    
-    profiles = FV.objects.filter(athlete=context['user'].athlete)
+def fv_data(self, context):
+    fv_id = self.request.GET['fv_id']
+    fv = FV.objects.filter(id=fv_id)
+    fv = fv[0]
+    fv_registers = FV_register.objects.filter(profile_fv=fv)
 
     # is_limit = len(profiles) >= 5
 
@@ -61,6 +63,7 @@ def profile_data(context):
     #     context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
     #     context['rm'] = rm
         
-    context['profiles'] = profiles
+    context['fv'] = fv
+    context['fv_registers'] = fv_registers
     # context['is_limit'] = is_limit
     

@@ -1,0 +1,46 @@
+{% extends 'layout/detail_base.html' %}
+
+{% block user %}
+<h5>Registro del {{fv.date}}</h5>
+<div class="row">
+    <div class="col-sm-12">
+        <h3>{{ profile.date }}</h3>
+        <div class="table-responsive p-0">
+            <table class="table table-striped align-items-center mb-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th><strong>Peso</strong></th>
+                        <th><strong>Vel 1</strong></th>
+                        <th><strong>Vel 2</strong></th>
+                        <th><strong>Vel 3</strong></th>
+                        <th><strong>Vel 4</strong></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fv_register in fv_registers %}
+                        <tr>
+                            <td>{{ fv_register.weight }}</td>
+                            <td>{{ fv_register.speed1 }}</td>
+                            <td>{{ fv_register.speed2 }}</td>
+                            <td>{{ fv_register.speed3 }}</td>
+                            <td>{{ fv_register.speed4 }}</td>
+                            <td>
+                                {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#profileModal_{{ fv_register.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                                {% include './inc/profile_update_modal.html' with user=user profile_parent=fv profile=fv_register %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'users:profile_fv_detail' user.id %}" class="btn"><i class="material-icons">arrow_back</i> Volver</a>
+            {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+            {% include './inc/profile_create_modal.html' with profile_parent=fv %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock  %}
+
+

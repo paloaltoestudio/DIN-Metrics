@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from .views import (signup, new_manager, Index, UserDetail, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
-                    ProfileFVGraph, BilateralDetail, ManagerView, ManagerDetail, manager_update, AccountDetail,
+                    FVDetail, ProfileFVGraph, BilateralDetail, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
 from fms.views import FmsUpdate
@@ -29,6 +29,7 @@ urlpatterns = [
     path('deportistas/<int:id>/bilateral', BilateralDetail.as_view(), name='bilateral_detail'),
     path('<int:id>/eliminar-bilateral', BilateralDelete.as_view(), name='bilateral_delete'),
     path('deportistas/<int:id>/perfil_fv', ProfileFVDetail.as_view(), name='profile_fv_detail'),
+    path('deportistas/<int:id>/perfil_fv/detalle_fv', FVDetail.as_view(), name='fv_detail'),
     path('deportistas/<int:id>/perfil_fv_graph', ProfileFVGraph.as_view(), name='profile_fv_graph'),
     path('<int:id>/editar-usuario', user_update, name='user_update'),
     path('<int:id>/editar-dolor', PainUpdate.as_view(), name='pain_update'),

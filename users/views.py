@@ -24,6 +24,7 @@ from users.forms import (UpdateUserForm,
                          UpdateAthleteLegal)
 from osteo.models import Osteo
 from fms.models import Fms
+from profile_fv.models import FV_register, FV
 
 #Utils
 from users.utils import age, get_sum
@@ -32,6 +33,7 @@ from users.utils import age, get_sum
 from users.data.jumps_data import jump_data
 from users.data.bilateral_data import bilateral_data
 from users.data.profile_data import profile_data
+from users.data.fv_data import fv_data
 
 #filters
 from users.filters import UserFilter, ManagerFilter
@@ -213,6 +215,26 @@ class ProfileFVDetail(LoginRequiredMixin, DetailView):
         
         #Get data from profile FV and make chart
         profile_data(context)
+
+        return context
+
+
+class FVDetail(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/detail_fv.html'
+    extra_context = {
+        'page': 'user_list_detail',
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        print('context: ', context)
+        print('context: ', self.request.GET['fv_id'])
+        
+        #Get data from profile FV and make chart
+        fv_data(self, context)
 
         return context
 
