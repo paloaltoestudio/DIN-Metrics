@@ -3,7 +3,7 @@
     <div class="col-sm-12">
         <h5>Sentadilla</h5>
         <div class="table-responsive p-0">
-            <table class="table table-striped align-items-center mb-3">
+            <table class="table table-striped align-items-center fv_table mb-3">
                 <thead class="table-dark">
                     <tr>
                         <th><strong>Fecha</strong></th>
@@ -50,5 +50,19 @@
     </div>
 </div>
 
-
+{% block extrajs %}
+<script type="text/javascript">
+     
+    $(document).ready(function() {
+        $(".fv_table").fancyTable({
+           sortOrder:0,
+           pagination: true,
+           perPage: 5,
+           globalSearch:false,
+           searchable:false
+           });
+                     
+    });
+</script>
+{% endblock %}
 
