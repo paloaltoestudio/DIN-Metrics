@@ -1,0 +1,28 @@
+<!-- Modal -->
+<div class="modal fade" id="fvCreateModal" tabindex="-1" aria-labelledby="fvCreateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fvCreateModalLabel">Perfil F/V</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'users:profile_fv_create' user.id %}" method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Fecha</label>
+                                <input class="form-control" type="date" name="date" value="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="text" name="uid" value="{{ user.id }}" hidden>
+                    <input type="text" name="athlete" value="{{ user.athlete.id }}" hidden>
+                    <button class="btn btn-primary">Crear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

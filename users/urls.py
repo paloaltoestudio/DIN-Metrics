@@ -9,7 +9,7 @@ from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
 from fms.views import FmsUpdate
 from neuro.views import NeuroCreateBase, NeuroBaseUpdate, NeuroDelete
 from bilateral.views import BilateralUpdateView, BilateralCreateView, BilateralDelete
-from profile_fv.views import ProfileUpdateView, ProfileCreateView
+from profile_fv.views import ProfileUpdateView, ProfileCreateView, ProfileDelete, FVCreateView, FVDelete
 
 app_name = 'users'
 
@@ -29,7 +29,10 @@ urlpatterns = [
     path('deportistas/<int:id>/bilateral', BilateralDetail.as_view(), name='bilateral_detail'),
     path('<int:id>/eliminar-bilateral', BilateralDelete.as_view(), name='bilateral_delete'),
     path('deportistas/<int:id>/perfil_fv', ProfileFVDetail.as_view(), name='profile_fv_detail'),
+    path('deportistas/<int:id>/crear_perfil_fv', FVCreateView.as_view(), name='profile_fv_create'),
+    path('deportistas/<int:id>/eliminar_perfil_fv', FVDelete.as_view(), name='profile_fv_delete'),
     path('deportistas/<int:id>/perfil_fv/detalle_fv', FVDetail.as_view(), name='fv_detail'),
+    path('deportistas/<int:id>/perfil_fv/eliminar_fv', ProfileDelete.as_view(), name='fv_delete'),
     path('deportistas/<int:id>/perfil_fv_graph', ProfileFVGraph.as_view(), name='profile_fv_graph'),
     path('<int:id>/editar-usuario', user_update, name='user_update'),
     path('<int:id>/editar-dolor', PainUpdate.as_view(), name='pain_update'),

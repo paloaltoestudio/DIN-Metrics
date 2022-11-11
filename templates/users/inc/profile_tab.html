@@ -18,21 +18,23 @@
                             <td>{{ profile.rm }}</td>
                             <td>
                                 {% if request.user.role == 'ADMIN' %}<a href="{% url 'users:fv_detail' user.id %}?fv_id={{profile.id}}" class="badge rounded-circle"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                            
+                                {% include './profile_fv_delete_modal.html' with fv=profile user=user %}
+                                {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fvDeleteModal_{{ profile.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %}
                             </td> 
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            {% if not is_limit %}
-                {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#profileCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
-                {% include './profile_create_modal.html' %}
-            {% endif %}
+                {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fvCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+                {% include './fv_create_modal.html' with user=user %}
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-12">
+        
         {% if graph %}
         <div class="graph_wrapper">
             <div class="loader">

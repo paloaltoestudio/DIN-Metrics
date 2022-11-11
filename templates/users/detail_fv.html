@@ -28,6 +28,9 @@
                             <td>
                                 {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#profileModal_{{ fv_register.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
                                 {% include './inc/profile_update_modal.html' with user=user profile_parent=fv profile=fv_register %}
+                            
+                                {% include './inc/fv_delete_modal.html' with fv=fv_register profile_parent=fv user=user %}
+                                {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fvDeleteModal_{{ fv_register.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -39,6 +42,27 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-12">
+        <h3 class="badge badge-pill badge-success text-white px-3" style="font-size: 20px !important;">RM: {{ rm }}</h3>
+        
+        {% if graph %}
+        <div class="graph_wrapper">
+            <div class="loader">
+                <span>Cargando Gráfico</span>
+                <div class="lds-ripple"><div></div><div></div></div>
+            </div>
+            <div class="graph_inner">
+                {{graph|safe}}
+            </div>
+    
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
 
 
 {% endblock  %}

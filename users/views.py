@@ -229,12 +229,10 @@ class FVDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        print('context: ', context)
-        print('context: ', self.request.GET['fv_id'])
         
         #Get data from profile FV and make chart
-        fv_data(self, context)
+        fv_id = self.request.GET['fv_id']
+        fv_data(fv_id, context)
 
         return context
 

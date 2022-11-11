@@ -12,58 +12,71 @@ from profile_fv.models import FV, FV_register
 #utils
 from .data_utils import update_plot
 
-def fv_data(self, context):
-    fv_id = self.request.GET['fv_id']
+# def get_rm(fv_registers):
+#     if len(fv_registers) > 1:
+#         model = px.get_trendline_results(bi_fig2)
+#         results = model.iloc[0]["px_fit_results"]
+
+#         try:
+#             rm = round(results.params[1]*0.3+results.params[0], 2)
+#             return rm
+#         except IndexError:
+#             print('RM params index error')
+
+
+def fv_data(fv_id, context):
+    # fv_id = self.request.GET['fv_id']
     fv = FV.objects.filter(id=fv_id)
     fv = fv[0]
-    fv_registers = FV_register.objects.filter(profile_fv=fv)
+    fv_registers = FV_register.objects.filter(profile_fv=fv).order_by('weight')
 
-    # is_limit = len(profiles) >= 5
+    rm = 0
 
-    # d = {
-    #     'Peso': [profile.weight for profile in profiles],
-    # }
+    d = {
+        'Peso': [],
+        'Velocidad': [],
+    }
 
-    # for i in range(1,5):
-    #     current_speed = 'speed'+str(i)
-    #     speed = [getattr(profile, current_speed) for profile in profiles]
+    for fv_register in fv_registers:
 
-    #     if any(type(value) == float for value in speed if value is not None):
-    #         d['Velocidad '+str(i)] = speed
+        #Get the max speed per row
+        speeds = [fv_register.speed1 if fv_register.speed1 is not None else 0, 
+                  fv_register.speed2 if fv_register.speed2 is not None else 0,
+                  fv_register.speed3 if fv_register.speed3 is not None else 0,
+                  fv_register.speed4 if fv_register.speed4 is not None else 0,]
 
-    # #Get the max speed per row
-    # max_speeds = []
-    # for p in profiles:
-    #     max_speed = [p.speed1 if p.speed1 is not None else 0, 
-    #                  p.speed2 if p.speed2 is not None else 0,
-    #                  p.speed3 if p.speed3 is not None else 0,
-    #                  p.speed4 if p.speed4 is not None else 0,]
+        d['Peso'].append(fv_register.weight)
+        d['Velocidad'].append(max(speeds))
 
-    #     max_speeds.append(max(max_speed))
+    if len(fv_registers) > 0:
+        df = pd.DataFrame(data=d)
+        df.set_index('Peso', inplace=True)
+        context['df'] = df.to_html(justify='left')
 
+        bi_fig2 = px.scatter(x=df['Velocidad'], y=df.index, title='Perfil F/V', labels={'y':'PESO(KG)', 'x': 'VEL(m/s)'}, trendline="ols", trendline_scope="overall")
+        update_plot(bi_fig2)
+        context['graph'] = bi_fig2.to_html(include_plotlyjs="cdn", full_html=False)
 
-    # if len(profiles) > 1:
-    #     df = pd.DataFrame(data=d)
-    #     df.set_index('Peso', inplace=True)
+        #Get RM from graph model
+        if len(fv_registers) > 1:
+            model = px.get_trendline_results(bi_fig2)
+            results = model.iloc[0]["px_fit_results"]
 
-    #     df2 = pd.DataFrame(data=d)
-    #     df2.set_index('Velocidad 1', inplace=True)
+            try:
+                rm = round(results.params[1]*0.3+results.params[0], 2)
+                context['rm'] = rm
+                
+            except IndexError:
+                print('RM params index error')
 
-    #     bi_fig = px.scatter(df, title='Perfil F/V', labels={'Peso':'PESO(KG)', 'value': 'VEL(m/s'}, trendline="ols", trendline_scope="overall")
-    #     update_plot(bi_fig)
-        
-    #     bi_fig2 = px.scatter(x=max_speeds, y=d['Peso'], title='Perfil F/V', labels={'value':'PESO(KG)', 'Velocidad 1': 'VEL(m/s)'}, trendline="ols", trendline_scope="overall")
-    #     update_plot(bi_fig2)
+        print('df: ', df)
 
-    #     model = px.get_trendline_results(bi_fig2)
-    #     results = model.iloc[0]["px_fit_results"]
-        
-    #     rm = round(results.params[1]*0.3+results.params[0], 2)
-
-    #     context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
-    #     context['rm'] = rm
+    print('rows: ', d)
         
     context['fv'] = fv
     context['fv_registers'] = fv_registers
-    # context['is_limit'] = is_limit
+
+    return rm
+
+    
     
