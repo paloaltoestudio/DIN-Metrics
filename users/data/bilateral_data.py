@@ -91,25 +91,6 @@ def bilateral_data(context, date):
 
         update_plot(bi_fig)
 
-        # trace1 = go.Bar(x = df['jump'],
-        #         y =df['score_left'],
-        #         name='izquierda',
-        #         marker = {'color':'#FFD700'})
-
-        # trace2 = go.Bar(x = df['jump'],
-        #         y =df['score_right'],
-        #         name='derecha',
-        #         marker = {'color':'#ccc'})
-        # trace3 = go.Scatter(x = df['jump'],
-        #         y =df['deficit'],
-        #         name='deficit',
-        #         marker = {'color':'#000'})
-
-        # data = [trace1,trace2,trace3]
-
-        # layout = go.Layout(title='Medals by Rank (nested)')
-        # bi_fig = go.Figure(data,layout)
-
         context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
 
     context['bilaterals'] = bilaterals

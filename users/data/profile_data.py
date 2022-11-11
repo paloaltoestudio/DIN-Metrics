@@ -21,15 +21,19 @@ def profile_data(context):
         'RM':[],
     }
 
-    if len(profiles) > 1:
+    if len(profiles) > 0:
         for profile in profiles:
             d['Fecha'].append(profile.date)
             d['RM'].append(profile.rm)
 
+
         df = pd.DataFrame(data=d)
         df.set_index('Fecha', inplace=True)
-        print(df)
-        bi_fig = px.bar(df, title='Perfil F/V', color=d['RM'], color_continuous_scale=[(0, "red"), (0.4, "yellow"), (0.6, "orange"), (1, "blue")], labels={'value': 'RM'})
+        bi_fig = px.bar(df, title='Perfil F/V', 
+                        color=d['RM'], 
+                        color_continuous_scale=[(0, "red"), (0.4, "yellow"), (0.6, "orange"), (1, "blue")], 
+                        text=d['RM'],
+                        labels={'value': 'RM'})
         update_plot(bi_fig)
         context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
         
