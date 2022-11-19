@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import (signup, new_manager, Index, UserDetail, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
+from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
                     FVDetail, ProfileFVGraph, BilateralDetail, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
@@ -23,6 +23,7 @@ urlpatterns = [
     path('empresarios/<int:id>', manager_update, name='manager_detail'),
     path('deportistas/nuevo/', signup, name='signup'),
     path('deportistas/<int:id>/', UserDetail.as_view(), name='user_detail'),
+    path('deportistas/<int:id>/reporte', ReportDetail.as_view(), name='report_detail'),
     path('deportistas/<int:id>/osteo', OsteoDetail.as_view(), name='osteo_detail'),
     path('deportistas/<int:id>/fms', FMSDetail.as_view(), name='fms_detail'),
     path('deportistas/<int:id>/neuromuscular', JumpDetail.as_view(), name='jump_detail'),

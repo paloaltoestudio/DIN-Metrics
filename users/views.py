@@ -93,6 +93,28 @@ class ManagerView(LoginRequiredMixin, ListView):
         return ManagerFilter(self.request.GET, User.objects.filter(role = 'MANAGER').order_by('-date_joined')).qs
 
 
+class ReportDetail(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/report_detail.html'
+    extra_context = {
+        'page': 'user_list_detail',
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        managers = User.objects.filter(role = 'MANAGER')
+
+        context['managers'] = managers
+
+        #Get Osteomuscular data
+        osteo = Osteo.objects.filter(athlete = context['user'].athlete)
+        if len(osteo) > 0:
+            context['osteo'] = osteo[0]
+            
+        return context
+
+
 class UserDetail(LoginRequiredMixin, DetailView):
     model = User
     pk_url_kwarg = 'id'

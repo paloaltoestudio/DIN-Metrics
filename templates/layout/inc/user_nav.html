@@ -21,5 +21,8 @@
         <li class="nav-item" role="presentation">
             <a href="{% url 'users:profile_fv_detail' user.id %}" class="nav-link {% if 'perfil_fv' in request.path %}active{% endif %}">Perfil F/V</a>
         </li>
+        <li class="nav-item" role="presentation">
+            <a href="{% url 'users:report_detail' user.id %}" class="nav-link {% if 'reporte' in request.path %}active{% endif %}">Reporte Completo</a>
+        </li>
     </ul>
 </div>
