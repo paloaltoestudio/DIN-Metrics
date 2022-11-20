@@ -35,14 +35,14 @@
 <div class="row">
     <div class="col-12">
         
-        {% if graph %}
+        {% if fv_graph %}
         <div class="graph_wrapper">
             <div class="loader">
                 <span>Cargando Gráfico</span>
                 <div class="lds-ripple"><div></div><div></div></div>
             </div>
             <div class="graph_inner">
-                {{ graph|safe }}
+                {{ fv_graph|safe }}
             </div>
     
         </div>

@@ -1,6 +1,18 @@
 {% extends 'layout/detail_base.html' %}
 
 {% block user %}
+<hr>
+<div class="row">
+    <div class="col-sm-6">
+        <h5 class="mb-0"><strong>Reporte Completo</strong></h5>
+        <p class="mb-0">Revisa la información y descárgala en PDF</p>
+    </div>
+    <div class="col-sm-6">
+        <a id="generate" class="generate btn btn-primary" href="#!"><i class="mr-2 material-icons">download</i>Descargar PDF</a>
+    </div>
+</div>
+
+<hr>
 
 <div class="source">
     <div class="row">
@@ -54,6 +66,7 @@
     <hr>
 
     <div>
+        <h3>FMS</h3>
         <h6>Evaluación dolor, sensibilidad, inflamación, edema</h6>
         <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
         <div class="row">
@@ -261,12 +274,84 @@
     </div>
 </div>
 
-    <div id="preview" style="left: -1000000px; position:absolute;"></div>
+<div class="source">
+    <h3>Osteomuscular</h3>
+    {% include './inc/fms_tab.html' %}
+</div>
 
-    <a id="generate" class="generate btn btn-primary" href="#!">Descargar PDF</a>
+<div class="source">
+    {% if fig %}
+    <h3>Neuromuscular</h3>
+    <div class="graph_wrapper">
+        <div class="loader">
+            <span>Cargando Gráfico</span>
+            <div class="lds-ripple"><div></div><div></div></div>
+        </div>
+        <div class="graph_inner">
+            {{ fig|safe }}
+        </div>
+    </div>
+    {% endif %}
+
+    <hr>
+
+    <h3>Déficit Bilateral</h3>
+    {% if graph %}
+    <div class="mt-4" style="width: 400px">
+        <form action="{% url 'users:bilateral_detail' user.id %}" method="get">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group input-group-outline">
+                        <input class="form-control mt-2" type="date" name="date" value="{% if date %}{{date|date:'Y-m-d'}}{% endif %}">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group input-group-outline">
+                        <button class="btn btn-secondary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <h4 class="mt-3">Fecha: {{ date|date:'j'}} de {{ date|date:'F'}} de {{ date|date:'Y'}}</h4>
+    <div class="graph_wrapper">
+        <div class="loader">
+            <span>Cargando Gráfico</span>
+            <div class="lds-ripple"><div></div><div></div></div>
+        </div>
+        <div class="graph_inner">
+            {{ graph|safe }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<hr>
+
+<div class="source">
+    <h3>Perfil F/V</h3>
+    {% if fv_graph %}
+    <div class="graph_wrapper">
+        <div class="loader">
+            <span>Cargando Gráfico</span>
+            <div class="lds-ripple"><div></div><div></div></div>
+        </div>
+        <div class="graph_inner">
+            {{ fv_graph|safe }}
+        </div>
+
+    </div>
+    {% endif %}
+</div>
+
+<div id="preview"></div>
+
+<a id="generate" class="generate btn btn-primary" href="#!"><i class="mr-2 material-icons">download</i>Descargar PDF</a>
 
 {% endblock  %}
 
+{% load static %}
 {% block extrajs %}
     <script>
         document.addEventListener('DOMContentLoaded', function(){
@@ -284,48 +369,60 @@
 
                 const sources = [...document.querySelectorAll(".source")]
                 
-                
                 var doc = new jsPDF(options);
                 doc.setFont('Arial')
                 doc.getFontSize(11)
 
-                sources.map(function(source, i){
-                    console.log(source, i)
+                console.log('len: ', sources.length)
 
-                    try{
-                        html2canvas(source,{
-                            allowTaint: true,
-                            useCORS: true,
-                            scale: 1
-                        }).then(canvas => {
-                            document.querySelector('#preview').appendChild(canvas)
-                            var image = canvas.toDataURL("image/png")
+                let initial_counter = 0
+                const html_canvas = function(initial_counter){
+                    for(let i = initial_counter; i < sources.length; i++){
+                        try{
+                            html2canvas(sources[i],{
+                                letterRendering:true,
+                                allowTaint: true,
+                                useCORS: true,
+                                scale: 1,
+                                dpi: 144,
+                            }).then(function(canvas){
+                                console.log(canvas)
+                                const canvas_result = document.querySelector('#preview').appendChild(canvas)
     
-                            const canvas_ratio = canvas.height / canvas.width
-                            const image_width = 20
-                            const image_height = canvas_ratio * image_width
-                            
-                            doc.addImage(image, 'PNG', 0.5, 0.5, image_width, image_height)
-                            
-                            if(parseInt(i+1) < parseInt(sources.length)){
-                                doc.addPage("letter", "p");
-                            }
+                                var image = canvas_result.toDataURL("image/png")
+                                const canvas_ratio = canvas_result.height / canvas_result.width
+                                const image_width = 20
+                                const image_height = canvas_ratio * image_width
+                                
+                                const header_img = "{% static 'img/pdf_header.jpg' %}"
+                                doc.addImage(header_img, 'JPG', 0.5, 0.5, 20.5, 1.66)
+                                doc.addImage(image, 'PNG', 0.5, 3, image_width, image_height)
+                                
+                                if(parseInt(i+1) < parseInt(sources.length)){
+                                    doc.addPage("letter", "p");
+                                    html_canvas(i+1)
+                                }
+    
+                                if(i+1 == sources.length){
+                                    const name = 'Dinametrics_reporte_' + '{{user.first_name}} _ {{user.last_name}}' + '.pdf'
+                                    doc.save(name);
+                                }
+                            })
+                        } catch(error){console.log(error)}
+                        break;
+                    }
+                }
 
-                            if(i+1 == sources.length){
-                                doc.save('test.pdf');
-                            }
-                        });
-                    } catch(error){console.log(error)}
+                html_canvas(initial_counter)
 
-                })
-                
             }
             
-            const generateBtn = document.querySelector('.generate')
-            generateBtn.addEventListener('click', function(e){
-                generate(e)
+            const generateBtns = [...document.querySelectorAll('.generate')]
+            generateBtns.forEach(function(generateBtn){
+                generateBtn.addEventListener('click', function(e){
+                    generate(e)
+                })
             })
-
         })
     </script>
 {% endblock %}
