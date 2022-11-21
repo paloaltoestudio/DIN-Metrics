@@ -12,23 +12,14 @@ from profile_fv.models import FV, FV_register
 #utils
 from .data_utils import update_plot
 
-# def get_rm(fv_registers):
-#     if len(fv_registers) > 1:
-#         model = px.get_trendline_results(bi_fig2)
-#         results = model.iloc[0]["px_fit_results"]
-
-#         try:
-#             rm = round(results.params[1]*0.3+results.params[0], 2)
-#             return rm
-#         except IndexError:
-#             print('RM params index error')
-
 
 def fv_data(fv_id, context):
+    
     # fv_id = self.request.GET['fv_id']
     fv = FV.objects.filter(id=fv_id)
     fv = fv[0]
     fv_registers = FV_register.objects.filter(profile_fv=fv).order_by('weight')
+    
 
     rm = 0
 

@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 #models
-from profile_fv.models import FV
+from profile_fv.models import FV, FV_observation
 
 #utils
 from .data_utils import update_plot
@@ -12,6 +12,11 @@ from .data_utils import update_plot
 def profile_data(context):
     
     profiles = FV.objects.filter(athlete=context['user'].athlete).order_by('date')
+
+    fv_observations = FV_observation.objects.filter(athlete=context['user'].athlete)
+
+    if(fv_observations and len(fv_observations) > 0):
+        context['fv_observations'] = fv_observations[0]
     
     d = {
         'Fecha':[],

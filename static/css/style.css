@@ -359,6 +359,34 @@ th[aria-sort="descending"] .sortArrow {
 }
 
 
+/* Report */
+.loading_report_wrapper {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  z-index: 10;
+}
+
+.loading_report {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  height: 300px;
+  background: #fff;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
 
 /* footer */
 footer {

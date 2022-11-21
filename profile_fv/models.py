@@ -19,3 +19,8 @@ class FV_register(models.Model):
     speed2 = models.FloatField('Velocidad 2', null=True, blank=True)
     speed3 = models.FloatField('Velocidad 3', null=True, blank=True)
     speed4 = models.FloatField('Velocidad 4', null=True, blank=True)
+
+
+class FV_observation(models.Model):
+    athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE, blank=True, null=True, related_name='fv_observations')
+    observation = models.CharField('Observaciones', max_length=200, blank=True, null=True)

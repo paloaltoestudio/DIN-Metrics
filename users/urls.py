@@ -12,7 +12,8 @@ from neuro.views import (NeuroCreateBase, NeuroBaseUpdate, NeuroDelete,
                         NeuroObservationsEditView)
 from bilateral.views import (BilateralUpdateView, BilateralCreateView, BilateralDelete,
                             BilateralObservationCreateView, BilateralObservationUpdateView, BilateralObservationDeleteView)
-from profile_fv.views import ProfileUpdateView, ProfileCreateView, ProfileDelete, FVCreateView, FVDelete
+from profile_fv.views import (ProfileUpdateView, ProfileCreateView, ProfileDelete, FVCreateView, FVDelete,
+                              ProfileObservationsCreateView, ProfileObservationsUpdateView, ProfileObservationsDeleteView)
 
 app_name = 'users'
 
@@ -31,6 +32,9 @@ urlpatterns = [
     path('deportistas/<int:id>/fms', FMSDetail.as_view(), name='fms_detail'),
     path('deportistas/<int:id>/neuromuscular', JumpDetail.as_view(), name='jump_detail'),
     path('deportistas/<int:id>/bilateral', BilateralDetail.as_view(), name='bilateral_detail'),
+    path('deportistas/<int:id>/perfil_fv/observaciones', ProfileObservationsCreateView.as_view(), name='fv_observation_add'),
+    path('deportistas/<int:id>/perfil_fv/editar-observaciones', ProfileObservationsUpdateView.as_view(), name='fv_observation_edit'),
+    path('deportistas/<int:id>/perfil_fv/borrar-observaciones', ProfileObservationsDeleteView.as_view(), name='fv_observation_delete'),
     path('deportistas/<int:id>/perfil_fv', ProfileFVDetail.as_view(), name='profile_fv_detail'),
     path('deportistas/<int:id>/crear_perfil_fv', FVCreateView.as_view(), name='profile_fv_create'),
     path('deportistas/<int:id>/eliminar_perfil_fv', FVDelete.as_view(), name='profile_fv_delete'),

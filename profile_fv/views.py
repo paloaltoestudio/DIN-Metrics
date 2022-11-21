@@ -3,10 +3,34 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
 #Models
-from .models import FV, FV_register
+from .models import FV, FV_register, FV_observation
 
 #utils
 from users.data.fv_data import fv_data
+
+
+class ProfileObservationBase:
+    model = FV_observation
+
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:profile_fv_detail', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        return url
+
+
+class ProfileObservationsUpdateView(ProfileObservationBase, UpdateView):
+    fields = ['observation',]
+    pk_url_kwarg = 'id'
+
+
+class ProfileObservationsCreateView(ProfileObservationBase, CreateView):
+    fields = ['athlete', 'observation',]
+
+
+class ProfileObservationsDeleteView(ProfileObservationBase, DeleteView):
+    pk_url_kwarg = 'id'
+
 
 class FVBase:
     def get_success_url(self):

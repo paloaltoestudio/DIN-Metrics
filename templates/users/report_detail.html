@@ -2,7 +2,15 @@
 
 {% block user %}
 <hr>
+{% load static %}
 <div class="row">
+    <div class="loading_report_wrapper">
+        <div class="loading_report">
+            <img src="{% static 'img/loading.gif' %}" width="50" alt="">
+            <h3>Generando Reporte</h3>
+        </div>
+    </div>
+    
     <div class="col-sm-6">
         <h5 class="mb-0"><strong>Reporte Completo</strong></h5>
         <p class="mb-0">Revisa la información y descárgala en PDF</p>
@@ -348,6 +356,12 @@
 
         <div class="source">
             <h3>Perfil F/V</h3>
+
+            <h6>Observaciones</h6>
+            {% if fv_observations %}
+            <p class="ml-2">{{fv_observations.observation}}</p>
+            {% endif %}
+
             {% if fv_graph %}
             <div class="graph_wrapper">
                 <div class="loader">
@@ -699,6 +713,12 @@
     
     <div>
         <h3>Perfil F/V</h3>
+
+        <h6>Observaciones</h6>
+        {% if fv_observations %}
+        <p class="ml-2">{{fv_observations.observation}}</p>
+        {% endif %}
+
         {% if fv_graph_mobile %}
         <div class="graph_wrapper">
             <div class="loader">
@@ -725,11 +745,13 @@
 {% block extrajs %}
     <script>
         document.addEventListener('DOMContentLoaded', function(){
+            const loading_report = document.querySelector('.loading_report_wrapper')
             window.html2canvas = html2canvas
             window.jsPDF = window.jspdf.jsPDF
 
             function generate(e) {
                 e.preventDefault()
+                loading_report.style.display = 'block'
 
                 const options = {
                     orientation: 'p',
@@ -776,6 +798,7 @@
                                 if(i+1 == sources.length){
                                     const name = 'Dinametrics_reporte_' + '{{user.first_name}}_{{user.last_name}}' + '.pdf'
                                     doc.save(name);
+                                    loading_report.style.display = 'none'
                                 }
                             })
                         } catch(error){console.log(error)}
