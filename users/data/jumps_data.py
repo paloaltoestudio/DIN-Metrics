@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 #models
-from neuro.models import SJ, CMJ, DROPS, Q
+from neuro.models import SJ, CMJ, DROPS, Q, NeuroObservations
 
 #utils
 from .data_utils import update_plot
@@ -17,6 +17,11 @@ def jump_data(context):
     cmj = CMJ.objects.filter(athlete=context['user'].athlete)
     drops = DROPS.objects.filter(athlete=context['user'].athlete)
     q = Q.objects.filter(athlete=context['user'].athlete)
+    observations = NeuroObservations.objects.filter(athlete=context['user'].athlete)
+
+    if(len(observations) > 0):
+        observations = observations[0]
+        context['neuro_observations'] = observations
 
     jumps = []
 
@@ -62,3 +67,4 @@ def jump_data(context):
     context['fig'] = fig.to_html(include_plotlyjs="cdn", full_html=False)
     context['jumps'] = jumps
     context['df'] = df.to_html(justify='left')
+    

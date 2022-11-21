@@ -7,7 +7,9 @@ from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoD
                     PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
 from fms.views import FmsUpdate
-from neuro.views import NeuroCreateBase, NeuroBaseUpdate, NeuroDelete
+from neuro.views import (NeuroCreateBase, NeuroBaseUpdate, NeuroDelete, 
+                        NeuroObservationsView, NeuroObservationsDeleteView,
+                        NeuroObservationsEditView)
 from bilateral.views import BilateralUpdateView, BilateralCreateView, BilateralDelete
 from profile_fv.views import ProfileUpdateView, ProfileCreateView, ProfileDelete, FVCreateView, FVDelete
 
@@ -41,6 +43,9 @@ urlpatterns = [
     path('<int:id>/editar-flex', FlexUpdate.as_view(), name='flex_update'),
     path('<int:id>/editar-fms', FmsUpdate.as_view(), name='fms_update'),
     path('<int:id>/crear-neuro', NeuroCreateBase.as_view(), name='neuro_create'),
+    path('<int:id>/neuro/observaciones', NeuroObservationsView.as_view(), name='neuro_observation_add'),
+    path('<int:id>/neuro/editar-observaciones', NeuroObservationsEditView.as_view(), name='neuro_observation_edit'),
+    path('<int:id>/neuro/borrar-observaciones', NeuroObservationsDeleteView.as_view(), name='neuro_observation_delete'),
     path('<int:id>/editar-neuro', NeuroBaseUpdate.as_view(), name='neuro_update'),
     path('<int:id>/eliminar-neuro', NeuroDelete.as_view(), name='neuro_delete'),
     path('<int:id>/editar-bilateral', BilateralUpdateView.as_view(), name='bilateral_update'),

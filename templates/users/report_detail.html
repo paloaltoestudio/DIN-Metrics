@@ -7,7 +7,7 @@
         <h5 class="mb-0"><strong>Reporte Completo</strong></h5>
         <p class="mb-0">Revisa la información y descárgala en PDF</p>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-6 text-right">
         <a id="generate" class="generate btn btn-primary" href="#!"><i class="mr-2 material-icons">download</i>Descargar PDF</a>
     </div>
 </div>
@@ -282,6 +282,15 @@
 <div class="source">
     {% if fig %}
     <h3>Neuromuscular</h3>
+    <hr>
+
+    <div class="notes">
+        <h4>Observaciones</h4>
+
+        {% if neuro_observations %}
+        <p class="ml-2">{{neuro_observations.observations}}</p>
+        {% endif %}
+    </div>
     <div class="graph_wrapper">
         <div class="loader">
             <span>Cargando Gráfico</span>
@@ -345,7 +354,7 @@
     {% endif %}
 </div>
 
-<div id="preview"></div>
+<div id="preview" style="position:absolute; left: -10000px;"></div>
 
 <a id="generate" class="generate btn btn-primary" href="#!"><i class="mr-2 material-icons">download</i>Descargar PDF</a>
 

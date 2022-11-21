@@ -1,0 +1,26 @@
+<!-- Modal -->
+<div class="modal fade" id="neuro_observations_edit_modal" tabindex="-1" aria-labelledby="observationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'users:neuro_observation_edit' observation.id %}" method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Observación</label>
+                                <textarea class="form-control" name="observations" id="" cols="30" rows="10">{{observation.observations}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="text" name="uid" value="{{ user.id }}" hidden>
+                    <button class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

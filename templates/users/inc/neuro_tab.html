@@ -30,18 +30,35 @@
     </table>
 </div>
 <div>
-{% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#neuroCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
-{% include './neuro_create_modal.html' %}
+
+<div class="add">
+    {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#neuroCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+    {% include './neuro_create_modal.html' %}
+</div>
+
+<hr>
+
+<div class="notes">
+    <h4>Observaciones</h4>
+    {% if request.user.role == 'ADMIN' and not neuro_observations %}<a href="#" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#neuro_observations_add_modal">Agregar Observación<i class="fs-6 material-icons">add</i></a>{% endif %}
+    {% include './neuro_observations_add_modal.html' %}
+
+    {% if neuro_observations %}
+    <p class="ml-2">{{neuro_observations.observations}}</p>
+    {% if request.user.role == 'ADMIN' %}
+        <a href="#" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#neuro_observations_edit_modal">Editar Observación<i class="fs-6 ml-2 material-icons">edit</i></a>
+        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#neuro_observations_delete_modal">Borrar Observación<i class="fs-6 ml-2 material-icons">delete</i></a>
+    {% endif %}
+    {% include './neuro_observations_edit_modal.html' with user=user observation=neuro_observations %}
+    {% include './neuro_observations_delete_modal.html' with user=user observation=neuro_observations %}
+    {% endif %}
+</div>
+
 </div>
 
 {% endif %}
 
-{% comment %} {{ df|safe }} {% endcomment %}
-
-{% comment %} {% for sj_item in sj %}
-{{ sj_item.date }}
-{{ sj_item.score }}
-{% endfor %} {% endcomment %}
+<hr>
 
 {% if fig %}
 <div class="graph_wrapper">

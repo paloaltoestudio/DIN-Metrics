@@ -4,9 +4,6 @@
         
     {% include './inc/neuro_tab.html' with jump=jump athlete=user.athlete %}
 
-    {% if request.user.role != 'MANAGER' %}
-        {% include './inc/fms_modal.html' %}
-    {% endif %}
     {% comment %} end if edit user permission {% endcomment %}
 
 {% endblock  %}

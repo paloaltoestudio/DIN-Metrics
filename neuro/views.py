@@ -2,8 +2,32 @@ from django.views.generic import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
 #Models
-from .models import SJ, CMJ, DROPS, Q
+from .models import SJ, CMJ, DROPS, Q, NeuroObservations
 from users.models import Athlete
+
+
+class ObservationsBase:
+    model = NeuroObservations
+
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:jump_detail', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        return url
+
+class NeuroObservationsView(ObservationsBase, CreateView):
+    fields = ['observations', 'athlete']
+
+
+class NeuroObservationsDeleteView(ObservationsBase, DeleteView):
+    model = NeuroObservations
+    pk_url_kwarg = 'id'
+
+
+class NeuroObservationsEditView(ObservationsBase, UpdateView):
+    pk_url_kwarg = 'id'
+    fields = ['observations', ]
+
 
 class NeuroBase:
     def post(self, request, *args, **kwargs):

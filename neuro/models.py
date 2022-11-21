@@ -4,6 +4,13 @@ from django.db import models
 #models
 from users.models import Athlete
 
+class NeuroObservations(models.Model):
+    observations = models.CharField('Observaciones', max_length=200, blank=True, null=True)
+    athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE, blank=True, null=True, related_name='neuro_observations')
+
+    def __str__(self):
+        return 'Neuro Observation'
+
 class NeuroBase(models.Model):
     date = models.DateField(null=True, blank=True)
     score = models.FloatField(null=True, blank=True)
