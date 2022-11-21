@@ -65,6 +65,7 @@ def jump_data(context):
     #fig = px.line(df, labels={'index':'Meses', 'value': 'Salto en CM'}, markers=True)
 
     context['fig'] = fig.to_html(include_plotlyjs="cdn", full_html=False)
+    context['fig_mobile'] = fig.to_html(include_plotlyjs="cdn", full_html=False)
     context['jumps'] = jumps
     context['df'] = df.to_html(justify='left')
     

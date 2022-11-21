@@ -13,353 +13,707 @@
 </div>
 
 <hr>
+<div class="source_wrapper" style="cursor: grab; overflow-x: scroll;">
+    <div style="width:1000px;">
+        <div class="source">
+            <div class="row">
+                <div class="col-2 col-sm-6 col-lg-2 text-center">
+                    <div class="picture" style="margin:auto; margin-bottom: 10px;">
+                        <img width="100" src="{% if user.picture %}{{ user.picture.url }}{% else %}/static/img/profile_pic.jpg{% endif %}" alt="">
+                    </div>
+                    <h6>{{user.first_name}} {{user.last_name}}</h6>
+                    
+                </div>
 
-<div class="source">
-    <div class="row">
-        <div class="col-sm-6 col-lg-2 text-center">
-            <div class="picture" style="margin:auto; margin-bottom: 10px;">
-                <img width="100" src="{% if user.picture %}{{ user.picture.url }}{% else %}/static/img/profile_pic.jpg{% endif %}" alt="">
+                <div class="col-3 col-lg-3">
+                    <h6>Información Personal</h6>
+                    <ul class="list-group">
+                        <li class="list-group-item p-0"><strong>Cédula:</strong> {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
+                        <li class="list-group-item p-0"><strong>Nacimiento:</strong> {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
+                        <li class="list-group-item p-0"><strong>Edad:</strong> {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
+                        <li class="list-group-item p-0"><strong>Género:</strong> {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
+                        <li class="list-group-item p-0"><strong>Teléfono:</strong> {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
+                        <li class="list-group-item p-0"><strong>Email:</strong> {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
+                    </ul>
+                </div>
+
+                <div class="col-3 col-sm-6 col-lg-3">
+                    <h6>Información Deportiva</h6>
+                    <ul class="list-group">
+                    <li class="list-group-item p-0"><strong>Equipo:</strong> {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Deporte:</strong> {% if user.athlete.sport %} {{ user.athlete.sport }} {% else %} --- {% endif %}</li>
+                    </ul>
+
+                    <ul class="list-group">
+                    <h6>Medidas</h6>
+                    <li class="list-group-item p-0"><strong>Talla:</strong> {% if user.athlete.size %} {{ user.athlete.size }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Peso:</strong> {% if user.athlete.weight %} {{ user.athlete.weight }} {% else %} --- {% endif %}</li>
+                    </ul>
+                </div>
+                
+                <div class="col-3 col-sm-6 col-lg-3">
+                    <h6>Salud</h6>
+                    <ul class="list-group">
+                    <li class="list-group-item p-0"><strong>EPS:</strong> {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>
+                    </ul>
+
+                    <h6>Legal</h6>
+                    <ul class="list-group">
+                    <li class="list-group-item p-0"><strong>Manager:</strong> {% if user.athlete.manager %}<a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a>{% else %}No Asignado{% endif %}</li>
+                    </ul>
+                </div>
             </div>
-            <h6>{{user.first_name}} {{user.last_name}}</h6>
+
+            <hr>
+
+            <div>
+                <h3>FMS</h3>
+                <h6>Evaluación dolor, sensibilidad, inflamación, edema</h6>
+                <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
+                <div class="row">
+                    <div class="col-4 col-sm-4">
+                        <ul class="mb-0">
+                            <li><strong>Dolor:</strong> {{ osteo.pain }}</li>
+                            <li><strong>En reposo:</strong> {{ osteo.resting }}</li>
+                            <li><strong>En movimiento:</strong> {{ osteo.moving }}</li>
+                            <li><strong>A la palpación:</strong> {{ osteo.on_palpitation }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-4 col-sm-4">
+                        <ul class="mb-0">
+                            <li><strong>Zona:</strong> {{ osteo.zone }}</li>
+                            <li><strong>Intensidad:</strong> {{ osteo.intensity }}</li>
+                            <li><strong>Sensibilidad superficial:</strong> {{ osteo.superficial_sensitivity }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-4 col-sm-4">
+                        <ul class="mb-0">
+                            <li><strong>Sensibilidad profunda:</strong> {{ osteo.deep_sensitivity }}</li>
+                            <li><strong>Inflamación:</strong> {{ osteo.inflammation }}</li>
+                            <li><strong>Edema:</strong> {{ osteo.edema }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <ul class="mb-0">
+                            <li><strong>Observaciones:</strong> {{ osteo.observations }}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-6 col-sm-6">
+                        <h6>Evaluación de flexibilidad | Retracción</h6>
+                        <h5><strong class="badge badge-pill badge-warning text-dark">leve (L)</strong><strong class="badge badge-pill badge-warning-2 text-dark">Moderada (M)</strong><strong class="badge badge-pill badge-danger text-white">Severa (S)</strong><strong class="badge badge-pill badge-secondary-2 text-dark">No evaluado (NE)</strong><strong class="badge badge-pill badge-success text-white">No retracción (NR)</strong></h5>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped user_info_table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th><strong>Grupo Muscular</strong></th>
+                                        <th><strong>Izquierdo</strong></th>
+                                        <th><strong>Derecho</strong></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Pectoral Menor</td>
+                                        <td class="osteo_bg_{{ osteo.pectoralis_minor_l }}">{{ osteo.pectoralis_minor_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.pectoralis_minor_r }}">{{ osteo.pectoralis_minor_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pectoral Mayor</td>
+                                        <td class="osteo_bg_{{ osteo.pectoralis_major_l }}">{{ osteo.pectoralis_major_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.pectoralis_major_r }}">{{ osteo.pectoralis_major_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rotador Interno Hombro</td>
+                                        <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_l }}">{{ osteo.shoulder_internal_rotator_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_r }}">{{ osteo.shoulder_internal_rotator_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rotador Externo Hombro</td>
+                                        <td class="osteo_bg_{{ osteo.shoulder_external_rotator_l }}">{{ osteo.shoulder_external_rotator_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.shoulder_external_rotator_r }}">{{ osteo.shoulder_external_rotator_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>PSOAS Ilíaco</td>
+                                        <td class="osteo_bg_{{ osteo.psoas_iliaco_l }}">{{ osteo.psoas_iliaco_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.psoas_iliaco_r }}">{{ osteo.psoas_iliaco_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Aductores de cadera</td>
+                                        <td class="osteo_bg_{{ osteo.hip_adductors_l }}">{{ osteo.hip_adductors_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.hip_adductors_r }}">{{ osteo.hip_adductors_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tensor de la fascia lata</td>
+                                        <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_l }}">{{ osteo.tensioner_fascia_liata_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_r }}">{{ osteo.tensioner_fascia_liata_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Espinales bajos</td>
+                                        <td class="osteo_bg_{{ osteo.low_spinal_l }}">{{ osteo.low_spinal_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.low_spinal_r }}">{{ osteo.low_spinal_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Isquitibiales</td>
+                                        <td class="osteo_bg_{{ osteo.hamstrings_l }}">{{ osteo.hamstrings_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.hamstrings_r }}">{{ osteo.hamstrings_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cuadriceps</td>
+                                        <td class="osteo_bg_{{ osteo.quadriceps_l }}">{{ osteo.quadriceps_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.quadriceps_r }}">{{ osteo.quadriceps_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tendón de Aquiles</td>
+                                        <td class="osteo_bg_{{ osteo.achilles_tendon_l }}">{{ osteo.achilles_tendon_l }}</td>
+                                        <td class="osteo_bg_{{ osteo.achilles_tendon_r }}">{{ osteo.achilles_tendon_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Columna vertebral lumbar</td>
+                                        <td  class="osteo_bg_{{ osteo.spine_lumbar }}" colspan="2">{{ osteo.spine_lumbar }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-sm-6">
+                        <h6>Medidas reales, aparentes y circunferencias</h6>
+                        <p>No evaluado (NE).</p>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-striped user_info_table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th><strong>Medidas Reales | CM</strong></th>
+                                        <th><strong>Izquierdo</strong></th>
+                                        <th><strong>Derecho</strong></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Miembro superior</td>
+                                        <td>{{ osteo.real_upper_l }}</td>
+                                        <td>{{ osteo.real_upper_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Miembro inferior</td>
+                                        <td>{{ osteo.real_lower_l }}</td>
+                                        <td>{{ osteo.real_lower_r }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-striped user_info_table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th><strong>Medidas Aparentes | CM</strong></th>
+                                        <th><strong>Izquierdo</strong></th>
+                                        <th><strong>Derecho</strong></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Miembro superior</td>
+                                        <td>{{ osteo.apparent_upper_l }}</td>
+                                        <td>{{ osteo.apparent_upper_r }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Miembro inferior</td>
+                                        <td>{{ osteo.apparent_lower_l }}</td>
+                                        <td>{{ osteo.apparent_lower_r }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped user_info_table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th><strong>Trofismo muscular | CM</strong></th>
+                                        <th><strong>Izquierdo</strong></th>
+                                        <th><strong>Derecho</strong></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <td>Brazo</td>
+                                        <td>{{ osteo.arm_l_mt }}</td>
+                                        <td>{{ osteo.arm_r_mt }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Antebrazo</td>
+                                        <td>{{ osteo.forearm_l_mt }}</td>
+                                        <td>{{ osteo.forearm_r_mt }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Muslo</td>
+                                        <td>{{ osteo.thigh_l_mt }}</td>
+                                        <td>{{ osteo.thigh_r_mt }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pierna</td>
+                                        <td>{{ osteo.leg_l_mt }}</td>
+                                        <td>{{ osteo.leg_r_mt }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="source">
+            <h3>Osteomuscular</h3>
+            {% include './inc/fms_tab.html' %}
+        </div>
+
+        <div class="source">
+            {% if fig %}
+            <h3>Neuromuscular</h3>
+            <hr>
+
+            <div class="notes">
+                <h6>Observaciones</h6>
+
+                {% if neuro_observations %}
+                <p class="ml-2">{{neuro_observations.observations}}</p>
+                {% endif %}
+            </div>
+            <div class="graph_wrapper">
+                <div class="loader">
+                    <span>Cargando Gráfico</span>
+                    <div class="lds-ripple"><div></div><div></div></div>
+                </div>
+                <div class="graph_inner">
+                    {{ fig|safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            <hr>
+
+            <h3>Déficit Bilateral</h3>
+            <div class="notes">
+                <h6>Observaciones</h6>
             
-        </div>
-
-        <div class="col-lg-3">
-            <h6>Información Personal</h6>
-            <ul class="list-group">
-                <li class="list-group-item p-0"><strong>Cédula:</strong> {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
-                <li class="list-group-item p-0"><strong>Nacimiento:</strong> {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
-                <li class="list-group-item p-0"><strong>Edad:</strong> {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
-                <li class="list-group-item p-0"><strong>Género:</strong> {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
-                <li class="list-group-item p-0"><strong>Teléfono:</strong> {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
-                <li class="list-group-item p-0"><strong>Email:</strong> {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
-            </ul>
-        </div>
-
-        <div class="col-sm-6 col-lg-3">
-            <h6>Información Deportiva</h6>
-            <ul class="list-group">
-            <li class="list-group-item p-0"><strong>Equipo:</strong> {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
-            <li class="list-group-item p-0"><strong>Deporte:</strong> {% if user.athlete.sport %} {{ user.athlete.sport }} {% else %} --- {% endif %}</li>
-            </ul>
-
-            <ul class="list-group">
-            <h6>Medidas</h6>
-            <li class="list-group-item p-0"><strong>Talla:</strong> {% if user.athlete.size %} {{ user.athlete.size }} {% else %} --- {% endif %}</li>
-            <li class="list-group-item p-0"><strong>Peso:</strong> {% if user.athlete.weight %} {{ user.athlete.weight }} {% else %} --- {% endif %}</li>
-            </ul>
-        </div>
-        
-        <div class="col-sm-6 col-lg-3">
-            <h6>Salud</h6>
-            <ul class="list-group">
-            <li class="list-group-item p-0"><strong>EPS:</strong> {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>
-            </ul>
-
-            <h6>Legal</h6>
-            <ul class="list-group">
-            <li class="list-group-item p-0"><strong>Manager:</strong> {% if user.athlete.manager %}<a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a>{% else %}No Asignado{% endif %}</li>
-            </ul>
-        </div>
-    </div>
-
-    <hr>
-
-    <div>
-        <h3>FMS</h3>
-        <h6>Evaluación dolor, sensibilidad, inflamación, edema</h6>
-        <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
-        <div class="row">
-            <div class="col-sm-4">
-                <ul class="mb-0">
-                    <li><strong>Dolor:</strong> {{ osteo.pain }}</li>
-                    <li><strong>En reposo:</strong> {{ osteo.resting }}</li>
-                    <li><strong>En movimiento:</strong> {{ osteo.moving }}</li>
-                    <li><strong>A la palpación:</strong> {{ osteo.on_palpitation }}</li>
-                </ul>
+                {% if bilateral_observation %}
+                <p class="ml-2">{{bilateral_observation.observation}}</p>
+                {% endif %}
             </div>
-            <div class="col-sm-4">
-                <ul class="mb-0">
-                    <li><strong>Zona:</strong> {{ osteo.zone }}</li>
-                    <li><strong>Intensidad:</strong> {{ osteo.intensity }}</li>
-                    <li><strong>Sensibilidad superficial:</strong> {{ osteo.superficial_sensitivity }}</li>
-                </ul>
+            {% if graph %}
+            <div class="mt-4" style="width: 400px">
+                <form action="{% url 'users:bilateral_detail' user.id %}" method="get">
+                    {% csrf_token %}
+                    <div class="row" data-html2canvas-ignore="true">
+                        <div class="col-6">
+                            <div class="input-group input-group-outline">
+                                <input class="form-control mt-2" type="date" name="date" value="{% if date %}{{date|date:'Y-m-d'}}{% endif %}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="input-group input-group-outline">
+                                <button class="btn btn-secondary">Filtrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="col-sm-4">
-                <ul class="mb-0">
-                    <li><strong>Sensibilidad profunda:</strong> {{ osteo.deep_sensitivity }}</li>
-                    <li><strong>Inflamación:</strong> {{ osteo.inflammation }}</li>
-                    <li><strong>Edema:</strong> {{ osteo.edema }}</li>
-                </ul>
+            <h4 class="mt-3">Fecha: {{ date|date:'j'}} de {{ date|date:'F'}} de {{ date|date:'Y'}}</h4>
+            <div class="graph_wrapper">
+                <div class="loader">
+                    <span>Cargando Gráfico</span>
+                    <div class="lds-ripple"><div></div><div></div></div>
+                </div>
+                <div class="graph_inner">
+                    {{ graph|safe }}
+                </div>
             </div>
-            <div class="col-sm-12">
-                <ul class="mb-0">
-                    <li><strong>Observaciones:</strong> {{ osteo.observations }}</li>
-                </ul>
-            </div>
+            {% endif %}
         </div>
 
         <hr>
 
+        <div class="source">
+            <h3>Perfil F/V</h3>
+            {% if fv_graph %}
+            <div class="graph_wrapper">
+                <div class="loader">
+                    <span>Cargando Gráfico</span>
+                    <div class="lds-ripple"><div></div><div></div></div>
+                </div>
+                <div class="graph_inner">
+                    {{ fv_graph|safe }}
+                </div>
+
+            </div>
+            {% endif %}
+        </div> 
+    </div>
+</div>
+
+
+<div class="source_mobile">
+    <div>
         <div class="row">
-            <div class="col-sm-6">
-                <h6>Evaluación de flexibilidad | Retracción</h6>
-                <h5><strong class="badge badge-pill badge-warning text-dark">leve (L)</strong><strong class="badge badge-pill badge-warning-2 text-dark">Moderada (M)</strong><strong class="badge badge-pill badge-danger text-white">Severa (S)</strong><strong class="badge badge-pill badge-secondary-2 text-dark">No evaluado (NE)</strong><strong class="badge badge-pill badge-success text-white">No retracción (NR)</strong></h5>
+            <div class="col-sm-6 col-lg-2 text-center">
+                <div class="picture" style="margin:auto; margin-bottom: 10px;">
+                    <img width="100" src="{% if user.picture %}{{ user.picture.url }}{% else %}/static/img/profile_pic.jpg{% endif %}" alt="">
+                </div>
+                <h6>{{user.first_name}} {{user.last_name}}</h6>
                 
-                <div class="table-responsive">
-                    <table class="table table-striped user_info_table">
-                        <thead class="table-dark">
-                            <tr>
-                                <th><strong>Grupo Muscular</strong></th>
-                                <th><strong>Izquierdo</strong></th>
-                                <th><strong>Derecho</strong></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>Pectoral Menor</td>
-                                <td class="osteo_bg_{{ osteo.pectoralis_minor_l }}">{{ osteo.pectoralis_minor_l }}</td>
-                                <td class="osteo_bg_{{ osteo.pectoralis_minor_r }}">{{ osteo.pectoralis_minor_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Pectoral Mayor</td>
-                                <td class="osteo_bg_{{ osteo.pectoralis_major_l }}">{{ osteo.pectoralis_major_l }}</td>
-                                <td class="osteo_bg_{{ osteo.pectoralis_major_r }}">{{ osteo.pectoralis_major_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Rotador Interno Hombro</td>
-                                <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_l }}">{{ osteo.shoulder_internal_rotator_l }}</td>
-                                <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_r }}">{{ osteo.shoulder_internal_rotator_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Rotador Externo Hombro</td>
-                                <td class="osteo_bg_{{ osteo.shoulder_external_rotator_l }}">{{ osteo.shoulder_external_rotator_l }}</td>
-                                <td class="osteo_bg_{{ osteo.shoulder_external_rotator_r }}">{{ osteo.shoulder_external_rotator_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>PSOAS Ilíaco</td>
-                                <td class="osteo_bg_{{ osteo.psoas_iliaco_l }}">{{ osteo.psoas_iliaco_l }}</td>
-                                <td class="osteo_bg_{{ osteo.psoas_iliaco_r }}">{{ osteo.psoas_iliaco_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Aductores de cadera</td>
-                                <td class="osteo_bg_{{ osteo.hip_adductors_l }}">{{ osteo.hip_adductors_l }}</td>
-                                <td class="osteo_bg_{{ osteo.hip_adductors_r }}">{{ osteo.hip_adductors_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Tensor de la fascia lata</td>
-                                <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_l }}">{{ osteo.tensioner_fascia_liata_l }}</td>
-                                <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_r }}">{{ osteo.tensioner_fascia_liata_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Espinales bajos</td>
-                                <td class="osteo_bg_{{ osteo.low_spinal_l }}">{{ osteo.low_spinal_l }}</td>
-                                <td class="osteo_bg_{{ osteo.low_spinal_r }}">{{ osteo.low_spinal_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Isquitibiales</td>
-                                <td class="osteo_bg_{{ osteo.hamstrings_l }}">{{ osteo.hamstrings_l }}</td>
-                                <td class="osteo_bg_{{ osteo.hamstrings_r }}">{{ osteo.hamstrings_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Cuadriceps</td>
-                                <td class="osteo_bg_{{ osteo.quadriceps_l }}">{{ osteo.quadriceps_l }}</td>
-                                <td class="osteo_bg_{{ osteo.quadriceps_r }}">{{ osteo.quadriceps_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Tendón de Aquiles</td>
-                                <td class="osteo_bg_{{ osteo.achilles_tendon_l }}">{{ osteo.achilles_tendon_l }}</td>
-                                <td class="osteo_bg_{{ osteo.achilles_tendon_r }}">{{ osteo.achilles_tendon_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Columna vertebral lumbar</td>
-                                <td  class="osteo_bg_{{ osteo.spine_lumbar }}" colspan="2">{{ osteo.spine_lumbar }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
-
-            <div class="col-sm-6">
-                <h6>Medidas reales, aparentes y circunferencias</h6>
-                <p>No evaluado (NE).</p>
-
-                <div class="table-responsive mb-4">
-                    <table class="table table-striped user_info_table">
-                        <thead class="table-dark">
-                            <tr>
-                                <th><strong>Medidas Reales | CM</strong></th>
-                                <th><strong>Izquierdo</strong></th>
-                                <th><strong>Derecho</strong></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>Miembro superior</td>
-                                <td>{{ osteo.real_upper_l }}</td>
-                                <td>{{ osteo.real_upper_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Miembro inferior</td>
-                                <td>{{ osteo.real_lower_l }}</td>
-                                <td>{{ osteo.real_lower_r }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="table-responsive mb-4">
-                    <table class="table table-striped user_info_table">
-                        <thead class="table-dark">
-                            <tr>
-                                <th><strong>Medidas Aparentes | CM</strong></th>
-                                <th><strong>Izquierdo</strong></th>
-                                <th><strong>Derecho</strong></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>Miembro superior</td>
-                                <td>{{ osteo.apparent_upper_l }}</td>
-                                <td>{{ osteo.apparent_upper_r }}</td>
-                            </tr>
-                            <tr>
-                                <td>Miembro inferior</td>
-                                <td>{{ osteo.apparent_lower_l }}</td>
-                                <td>{{ osteo.apparent_lower_r }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="table-responsive">
-                    <table class="table table-striped user_info_table">
-                        <thead class="table-dark">
-                            <tr>
-                                <th><strong>Trofismo muscular | CM</strong></th>
-                                <th><strong>Izquierdo</strong></th>
-                                <th><strong>Derecho</strong></th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>Brazo</td>
-                                <td>{{ osteo.arm_l_mt }}</td>
-                                <td>{{ osteo.arm_r_mt }}</td>
-                            </tr>
-                            <tr>
-                                <td>Antebrazo</td>
-                                <td>{{ osteo.forearm_l_mt }}</td>
-                                <td>{{ osteo.forearm_r_mt }}</td>
-                            </tr>
-                            <tr>
-                                <td>Muslo</td>
-                                <td>{{ osteo.thigh_l_mt }}</td>
-                                <td>{{ osteo.thigh_r_mt }}</td>
-                            </tr>
-                            <tr>
-                                <td>Pierna</td>
-                                <td>{{ osteo.leg_l_mt }}</td>
-                                <td>{{ osteo.leg_r_mt }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="source">
-    <h3>Osteomuscular</h3>
-    {% include './inc/fms_tab.html' %}
-</div>
-
-<div class="source">
-    {% if fig %}
-    <h3>Neuromuscular</h3>
-    <hr>
-
-    <div class="notes">
-        <h4>Observaciones</h4>
-
-        {% if neuro_observations %}
-        <p class="ml-2">{{neuro_observations.observations}}</p>
-        {% endif %}
-    </div>
-    <div class="graph_wrapper">
-        <div class="loader">
-            <span>Cargando Gráfico</span>
-            <div class="lds-ripple"><div></div><div></div></div>
-        </div>
-        <div class="graph_inner">
-            {{ fig|safe }}
-        </div>
-    </div>
-    {% endif %}
-
-    <hr>
-
-    <h3>Déficit Bilateral</h3>
-    <div class="notes">
-        <h4>Observaciones</h4>
     
-        {% if bilateral_observation %}
-        <p class="ml-2">{{bilateral_observation.observation}}</p>
-        {% endif %}
-    </div>
-    {% if graph %}
-    <div class="mt-4" style="width: 400px">
-        <form action="{% url 'users:bilateral_detail' user.id %}" method="get">
-            {% csrf_token %}
+            <div class="col-lg-3">
+                <h6>Información Personal</h6>
+                <ul class="list-group">
+                    <li class="list-group-item p-0"><strong>Cédula:</strong> {% if user.document %} {{ user.document }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Nacimiento:</strong> {% if user.athlete.birthdate %}{{ user.athlete.birthdate }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Edad:</strong> {% if user.athlete.age %} {{ user.athlete.age }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Género:</strong> {% if user.athlete.gender %} {{ user.athlete.gender }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Teléfono:</strong> {% if user.phone %} {{ user.phone }} {% else %} --- {% endif %}</li>
+                    <li class="list-group-item p-0"><strong>Email:</strong> {% if user.email %} <a href="mailto:{{ user.email }}" target="blank">{{ user.email }}</a> {% else %} --- {% endif %}</li>
+                </ul>
+            </div>
+    
+            <div class="col-sm-6 col-lg-3">
+                <h6>Información Deportiva</h6>
+                <ul class="list-group">
+                <li class="list-group-item p-0"><strong>Equipo:</strong> {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Deporte:</strong> {% if user.athlete.sport %} {{ user.athlete.sport }} {% else %} --- {% endif %}</li>
+                </ul>
+    
+                <ul class="list-group">
+                <h6>Medidas</h6>
+                <li class="list-group-item p-0"><strong>Talla:</strong> {% if user.athlete.size %} {{ user.athlete.size }} {% else %} --- {% endif %}</li>
+                <li class="list-group-item p-0"><strong>Peso:</strong> {% if user.athlete.weight %} {{ user.athlete.weight }} {% else %} --- {% endif %}</li>
+                </ul>
+            </div>
+            
+            <div class="col-sm-6 col-lg-3">
+                <h6>Salud</h6>
+                <ul class="list-group">
+                <li class="list-group-item p-0"><strong>EPS:</strong> {% if user.athlete.eps %} {{ user.athlete.eps }} {% else %} --- {% endif %}</li>
+                </ul>
+    
+                <h6>Legal</h6>
+                <ul class="list-group">
+                <li class="list-group-item p-0"><strong>Manager:</strong> {% if user.athlete.manager %}<a href="{% url 'users:manager_detail' user.athlete.manager.id %}">{{ user.athlete.manager }}</a>{% else %}No Asignado{% endif %}</li>
+                </ul>
+            </div>
+        </div>
+    
+        <hr>
+    
+        <div>
+            <h3>FMS</h3>
+            <h6>Evaluación dolor, sensibilidad, inflamación, edema</h6>
+            <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
+            <div class="row">
+                <div class="col-sm-4">
+                    <ul class="mb-0">
+                        <li><strong>Dolor:</strong> {{ osteo.pain }}</li>
+                        <li><strong>En reposo:</strong> {{ osteo.resting }}</li>
+                        <li><strong>En movimiento:</strong> {{ osteo.moving }}</li>
+                        <li><strong>A la palpación:</strong> {{ osteo.on_palpitation }}</li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <ul class="mb-0">
+                        <li><strong>Zona:</strong> {{ osteo.zone }}</li>
+                        <li><strong>Intensidad:</strong> {{ osteo.intensity }}</li>
+                        <li><strong>Sensibilidad superficial:</strong> {{ osteo.superficial_sensitivity }}</li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <ul class="mb-0">
+                        <li><strong>Sensibilidad profunda:</strong> {{ osteo.deep_sensitivity }}</li>
+                        <li><strong>Inflamación:</strong> {{ osteo.inflammation }}</li>
+                        <li><strong>Edema:</strong> {{ osteo.edema }}</li>
+                    </ul>
+                </div>
+                <div class="col-sm-12">
+                    <ul class="mb-0">
+                        <li><strong>Observaciones:</strong> {{ osteo.observations }}</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <hr>
+    
             <div class="row">
                 <div class="col-sm-6">
-                    <div class="input-group input-group-outline">
-                        <input class="form-control mt-2" type="date" name="date" value="{% if date %}{{date|date:'Y-m-d'}}{% endif %}">
+                    <h6>Evaluación de flexibilidad | Retracción</h6>
+                    <h5><strong class="badge badge-pill badge-warning text-dark">leve (L)</strong><strong class="badge badge-pill badge-warning-2 text-dark">Moderada (M)</strong><strong class="badge badge-pill badge-danger text-white">Severa (S)</strong><strong class="badge badge-pill badge-secondary-2 text-dark">No evaluado (NE)</strong><strong class="badge badge-pill badge-success text-white">No retracción (NR)</strong></h5>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-striped user_info_table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th><strong>Grupo Muscular</strong></th>
+                                    <th><strong>Izquierdo</strong></th>
+                                    <th><strong>Derecho</strong></th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr>
+                                    <td>Pectoral Menor</td>
+                                    <td class="osteo_bg_{{ osteo.pectoralis_minor_l }}">{{ osteo.pectoralis_minor_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.pectoralis_minor_r }}">{{ osteo.pectoralis_minor_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Pectoral Mayor</td>
+                                    <td class="osteo_bg_{{ osteo.pectoralis_major_l }}">{{ osteo.pectoralis_major_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.pectoralis_major_r }}">{{ osteo.pectoralis_major_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rotador Interno Hombro</td>
+                                    <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_l }}">{{ osteo.shoulder_internal_rotator_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_r }}">{{ osteo.shoulder_internal_rotator_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Rotador Externo Hombro</td>
+                                    <td class="osteo_bg_{{ osteo.shoulder_external_rotator_l }}">{{ osteo.shoulder_external_rotator_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.shoulder_external_rotator_r }}">{{ osteo.shoulder_external_rotator_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>PSOAS Ilíaco</td>
+                                    <td class="osteo_bg_{{ osteo.psoas_iliaco_l }}">{{ osteo.psoas_iliaco_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.psoas_iliaco_r }}">{{ osteo.psoas_iliaco_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Aductores de cadera</td>
+                                    <td class="osteo_bg_{{ osteo.hip_adductors_l }}">{{ osteo.hip_adductors_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.hip_adductors_r }}">{{ osteo.hip_adductors_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tensor de la fascia lata</td>
+                                    <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_l }}">{{ osteo.tensioner_fascia_liata_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_r }}">{{ osteo.tensioner_fascia_liata_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Espinales bajos</td>
+                                    <td class="osteo_bg_{{ osteo.low_spinal_l }}">{{ osteo.low_spinal_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.low_spinal_r }}">{{ osteo.low_spinal_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Isquitibiales</td>
+                                    <td class="osteo_bg_{{ osteo.hamstrings_l }}">{{ osteo.hamstrings_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.hamstrings_r }}">{{ osteo.hamstrings_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Cuadriceps</td>
+                                    <td class="osteo_bg_{{ osteo.quadriceps_l }}">{{ osteo.quadriceps_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.quadriceps_r }}">{{ osteo.quadriceps_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tendón de Aquiles</td>
+                                    <td class="osteo_bg_{{ osteo.achilles_tendon_l }}">{{ osteo.achilles_tendon_l }}</td>
+                                    <td class="osteo_bg_{{ osteo.achilles_tendon_r }}">{{ osteo.achilles_tendon_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Columna vertebral lumbar</td>
+                                    <td  class="osteo_bg_{{ osteo.spine_lumbar }}" colspan="2">{{ osteo.spine_lumbar }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+    
                 <div class="col-sm-6">
-                    <div class="input-group input-group-outline">
-                        <button class="btn btn-secondary">Filtrar</button>
+                    <h6>Medidas reales, aparentes y circunferencias</h6>
+                    <p>No evaluado (NE).</p>
+    
+                    <div class="table-responsive mb-4">
+                        <table class="table table-striped user_info_table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th><strong>Medidas Reales | CM</strong></th>
+                                    <th><strong>Izquierdo</strong></th>
+                                    <th><strong>Derecho</strong></th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr>
+                                    <td>Miembro superior</td>
+                                    <td>{{ osteo.real_upper_l }}</td>
+                                    <td>{{ osteo.real_upper_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Miembro inferior</td>
+                                    <td>{{ osteo.real_lower_l }}</td>
+                                    <td>{{ osteo.real_lower_r }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+    
+                    <div class="table-responsive mb-4">
+                        <table class="table table-striped user_info_table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th><strong>Medidas Aparentes | CM</strong></th>
+                                    <th><strong>Izquierdo</strong></th>
+                                    <th><strong>Derecho</strong></th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr>
+                                    <td>Miembro superior</td>
+                                    <td>{{ osteo.apparent_upper_l }}</td>
+                                    <td>{{ osteo.apparent_upper_r }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Miembro inferior</td>
+                                    <td>{{ osteo.apparent_lower_l }}</td>
+                                    <td>{{ osteo.apparent_lower_r }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-striped user_info_table">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th><strong>Trofismo muscular | CM</strong></th>
+                                    <th><strong>Izquierdo</strong></th>
+                                    <th><strong>Derecho</strong></th>
+                                </tr>
+                            </thead>
+    
+                            <tbody>
+                                <tr>
+                                    <td>Brazo</td>
+                                    <td>{{ osteo.arm_l_mt }}</td>
+                                    <td>{{ osteo.arm_r_mt }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Antebrazo</td>
+                                    <td>{{ osteo.forearm_l_mt }}</td>
+                                    <td>{{ osteo.forearm_r_mt }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Muslo</td>
+                                    <td>{{ osteo.thigh_l_mt }}</td>
+                                    <td>{{ osteo.thigh_r_mt }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Pierna</td>
+                                    <td>{{ osteo.leg_l_mt }}</td>
+                                    <td>{{ osteo.leg_r_mt }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <h4 class="mt-3">Fecha: {{ date|date:'j'}} de {{ date|date:'F'}} de {{ date|date:'Y'}}</h4>
-    <div class="graph_wrapper">
-        <div class="loader">
-            <span>Cargando Gráfico</span>
-            <div class="lds-ripple"><div></div><div></div></div>
-        </div>
-        <div class="graph_inner">
-            {{ graph|safe }}
         </div>
     </div>
-    {% endif %}
+    
+    <div>
+        <h3>Osteomuscular</h3>
+        {% include './inc/fms_tab.html' %}
+    </div>
+    
+    <div>
+        {% if fig_mobile %}
+        <h3>Neuromuscular</h3>
+        <hr>
+    
+        <div class="notes">
+            <h6>Observaciones</h6>
+    
+            {% if neuro_observations %}
+            <p class="ml-2">{{neuro_observations.observations}}</p>
+            {% endif %}
+        </div>
+        <div class="graph_wrapper">
+            <div class="loader">
+                <span>Cargando Gráfico</span>
+                <div class="lds-ripple"><div></div><div></div></div>
+            </div>
+            <div class="graph_inner">
+                {{ fig_mobile|safe }}
+            </div>
+        </div>
+        {% endif %}
+    
+        <hr>
+    
+        <h3>Déficit Bilateral</h3>
+        <div class="notes">
+            <h6>Observaciones</h6>
+        
+            {% if bilateral_observation %}
+            <p class="ml-2">{{bilateral_observation.observation}}</p>
+            {% endif %}
+        </div>
+        {% if graph_mobile %}
+        <div class="mt-4" style="width: 400px">
+            <form action="{% url 'users:bilateral_detail' user.id %}" method="get">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group input-group-outline">
+                            <input class="form-control mt-2" type="date" name="date" value="{% if date %}{{date|date:'Y-m-d'}}{% endif %}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group input-group-outline">
+                            <button class="btn btn-secondary">Filtrar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <h4 class="mt-3">Fecha: {{ date|date:'j'}} de {{ date|date:'F'}} de {{ date|date:'Y'}}</h4>
+        <div class="graph_wrapper">
+            <div class="loader">
+                <span>Cargando Gráfico</span>
+                <div class="lds-ripple"><div></div><div></div></div>
+            </div>
+            <div class="graph_inner">
+                {{ graph_mobile|safe }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <hr>
+    
+    <div>
+        <h3>Perfil F/V</h3>
+        {% if fv_graph_mobile %}
+        <div class="graph_wrapper">
+            <div class="loader">
+                <span>Cargando Gráfico</span>
+                <div class="lds-ripple"><div></div><div></div></div>
+            </div>
+            <div class="graph_inner">
+                {{ fv_graph_mobile|safe }}
+            </div>
+    
+        </div>
+        {% endif %}
+    </div> 
 </div>
 
-<hr>
-
-<div class="source">
-    <h3>Perfil F/V</h3>
-    {% if fv_graph %}
-    <div class="graph_wrapper">
-        <div class="loader">
-            <span>Cargando Gráfico</span>
-            <div class="lds-ripple"><div></div><div></div></div>
-        </div>
-        <div class="graph_inner">
-            {{ fv_graph|safe }}
-        </div>
-
-    </div>
-    {% endif %}
-</div>
 
 <div id="preview" style="position:absolute; left: -10000px;"></div>
 
@@ -412,7 +766,7 @@
                                 
                                 const header_img = "{% static 'img/pdf_header.jpg' %}"
                                 doc.addImage(header_img, 'JPG', 0.5, 0.5, 20.5, 1.66)
-                                doc.addImage(image, 'PNG', 0.5, 3, image_width, image_height)
+                                doc.addImage(image, 'PNG', 0.5, 2.3, image_width, image_height)
                                 
                                 if(parseInt(i+1) < parseInt(sources.length)){
                                     doc.addPage("letter", "p");
@@ -420,7 +774,7 @@
                                 }
     
                                 if(i+1 == sources.length){
-                                    const name = 'Dinametrics_reporte_' + '{{user.first_name}} _ {{user.last_name}}' + '.pdf'
+                                    const name = 'Dinametrics_reporte_' + '{{user.first_name}}_{{user.last_name}}' + '.pdf'
                                     doc.save(name);
                                 }
                             })

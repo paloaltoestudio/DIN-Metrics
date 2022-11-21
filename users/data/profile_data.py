@@ -33,6 +33,7 @@ def profile_data(context):
                         labels={'value': 'RM'})
         update_plot(bi_fig)
         context['fv_graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
+        context['fv_graph_mobile'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
         
         
     context['profiles'] = profiles

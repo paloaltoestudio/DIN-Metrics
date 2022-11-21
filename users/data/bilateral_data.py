@@ -98,6 +98,7 @@ def bilateral_data(context, date):
         update_plot(bi_fig)
 
         context['graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
+        context['graph_mobile'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
 
     context['bilaterals'] = bilaterals
     context['date'] = date
