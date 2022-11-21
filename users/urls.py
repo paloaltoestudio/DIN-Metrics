@@ -10,7 +10,8 @@ from fms.views import FmsUpdate
 from neuro.views import (NeuroCreateBase, NeuroBaseUpdate, NeuroDelete, 
                         NeuroObservationsView, NeuroObservationsDeleteView,
                         NeuroObservationsEditView)
-from bilateral.views import BilateralUpdateView, BilateralCreateView, BilateralDelete
+from bilateral.views import (BilateralUpdateView, BilateralCreateView, BilateralDelete,
+                            BilateralObservationCreateView, BilateralObservationUpdateView, BilateralObservationDeleteView)
 from profile_fv.views import ProfileUpdateView, ProfileCreateView, ProfileDelete, FVCreateView, FVDelete
 
 app_name = 'users'
@@ -30,7 +31,6 @@ urlpatterns = [
     path('deportistas/<int:id>/fms', FMSDetail.as_view(), name='fms_detail'),
     path('deportistas/<int:id>/neuromuscular', JumpDetail.as_view(), name='jump_detail'),
     path('deportistas/<int:id>/bilateral', BilateralDetail.as_view(), name='bilateral_detail'),
-    path('<int:id>/eliminar-bilateral', BilateralDelete.as_view(), name='bilateral_delete'),
     path('deportistas/<int:id>/perfil_fv', ProfileFVDetail.as_view(), name='profile_fv_detail'),
     path('deportistas/<int:id>/crear_perfil_fv', FVCreateView.as_view(), name='profile_fv_create'),
     path('deportistas/<int:id>/eliminar_perfil_fv', FVDelete.as_view(), name='profile_fv_delete'),
@@ -48,8 +48,12 @@ urlpatterns = [
     path('<int:id>/neuro/borrar-observaciones', NeuroObservationsDeleteView.as_view(), name='neuro_observation_delete'),
     path('<int:id>/editar-neuro', NeuroBaseUpdate.as_view(), name='neuro_update'),
     path('<int:id>/eliminar-neuro', NeuroDelete.as_view(), name='neuro_delete'),
-    path('<int:id>/editar-bilateral', BilateralUpdateView.as_view(), name='bilateral_update'),
     path('crear-bilateral', BilateralCreateView.as_view(), name='bilateral_create'),
+    path('<int:id>/editar-bilateral', BilateralUpdateView.as_view(), name='bilateral_update'),
+    path('<int:id>/eliminar-bilateral', BilateralDelete.as_view(), name='bilateral_delete'),
+    path('deportistas/bilateral/crear-observacion', BilateralObservationCreateView.as_view(), name='bilateral_observation_create'),
+    path('deportistas/<int:id>/bilateral/editar-observacion', BilateralObservationUpdateView.as_view(), name='bilateral_observation_edit'),
+    path('deportistas/<int:id>/bilateral/borrar-observacion', BilateralObservationDeleteView.as_view(), name='bilateral_observation_delete'),
     path('<int:id>/editar-perfil', ProfileUpdateView.as_view(), name='profile_update'),
     path('crear-perfil', ProfileCreateView.as_view(), name='profile_create'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

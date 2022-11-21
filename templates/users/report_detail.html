@@ -305,6 +305,13 @@
     <hr>
 
     <h3>Déficit Bilateral</h3>
+    <div class="notes">
+        <h4>Observaciones</h4>
+    
+        {% if bilateral_observation %}
+        <p class="ml-2">{{bilateral_observation.observation}}</p>
+        {% endif %}
+    </div>
     {% if graph %}
     <div class="mt-4" style="width: 400px">
         <form action="{% url 'users:bilateral_detail' user.id %}" method="get">

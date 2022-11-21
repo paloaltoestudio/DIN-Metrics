@@ -20,3 +20,9 @@ class Bilateral(models.Model):
     deficit = models.FloatField('Déficit', null=True, blank=True)
 
 
+class BilateralObservation(models.Model):
+
+    athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE, blank=True, null=True, related_name='bilateral_observations')
+    observation = models.CharField('Observaciones', max_length=200, blank=True, null=True)
+
+

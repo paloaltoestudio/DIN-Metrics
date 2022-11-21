@@ -2,7 +2,7 @@ from django.views.generic import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
 #Models
-from .models import Bilateral
+from .models import Bilateral, BilateralObservation
 
 class BilateralBase:
     def form_valid(self, form):
@@ -18,9 +18,34 @@ class BilateralBase:
         url = success_url.format(**self.object.__dict__)
         return url
 
+
+class BilateralObservationBase:
+    model = BilateralObservation
+
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:bilateral_detail', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        return url
+
+
+class BilateralObservationCreateView(BilateralObservationBase, CreateView):
+    fields = ['athlete', 'observation', ]
+
+
+class BilateralObservationUpdateView(BilateralObservationBase, UpdateView):
+    fields = ['observation', ]
+    pk_url_kwarg = 'id'
+
+
+class BilateralObservationDeleteView(BilateralObservationBase, DeleteView):
+    pk_url_kwarg = 'id'
+
+
 class BilateralCreateView(BilateralBase, CreateView):
     model = Bilateral
     fields = ['athlete', 'date', 'jump', 'left', 'right']
+
 
 class BilateralUpdateView(BilateralBase, UpdateView):
     model = Bilateral

@@ -11,7 +11,7 @@ from plotly.subplots import make_subplots
 import plotly.express as px
 
 #models
-from bilateral.models import Bilateral
+from bilateral.models import Bilateral, BilateralObservation
 
 #utils
 from .data_utils import update_plot
@@ -20,6 +20,12 @@ def bilateral_data(context, date):
     
     bilaterals = Bilateral.objects.filter(athlete=context['user'].athlete).order_by('date')
     #bilaterals_filter = Bilateral.objects.filter(athlete=context['user'].athlete, date=date).order_by('date')
+    bilateral_observation = BilateralObservation.objects.filter(athlete=context['user'].athlete)
+
+    if(bilateral_observation and len(bilateral_observation) > 0):
+        bilateral_observation = bilateral_observation[0]
+        context['bilateral_observation'] = bilateral_observation
+
 
     is_limit = len(bilaterals) >= 10
 

@@ -36,6 +36,29 @@
     {% include './bilateral_create_modal.html' %}
 </div>
 
+<hr>
+
+<div class="notes">
+    <h4>Observaciones</h4>
+    {% if request.user.role == 'ADMIN' and not bilateral_observation %}<a href="#" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#bilateral_create_observation_modal">Agregar Observación<i class="fs-6 material-icons">add</i></a>{% endif %}
+    {% include './bilateral_create_observation_modal.html' with user=user %}
+
+    {% if bilateral_observation %}
+    <p class="ml-2">{{bilateral_observation.observation}}</p>
+
+    {% if request.user.role == 'ADMIN' %}
+        <a href="#" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#bilateral_observations_edit_modal">Editar Observación<i class="fs-6 ml-2 material-icons">edit</i></a>
+        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#bilateral_observations_delete_modal">Borrar Observación<i class="fs-6 ml-2 material-icons">delete</i></a>
+    {% endif %}
+
+    {% include './bilateral_observation_edit_modal.html' with user=user observation=bilateral_observation %}
+    {% include './bilateral_observation_delete_modal.html' with user=user observation=bilateral_observation %}
+    {% endif %}
+</div>
+
+
+
+
 {% comment %} {{ df|safe }} {% endcomment %}
 {% if graph %}
 <div class="mt-4" style="width: 400px">

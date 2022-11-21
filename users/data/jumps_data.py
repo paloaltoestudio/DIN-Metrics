@@ -19,7 +19,7 @@ def jump_data(context):
     q = Q.objects.filter(athlete=context['user'].athlete)
     observations = NeuroObservations.objects.filter(athlete=context['user'].athlete)
 
-    if(len(observations) > 0):
+    if(observations and len(observations) > 0):
         observations = observations[0]
         context['neuro_observations'] = observations
 
