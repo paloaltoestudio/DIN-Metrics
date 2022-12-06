@@ -25,6 +25,7 @@ from users.forms import (UpdateUserForm,
 from osteo.models import Osteo
 from fms.models import Fms
 from profile_fv.models import FV_register, FV
+from fat.models import Fat_rate
 
 #Utils
 from users.utils import age, get_sum
@@ -259,6 +260,15 @@ class BilateralDetail(LoginRequiredMixin, DetailView):
         bilateral_data(context, date)
 
         return context
+
+
+class FatDetailView(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/detail_fat.html'
+    extra_context = {
+        'page': 'user_list_detail',
+    }
 
 
 class ProfileFVDetail(LoginRequiredMixin, DetailView):

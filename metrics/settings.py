@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'neuro.apps.NeuroConfig',
     'bilateral.apps.BilateralConfig',
     'profile_fv.apps.ProfileFvConfig',
+    'fat.apps.FatConfig',
 ]
 
 MIDDLEWARE = [

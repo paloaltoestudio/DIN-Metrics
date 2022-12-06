@@ -1,4 +1,5 @@
 .venv
+.env
 db.sqlite3
 metrics/__pycache__/
 users/__pycache__/
@@ -12,6 +13,8 @@ fms/__pycache__/
 neuro/migrations/*
 neuro/__pycache__/
 bilateral/__pycache__/
+fat/__pycache__/
+fat/migrations/*
 bilateral/migrations/*
 profile_fv/__pycache__/
 profile_fv/migrations/*

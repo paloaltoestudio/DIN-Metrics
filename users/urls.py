@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
-                    FVDetail, ProfileFVGraph, BilateralDetail, ManagerView, ManagerDetail, manager_update, AccountDetail,
+                    FVDetail, ProfileFVGraph, BilateralDetail, FatDetailView, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate
 from fms.views import FmsUpdate
@@ -14,6 +14,7 @@ from bilateral.views import (BilateralUpdateView, BilateralCreateView, Bilateral
                             BilateralObservationCreateView, BilateralObservationUpdateView, BilateralObservationDeleteView)
 from profile_fv.views import (ProfileUpdateView, ProfileCreateView, ProfileDelete, FVCreateView, FVDelete,
                               ProfileObservationsCreateView, ProfileObservationsUpdateView, ProfileObservationsDeleteView)
+
 
 app_name = 'users'
 
@@ -60,4 +61,5 @@ urlpatterns = [
     path('deportistas/<int:id>/bilateral/borrar-observacion', BilateralObservationDeleteView.as_view(), name='bilateral_observation_delete'),
     path('<int:id>/editar-perfil', ProfileUpdateView.as_view(), name='profile_update'),
     path('crear-perfil', ProfileCreateView.as_view(), name='profile_create'),
+    path('deportistas/<int:id>/grasa', FatDetailView.as_view(), name='fat_detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
