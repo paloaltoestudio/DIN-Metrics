@@ -3,22 +3,35 @@
         <thead class="table-dark">
             <tr>
                 <th><strong>Fecha</strong></th>
-                <th><strong>Salto</strong></th>
-                <th><strong>Izquierda</strong></th>
-                <th><strong>Derecha</strong></th>
-                <th><strong>Déficit</strong></th>
+                <th><strong>Triceps</strong></th>
+                <th><strong>Subescapular</strong></th>
+                <th><strong>Abdominal</strong></th>
+                <th><strong>Suprailíaco</strong></th>
+                <th><strong>Muslo</strong></th>
+                <th><strong>Pantorrilla</strong></th>
                 <th></th>
             </tr>
         </thead>
 
         <tbody>
-            
+            {% for fat_rate in fat_rates  %}
+            <tr>
+                <td>{{ fat_rate.date }}</td>
+                <td>{{ fat_rate.triceps }}</td>
+                <td>{{ fat_rate.subscap }}</td>
+                <td>{{ fat_rate.abdominal }}</td>
+                <td>{{ fat_rate.suprailiac }}</td>
+                <td>{{ fat_rate.thigh }}</td>
+                <td>{{ fat_rate.calf }}</td>
+                <td>{{ fat_rate.fat_rate }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 
     
-    {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#biCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
-    {% include './bilateral_create_modal.html' %}
+    {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fatCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+    {% include './fat_create_modal.html' %}
 </div>
 
 <hr>

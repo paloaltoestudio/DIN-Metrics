@@ -28,6 +28,7 @@
         <div class="col-sm-6 col-lg-3">
             <h6>Información Deportiva {% if request.user.role == 'ADMIN' %}<a class="badge rounded-circle" href="#" data-bs-toggle="modal" data-bs-target="#sportModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
             <ul class="list-group">
+            <li class="list-group-item p-0"><strong>Es deportista:</strong> {% if user.athlete.is_athlete %} Sí {% else %} No {% endif %}</li>
             <li class="list-group-item p-0"><strong>Equipo:</strong> {% if user.athlete.team %} {{ user.athlete.team }} {% else %} --- {% endif %}</li>
             <li class="list-group-item p-0"><strong>Deporte:</strong> {% if user.athlete.sport %} {{ user.athlete.sport }} {% else %} --- {% endif %}</li>
             </ul>
@@ -173,6 +174,10 @@
                     <form action="{% url 'users:user_update' user.id %}" method='post'>
                     <div class="modal-body">
                             {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <input class="" type="checkbox" name="is_athlete" {% if user.athlete.is_athlete %}checked{% endif %}>
+                                <label style="position:relative; top:5px; margin-left: 5px;" class="">Es deportista</label>
+                            </div>
                             <div class="input-group input-group-outline mb-3">
                                 <label class="form-label">Equipo</label>
                                 <input class="form-control" type="text" name="team" value="{% if user.athlete.team %}{{ user.athlete.team }}{% endif %}">

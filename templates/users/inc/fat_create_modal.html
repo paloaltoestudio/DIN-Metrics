@@ -1,0 +1,64 @@
+<!-- Modal -->
+<div class="modal fade" id="fatCreateModal" tabindex="-1" aria-labelledby="fatCreateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fatCreateModalLabel">Pliegues</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'users:fat_create' user.id %}" method='post'>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Fecha</label>
+                                <input class="form-control" type="date" name="date" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Triceps</label>
+                                <input class="form-control" type="number" step="0.01" name="triceps" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Subescapular</label>
+                                <input class="form-control" type="number" step="0.01" name="subscap" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Abdominal</label>
+                                <input class="form-control" type="number" step="0.01" name="abdominal" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Suprailíaco</label>
+                                <input class="form-control" type="number" step="0.01" name="suprailiac" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Muslo</label>
+                                <input class="form-control" type="number" step="0.01" name="thigh" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group input-group-outline mb-3 is-upper">
+                                <label class="form-label">Pantorrilla</label>
+                                <input class="form-control" type="number" step="0.01" name="calf" value="" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="text" name="uid" value="{{ user.id }}" hidden>
+                    <input type="text" name="athlete" value="{{ user.athlete.id }}" hidden>
+                    <button class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

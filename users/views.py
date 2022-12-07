@@ -32,6 +32,7 @@ from users.utils import age, get_sum
 
 #data
 from users.data.jumps_data import jump_data
+from users.data.fat_data import fat_data
 from users.data.bilateral_data import bilateral_data
 from users.data.profile_data import profile_data
 from users.data.fv_data import fv_data
@@ -270,6 +271,14 @@ class FatDetailView(LoginRequiredMixin, DetailView):
         'page': 'user_list_detail',
     }
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        #Get data from fat and make chart
+        fat_data(context)
+
+        return context
+
 
 class ProfileFVDetail(LoginRequiredMixin, DetailView):
     model = User
@@ -423,9 +432,17 @@ def user_update(request, id):
 
         if request.POST['type'] == 'sport':
             form_profile_sport = UpdateAthleteSport(data=request.POST, instance=user.athlete)
+
+            if request.POST.get('is_athlete') and request.POST.get('is_athlete') == 'on':
+                is_athlete = True
+            else:
+                is_athlete = False
             
             if form_profile_sport.is_valid():
-                form_profile_sport.save()
+                sport = form_profile_sport.save(commit=False)
+                sport.is_athlete = is_athlete
+                sport.save()
+
                 messages.add_message(request, messages.SUCCESS, 'Deportista Actualizado')
 
             else:

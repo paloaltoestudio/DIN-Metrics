@@ -11,7 +11,7 @@ class AthleteAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {'fields': ('user', 'manager', 'birthdate', 'gender', 'age', 'created', 'modified')}),
-        ('Información Básica', {'fields': ('team', 'sport', 'size', 'weight', 'eps')})
+        ('Información Básica', {'fields': ('is_athlete', 'team', 'sport', 'size', 'weight', 'eps')})
     )
 
     readonly_fields = ('created', 'modified')

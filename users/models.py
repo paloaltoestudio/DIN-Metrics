@@ -101,6 +101,7 @@ class Athlete(models.Model):
     birthdate = models.DateField('Fecha de Nacimiento',blank=True, null=True)
     gender = models.CharField('Género', max_length=1, choices=GENDER_CHOICES, blank=True)
     age = models.PositiveIntegerField('Edad', blank=True, null=True)
+    is_athlete = models.BooleanField('Es deportista', blank=True, null=True)
     team = models.CharField('Equipo', max_length=30, blank=True, null=True)
     sport = models.CharField('Deporte', max_length=30, blank=True, null=True)
     size = models.CharField('Talla', max_length=10, blank=True, null=True)
