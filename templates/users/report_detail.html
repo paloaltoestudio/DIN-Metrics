@@ -289,6 +289,30 @@
         </div>
 
         <div class="source">
+            {% if fat_graph %}
+            <h3>Grasa</h3>
+            <hr>
+
+            <div class="notes">
+                <h6>Observaciones</h6>
+
+                {% if fat_observations %}
+                <p class="ml-2">{{fat_observations.observations}}</p>
+                {% endif %}
+            </div>
+            <div class="graph_wrapper">
+                <div class="loader">
+                    <span>Cargando Gráfico</span>
+                    <div class="lds-ripple"><div></div><div></div></div>
+                </div>
+                <div class="graph_inner">
+                    {{ fat_graph|safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            <hr>
+
             {% if fig %}
             <h3>Neuromuscular</h3>
             <hr>
@@ -311,8 +335,10 @@
             </div>
             {% endif %}
 
-            <hr>
+        <hr>
+        </div>
 
+        <div class="source">
             <h3>Déficit Bilateral</h3>
             <div class="notes">
                 <h6>Observaciones</h6>
@@ -350,11 +376,9 @@
                 </div>
             </div>
             {% endif %}
-        </div>
 
-        <hr>
+            <hr>
 
-        <div class="source">
             <h3>Perfil F/V</h3>
 
             <h6>Observaciones</h6>

@@ -139,6 +139,9 @@ class ReportDetail(LoginRequiredMixin, DetailView):
 
         #Get data from neuro and make chart
         jump_data(context)
+        
+        #Get data from fat and make chart
+        fat_data(context)
 
         #Get data from bilateral and make chart
         if 'date' in self.request.GET:
