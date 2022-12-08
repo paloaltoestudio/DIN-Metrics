@@ -9,6 +9,7 @@
                 <th><strong>Suprailíaco</strong></th>
                 <th><strong>Muslo</strong></th>
                 <th><strong>Pantorrilla</strong></th>
+                <th>Porcentaje</th>
                 <th></th>
             </tr>
         </thead>
@@ -24,6 +25,14 @@
                 <td>{{ fat_rate.thigh }}</td>
                 <td>{{ fat_rate.calf }}</td>
                 <td>{{ fat_rate.fat_rate }}</td>
+                <td> 
+                    {% comment %} {% include './fat_update_modal.html' with fat=item user=user %}
+                    {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#neuroUpdateModal_{{ item }}_{{ item.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                     {% endcomment %}
+                    {% include './fat_delete_modal.html' with fat=fat_rate user=user %}
+                    {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fatDeleteModal_{{ fat_rate.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %}
+                    
+                </td>
             </tr>
             {% endfor %}
         </tbody>

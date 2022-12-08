@@ -7,6 +7,16 @@ from users.models import Athlete
 
 class FatBase:
     model = Fat_rate
+    
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:fat_detail', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        return url
+
+
+class FatCreateView(FatBase, CreateView):     
+    fields = ['athlete', 'date', 'triceps', 'subscap', 'abdominal', 'suprailiac', 'thigh', 'calf']
 
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
@@ -46,13 +56,5 @@ class FatBase:
         self.object = form.save()
         return super().form_valid(form)
 
-    def get_success_url(self):
-        id = self.request.POST['uid']
-        success_url = reverse_lazy('users:fat_detail', kwargs = {'id': id})
-        url = success_url.format(**self.object.__dict__)
-        return url
-
-
-class FatCreateView(FatBase, CreateView):     
-    fields = ['athlete', 'date', 'triceps', 'subscap', 'abdominal', 'suprailiac', 'thigh', 'calf']
-
+class FatDeleteView(FatBase, DeleteView):
+    pk_url_kwarg = 'id'

@@ -1,0 +1,21 @@
+<!-- Modal -->
+<div class="modal fade" id="fatDeleteModal_{{ fat.id }}" tabindex="-1" aria-labelledby="fatDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fatDeleteModalLabel">¿Esta seguro que desea borrar el registro del {{ fat.date }}?</h5>
+                <a href="#" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+            </div>
+            <div class="modal-body">
+                <form 
+                action="{% url 'users:fat_delete' fat.id %}" 
+                method='post'>
+                    {% csrf_token %}
+
+                    <input type="text" name="uid" value="{{ user.id }}" hidden>
+                    <button class="btn btn-danger">Sí, Borrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
