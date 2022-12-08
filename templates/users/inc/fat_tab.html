@@ -26,9 +26,9 @@
                 <td>{{ fat_rate.calf }}</td>
                 <td>{{ fat_rate.fat_rate }}</td>
                 <td> 
-                    {% comment %} {% include './fat_update_modal.html' with fat=item user=user %}
-                    {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#neuroUpdateModal_{{ item }}_{{ item.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
-                     {% endcomment %}
+                    {% include './fat_update_modal.html' with fat=fat_rate user=user %}
+                    {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fatUpdateModal_{{ fat_rate.id }}"><i class="fs-6 material-icons">edit</i></a>{% endif %}
+                    
                     {% include './fat_delete_modal.html' with fat=fat_rate user=user %}
                     {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fatDeleteModal_{{ fat_rate.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %}
                     

@@ -15,7 +15,7 @@ from bilateral.views import (BilateralUpdateView, BilateralCreateView, Bilateral
 from profile_fv.views import (ProfileUpdateView, ProfileCreateView, ProfileDelete, FVCreateView, FVDelete,
                               ProfileObservationsCreateView, ProfileObservationsUpdateView, ProfileObservationsDeleteView)
 
-from fat.views import FatCreateView, FatDeleteView
+from fat.views import FatCreateView, FatDeleteView, FatUpdateView
 
 app_name = 'users'
 
@@ -62,6 +62,7 @@ urlpatterns = [
     path('deportistas/<int:id>/bilateral/borrar-observacion', BilateralObservationDeleteView.as_view(), name='bilateral_observation_delete'),
     path('deportistas/<int:id>/crear_grasa', FatCreateView.as_view(), name='fat_create'),
     path('<int:id>/eliminar-grasa', FatDeleteView.as_view(), name='fat_delete'),
+    path('<int:id>/editar-grasa', FatUpdateView.as_view(), name='fat_update'),
     path('<int:id>/editar-perfil', ProfileUpdateView.as_view(), name='profile_update'),
     path('crear-perfil', ProfileCreateView.as_view(), name='profile_create'),
     path('deportistas/<int:id>/grasa', FatDetailView.as_view(), name='fat_detail'),
