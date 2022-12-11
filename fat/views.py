@@ -36,22 +36,24 @@ class FatCreateView(FatBase, CreateView):
         if(athlete[0] and athlete[0].is_athlete):
             if(athlete[0].gender == 'M'):
                 rate = (0.1051*total_fat)+2.585
-                print('is athlete an M, rate: ', rate)
+                print('is athlete and M, rate: ', rate)
             else:
                 rate = (0.1548*total_fat)+3.58
-                print('is athlete an F, rate: ', rate)
+                print('is athlete and F, rate: ', rate)
 
         else:
             if(athlete[0].gender == 'M'):
                 corp_density = 1.112-(0.00043499*total_fat)+(0.00000055*total_fat**2)-(0.00028826*athlete[0].age)
                 corp_density = round(corp_density, 7)
                 rate = ((495/corp_density)-450)
-                print('is not athlete an M, rate: ', rate)
+                print('total_fat: ', total_fat)
+                print('corp_density: ', corp_density)
+                print('is not athlete and M, rate: ', rate)
             else:
                 corp_density = 1.112-(0.00046971*total_fat)+(0.00000056*total_fat**2)-(0.00012828*athlete[0].age)
                 corp_density = round(corp_density, 7)
                 rate = ((495/corp_density)-450)
-                print('is not athlete an F, rate: ', rate)
+                print('is not athlete and F, rate: ', rate)
 
         print('not conditional')
             
@@ -95,7 +97,9 @@ class FatUpdateView(FatBase, UpdateView):
                 corp_density = 1.112-(0.00043499*total_fat)+(0.00000055*total_fat**2)-(0.00028826*athlete[0].age)
                 corp_density = round(corp_density, 7)
                 rate = ((495/corp_density)-450)
-                print('is not athlete an M, rate: ', rate)
+                print('total_fat: ', total_fat)
+                print('corp_density: ', corp_density)
+                print('is not athlete and M, rate: ', rate)
             else:
                 corp_density = 1.112-(0.00046971*total_fat)+(0.00000056*total_fat**2)-(0.00012828*athlete[0].age)
                 corp_density = round(corp_density, 7)
