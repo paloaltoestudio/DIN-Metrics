@@ -7,6 +7,8 @@ services:
     ports:
       - 8000:8000
     image: app:django
+    environment:
+      DJANGO_SETTINGS_MODULE: metrics.settings.dev
     container_name: django_container
     restart: always
     command: python manage.py runserver 0.0.0.0:8000 --settings=metrics.settings.dev
