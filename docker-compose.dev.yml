@@ -9,5 +9,5 @@ services:
     image: app:django
     container_name: django_container
     restart: always
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000 --settings=metrics.settings.dev
     
