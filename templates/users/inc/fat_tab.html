@@ -47,20 +47,20 @@
 
 <div class="notes">
     <h4>Observaciones</h4>
-    {% comment %} {% if request.user.role == 'ADMIN' and not bilateral_observation %}<a href="#" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#bilateral_create_observation_modal">Agregar Observación<i class="fs-6 material-icons">add</i></a>{% endif %}
-    {% include './bilateral_create_observation_modal.html' with user=user %}
+    {% if request.user.role == 'ADMIN' and not fat_observation %}<a href="#" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#fat_create_observation_modal">Agregar Observación<i class="fs-6 material-icons">add</i></a>{% endif %}
+    {% include './fat_create_observation_modal.html' with user=user %}
 
-    {% if bilateral_observation %}
-    <p class="ml-2">{{bilateral_observation.observation}}</p>
+    {% if fat_observation %}
+    <p class="ml-2">{{fat_observation.observation}}</p>
 
     {% if request.user.role == 'ADMIN' %}
-        <a href="#" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#bilateral_observations_edit_modal">Editar Observación<i class="fs-6 ml-2 material-icons">edit</i></a>
-        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#bilateral_observations_delete_modal">Borrar Observación<i class="fs-6 ml-2 material-icons">delete</i></a>
+        <a href="#" class="btn btn-secundary" data-bs-toggle="modal" data-bs-target="#fat_observation_edit_modal">Editar Observación<i class="fs-6 ml-2 material-icons">edit</i></a>
+        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#fat_observation_delete_modal">Borrar Observación<i class="fs-6 ml-2 material-icons">delete</i></a>
     {% endif %}
 
-    {% include './bilateral_observation_edit_modal.html' with user=user observation=bilateral_observation %}
-    {% include './bilateral_observation_delete_modal.html' with user=user observation=bilateral_observation %}
-    {% endif %} {% endcomment %}
+    {% include './fat_observation_edit_modal.html' with user=user observation=fat_observation %}
+    {% include './fat_observation_delete_modal.html' with user=user observation=fat_observation %}
+    {% endif %}
 </div>
 
 

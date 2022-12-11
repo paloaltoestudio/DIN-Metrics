@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 #models
-from fat.models import Fat_rate
+from fat.models import Fat_rate, FatObservation
 
 #utils
 from .data_utils import update_plot
@@ -11,11 +11,11 @@ from .data_utils import update_plot
 def fat_data(context):
     
     fat_rates = Fat_rate.objects.filter(athlete=context['user'].athlete).order_by('date')
-    #bilateral_observation = BilateralObservation.objects.filter(athlete=context['user'].athlete)
+    fat_observation = FatObservation.objects.filter(athlete=context['user'].athlete)
 
-    # if(bilateral_observation and len(bilateral_observation) > 0):
-    #     bilateral_observation = bilateral_observation[0]
-    #     context['bilateral_observation'] = bilateral_observation
+    if(fat_observation and len(fat_observation) > 0):
+        fat_observation = fat_observation[0]
+        context['fat_observation'] = fat_observation
 
 
     data = {

@@ -13,3 +13,9 @@ class Fat_rate(models.Model):
     thigh = models.FloatField('Muslo', blank=True)
     calf = models.FloatField('Pantorrilla', blank=True)
     fat_rate = models.FloatField('Porcentaje de grasa', blank=True, null=True)
+
+
+class FatObservation(models.Model):
+
+    athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE, blank=True, null=True, related_name='fat_observations')
+    observation = models.CharField('Observaciones', max_length=200, blank=True, null=True)

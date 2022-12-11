@@ -2,7 +2,7 @@ from django.views.generic import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
 #Models
-from .models import Fat_rate
+from .models import Fat_rate, FatObservation
 from users.models import Athlete
 
 class FatBase:
@@ -98,4 +98,27 @@ class FatUpdateView(FatBase, UpdateView):
         return super().form_valid(form)
 
 class FatDeleteView(FatBase, DeleteView):
+    pk_url_kwarg = 'id'
+
+
+class FatObservationBase:
+    model = FatObservation
+
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:fat_detail', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        return url
+
+
+class FatObservationCreateView(FatObservationBase, CreateView):
+    fields = ['athlete', 'observation', ]
+
+
+class FatObservationUpdateView(FatObservationBase, UpdateView):
+    fields = ['observation', ]
+    pk_url_kwarg = 'id'
+
+
+class FatObservationDeleteView(FatObservationBase, DeleteView):
     pk_url_kwarg = 'id'

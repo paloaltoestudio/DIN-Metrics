@@ -15,7 +15,7 @@ from bilateral.views import (BilateralUpdateView, BilateralCreateView, Bilateral
 from profile_fv.views import (ProfileUpdateView, ProfileCreateView, ProfileDelete, FVCreateView, FVDelete,
                               ProfileObservationsCreateView, ProfileObservationsUpdateView, ProfileObservationsDeleteView)
 
-from fat.views import FatCreateView, FatDeleteView, FatUpdateView
+from fat.views import FatCreateView, FatDeleteView, FatUpdateView, FatObservationCreateView, FatObservationDeleteView, FatObservationUpdateView
 
 app_name = 'users'
 
@@ -60,6 +60,9 @@ urlpatterns = [
     path('deportistas/bilateral/crear-observacion', BilateralObservationCreateView.as_view(), name='bilateral_observation_create'),
     path('deportistas/<int:id>/bilateral/editar-observacion', BilateralObservationUpdateView.as_view(), name='bilateral_observation_edit'),
     path('deportistas/<int:id>/bilateral/borrar-observacion', BilateralObservationDeleteView.as_view(), name='bilateral_observation_delete'),
+    path('deportistas/grasa/crear-observacion', FatObservationCreateView.as_view(), name='fat_observation_create'),
+    path('deportistas/<int:id>/grasa/editar-observacion', FatObservationUpdateView.as_view(), name='fat_observation_edit'),
+    path('deportistas/<int:id>/grasa/borrar-observacion', FatObservationDeleteView.as_view(), name='fat_observation_delete'),
     path('deportistas/<int:id>/crear_grasa', FatCreateView.as_view(), name='fat_create'),
     path('<int:id>/eliminar-grasa', FatDeleteView.as_view(), name='fat_delete'),
     path('<int:id>/editar-grasa', FatUpdateView.as_view(), name='fat_update'),
