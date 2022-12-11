@@ -5,7 +5,6 @@ services:
     depends_on:
       - mysql
     environment:
-      #DJANGO_SETTINGS_MODULE: metrics.settings.prod gunicorn metrics.wsgi:application
       DJANGO_SETTINGS_MODULE: metrics.settings.prod
       MYSQL_DATABASE: dinametrics
       MYSQL_USER: dina_user
@@ -20,8 +19,8 @@ services:
     image: app:django
     container_name: django_container
       
-    # command: gunicorn metrics.wsgi:application --bind 0.0.0.0:8000
-    command: python manage.py runserver 0.0.0.0:8000 --settings=metrics.settings.prod
+    command: gunicorn metrics.wsgi:application --bind 0.0.0.0:8000 --workers 10
+    # command: python manage.py runserver 0.0.0.0:8000
 
 
   mysql:
@@ -34,7 +33,10 @@ services:
       MYSQL_PASSWORD: dinametrics@2022*
       MYSQL_ROOT_PASSWORD: paloaltodinamtrics@2022*
     volumes:
-      - ./db:/var/lib/mysql
+      - db:/var/lib/mysql
     restart: unless-stopped
     ports:
       - 3306:3306
+
+volumes:
+  db:
