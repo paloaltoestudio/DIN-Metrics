@@ -14,7 +14,7 @@ services:
     image: app:django
     container_name: django_container
       
-    command: gunicorn metrics.wsgi:application --bind 0.0.0.0:8000 --workers 10
+    command: gunicorn metrics.wsgi:application --bind 0.0.0.0:8000 --workers 2
     # command: python manage.py runserver 0.0.0.0:8000
 
 
@@ -30,8 +30,8 @@ services:
     volumes:
       - db:/var/lib/mysql
     restart: unless-stopped
-    expose:
-      - '3306'
+    ports:
+        - "3306:3306"
 
   nginx:
     image: nginx:latest
