@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoList, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
                     FVDetail, ProfileFVGraph, BilateralDetail, FatDetailView, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
-from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate, OsteoCreateView, OsteoDeleteView
+from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate, OsteoCreateView, OsteoDeleteView, OsteoReportView
 from fms.views import FmsUpdate
 from neuro.views import (NeuroCreateBase, NeuroBaseUpdate, NeuroDelete, 
                         NeuroObservationsView, NeuroObservationsDeleteView,
@@ -30,6 +30,7 @@ urlpatterns = [
     path('deportistas/nuevo/', signup, name='signup'),
     path('deportistas/<int:id>/', UserDetail.as_view(), name='user_detail'),
     path('deportistas/<int:id>/reporte', ReportDetail.as_view(), name='report_detail'),
+    path('deportistas/<int:id>/reporte-osteo', OsteoReportView.as_view(), name='report_osteo'),
     path('deportistas/<int:id>/osteo-crear', OsteoCreateView.as_view(), name='osteo_create'),
     path('deportistas/<int:id>/osteo-borrar', OsteoDeleteView.as_view(), name='osteo_delete'),
     path('deportistas/<int:id>/osteo', OsteoList.as_view(), name='osteo_list'),

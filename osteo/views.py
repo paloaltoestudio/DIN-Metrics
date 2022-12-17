@@ -1,9 +1,11 @@
-from django.views.generic import UpdateView, CreateView, DeleteView
+from django.views.generic import UpdateView, CreateView, DeleteView, DetailView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 #Models
 from osteo.models import Osteo
-from users.models import Athlete
+from users.models import Athlete, User
 
 class OsteoCreateView(CreateView):
     model = Osteo
@@ -36,6 +38,36 @@ class OsteoBase:
         success_url = reverse_lazy('users:osteo_detail', kwargs = {'id': id}) + '?osteo_id=' + str(self.object.pk)
         url = success_url.format(**self.object.__dict__)
         return url
+
+
+class OsteoReportView(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/report_osteo.html'
+    extra_context = {
+        'page': 'user_list_detail',
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        #Get data from osteo and make chart
+        if(self.request.GET.get('osteo_id')):
+            osteos = Osteo.objects.filter(athlete = context['user'].athlete)
+            
+            osteo_id = self.request.GET['osteo_id']
+            osteo = Osteo.objects.filter(id=osteo_id)
+            osteo = osteo[0]
+            
+            context['osteos'] = osteos
+            context['osteo'] = osteo
+        else:
+            osteo = Osteo.objects.filter(athlete = context['user'].athlete)
+            context['osteo'] = osteo[0]
+            context['osteos'] = osteo
+
+
+        return context
 
 
 class FlexUpdate(OsteoBase, UpdateView):
