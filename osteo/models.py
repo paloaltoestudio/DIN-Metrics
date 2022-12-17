@@ -18,7 +18,8 @@ class Osteo(models.Model):
         ('NR', 'No retracción')
     )
 
-    athlete = models.OneToOneField(Athlete, on_delete=models.CASCADE, blank=True, null=True)
+    athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE, blank=True, null=True, related_name='osteo')
+    date = models.DateField(blank=True, null=True)
     pain = models.CharField('Dolor', max_length=2, choices=PAIN_CHOICES, blank=True)
     resting = models.CharField('En reposo', max_length=2, choices=PAIN_CHOICES, blank=True)
     moving = models.CharField('En movimiento', max_length=2, choices=PAIN_CHOICES, blank=True)
@@ -72,6 +73,6 @@ class Osteo(models.Model):
 
     def __str__(self):
         if hasattr(self, 'athlete'):
-            return f'{self.athlete.user.first_name} {self.athlete.user.last_name}'
+            return f'{self.date}'
         else:
             return self.zone

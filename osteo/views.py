@@ -1,25 +1,39 @@
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 
 #Models
 from osteo.models import Osteo
 from users.models import Athlete
 
+class OsteoCreateView(CreateView):
+    model = Osteo
+    fields = ['athlete', 'date',]
+
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:osteo_detail', kwargs = {'id': id}) + '?osteo_id=' + str(self.object.pk)
+        url = success_url.format(**self.object.__dict__)
+        return url
+
+
+class OsteoDeleteView(DeleteView):
+    model = Osteo
+    pk_url_kwarg = 'id'
+
+    def get_success_url(self):
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:osteo_list', kwargs = {'id': id})
+        url = success_url.format(**self.object.__dict__)
+        return url
+
+
 class OsteoBase:
     model = Osteo
     pk_url_kwarg = 'id'
 
-    def get_object(self, queryset=None):
-        athlete = Athlete.objects.get(id = self.kwargs.get(self.pk_url_kwarg))
-        if queryset is None:
-            queryset = self.get_queryset()
-
-        obj = queryset.get_or_create(athlete = athlete)[0]
-        return obj
-
     def get_success_url(self):
-        id = self.request.POST['id']
-        success_url = reverse_lazy('users:osteo_detail', kwargs = {'id': id})
+        id = self.request.POST['uid']
+        success_url = reverse_lazy('users:osteo_detail', kwargs = {'id': id}) + '?osteo_id=' + str(self.object.pk)
         url = success_url.format(**self.object.__dict__)
         return url
 

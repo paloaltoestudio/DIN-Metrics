@@ -7,7 +7,7 @@
             <a href="{% url 'users:user_detail' user.id %}" class="nav-link {% if request.path == url %}active{% endif %}">Básico</a>
         </li>
         <li class="nav-item" role="presentation">
-            <a href="{% url 'users:osteo_detail' user.id %}" class="nav-link {% if 'osteo' in request.path %}active{% endif %}">Osteomuscular</a>
+            <a href="{% url 'users:osteo_list' user.id %}" class="nav-link {% if 'osteo' in request.path %}active{% endif %}">Osteomuscular</a>
         </li>
         <li class="nav-item" role="presentation">
             <a href="{% url 'users:fms_detail' user.id %}" class="nav-link {% if 'fms' in request.path %}active{% endif %}">FMS</a>

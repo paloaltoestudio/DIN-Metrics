@@ -184,9 +184,28 @@ class OsteoDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
+        #Get data from profile FV and make chart
+        osteo_id = self.request.GET['osteo_id']
+        osteo = Osteo.objects.filter(id=osteo_id)
+        osteo = osteo[0]
+        context['osteo'] = osteo
+
+        return context
+
+
+class OsteoList(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/list_osteo.html'
+    extra_context = {
+        'page': 'user_list_detail',
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
         osteo = Osteo.objects.filter(athlete = context['user'].athlete)
-        if len(osteo) > 0:
-            context['osteo'] = osteo[0]
+        context['osteos'] = osteo
 
         return context
 

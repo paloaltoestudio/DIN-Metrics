@@ -1,7 +1,11 @@
 {% extends 'layout/detail_base.html' %}
 
 {% block user %}
-        
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'users:osteo_list' user.id %}" class="btn mb-3"><i class="material-icons">arrow_back</i> Volver</a>
+            </div>
+        </div>
         <h6>Evaluación dolor, sensibilidad, inflamación, edema {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#painModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
         <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
         <div class="row">
@@ -206,11 +210,16 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <a href="{% url 'users:osteo_list' user.id %}" class="btn mb-3"><i class="material-icons">arrow_back</i> Volver</a>
+            </div>
+        </div>
 
         {% if request.user.role != 'MANAGER' %}
-            {% include './inc/osteo_pain_modal.html' %}
-            {% include './inc/osteo_measures_modal.html' %}
-            {% include './inc/osteo_flex_modal.html' %}
+            {% include './inc/osteo_pain_modal.html' with osteo=osteo user=user %}
+            {% include './inc/osteo_measures_modal.html' with osteo=osteo user=user %}
+            {% include './inc/osteo_flex_modal.html' with osteo=osteo user=user %}
         {% endif %}
         {% comment %} end if edit user permission {% endcomment %}
 
