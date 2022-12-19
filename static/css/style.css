@@ -398,6 +398,27 @@ footer {
     font-size: 12px;
 }
 
+/* Report */
+.source h3 {
+  font-size: 14px;
+  font-weight: bold;
+}
+.source_mobile {
+  display: none;
+}
+
+@media all and (max-width: 768px){
+
+  .source_wrapper {
+    position: absolute;
+    left: -10000px;
+  }
+
+  .source_mobile {
+    display: block;
+  }
+}
+
 @media screen and (min-width: 769px){
   .collapse:not(.show) {
       display: block;

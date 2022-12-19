@@ -1,12 +1,16 @@
-{% extends 'layout/detail_base.html' %}
+{% extends 'layout/base_minimal.html' %}
 
-{% block user %}
+{% block report %}
+<div class="source">
+    <h3>Osteomuscular</h3>
 
-
-<div class="row">
-    <div class="col-sm-3">
-        <div class="input-group input-group-outline mt-3 is-upper">
+</div>
+<p class="mb-1">Fecha de la medición: {{osteo.date}}</p>
+<div class="row" data-html2canvas-ignore="true">
+    <div class="col-sm-4">
+        <div class="input-group input-group-outline mb-3 is-upper">
             <select id="osteo_filter" name="osteo_filter" id="" class="form-control mr-2">
+                <option value="">Selecciona una fecha</option>
                 {% for ost in osteos %}
                 <option value="{{ost.id}}">{{ost.date}}</option>
                 {% endfor %}
@@ -16,7 +20,6 @@
     </div>
 </div>
 
-        {{osteo.date}}
         <h6>Evaluación dolor, sensibilidad, inflamación, edema {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#painModal"><i class="fs-6 material-icons">edit</i></a>{% endif %}</h6>
         <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
         <div class="row">
@@ -221,11 +224,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <a href="{% url 'users:osteo_list' user.id %}" class="btn mb-3"><i class="material-icons">arrow_back</i> Volver</a>
-            </div>
-        </div>
+       
 
         <script>
             const osteo_filter = document.querySelector('#osteo_filter')
