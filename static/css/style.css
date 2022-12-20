@@ -399,6 +399,19 @@ footer {
 }
 
 /* Report */
+.source_wrapper  {
+  background: #ccc;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.source_wrapper > div {
+  padding: 20px;
+  margin: auto;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
 .source h3 {
   font-size: 14px;
   font-weight: bold;
