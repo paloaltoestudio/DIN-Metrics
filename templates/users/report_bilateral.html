@@ -1,0 +1,52 @@
+{% extends 'layout/base_minimal.html' %}
+
+{% block report %}
+<div class="source">
+    <h3>Déficit Bilateral</h3>
+</div>
+
+{% if bilaterals %}
+    <div class="notes">
+        <h6>Observaciones</h6>
+    
+        {% if bilateral_observation %}
+        <p class="ml-2">{{bilateral_observation.observation}}</p>
+        {% endif %}
+    </div>
+
+    <p class="mb-1">Fecha de la medición: {{ date|date:'j'}} de {{ date|date:'F'}} de {{ date|date:'Y'}}</p>
+    <form action="{% url 'users:report_bilateral' user.id %}" method="get">
+        <div class="row" data-html2canvas-ignore="true">
+            {% csrf_token %}
+            <div class="col-sm-4">
+                <div class="input-group input-group-outline mb-3 is-upper">
+                    <select id="osteo_filter" name="date" id="" class="form-control mr-2">
+                        <option value="">Selecciona una fecha</option>
+                        {% for bi in bilaterals %}
+                            {% ifchanged %}
+                            <option value="{{bi.date|date:'Y-m-d'}}">{{bi.date}}</option>
+                            {% endifchanged %}
+                        {% endfor %}
+                    </select>
+                    <button class="btn" style="top:-5px;">Filtrar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+        
+    <div class="graph_wrapper">
+        <div class="loader">
+            <span>Cargando Gráfico</span>
+            <div class="lds-ripple"><div></div><div></div></div>
+        </div>
+        <div class="graph_inner">
+            {{ graph|safe }}
+        </div>
+    </div>
+{% endif %}
+       
+
+
+{% endblock  %}
+
+

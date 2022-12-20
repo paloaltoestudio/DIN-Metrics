@@ -67,7 +67,14 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="input-group input-group-outline">
-                    <input class="form-control mt-2" type="date" name="date" value="{% if date %}{{date|date:'Y-m-d'}}{% endif %}">
+                    <select id="osteo_filter" name="date" id="" class="form-control mr-2">
+                        <option value="">Selecciona una fecha</option>
+                        {% for bi in bilaterals %}
+                            {% ifchanged %}
+                            <option value="{{bi.date|date:'Y-m-d'}}">{{bi.date}}</option>
+                            {% endifchanged %}
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6">

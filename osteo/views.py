@@ -63,8 +63,10 @@ class OsteoReportView(LoginRequiredMixin, DetailView):
             context['osteo'] = osteo
         else:
             osteo = Osteo.objects.filter(athlete = context['user'].athlete)
-            context['osteo'] = osteo[0]
-            context['osteos'] = osteo
+
+            if len(osteo) > 0:
+                context['osteo'] = osteo[0]
+                context['osteos'] = osteo
 
 
         return context

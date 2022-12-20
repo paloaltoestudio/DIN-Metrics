@@ -3,8 +3,9 @@
 {% block report %}
 <div class="source">
     <h3>Osteomuscular</h3>
-
 </div>
+
+{% if osteos %}
 <p class="mb-1">Fecha de la medición: {{osteo.date}}</p>
 <div class="row" data-html2canvas-ignore="true">
     <div class="col-sm-4">
@@ -224,6 +225,7 @@
                 </div>
             </div>
         </div>
+{% endif %}
        
 
         <script>
