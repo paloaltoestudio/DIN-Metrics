@@ -250,8 +250,8 @@ class FMSDetail(LoginRequiredMixin, DetailView):
             fms = fms[0]
             
             def check_value(value):
-                if type(value) == str:
-                    return 0.0
+                if type(value) != int:
+                    return 0
                 else:
                     return value
 
@@ -262,8 +262,6 @@ class FMSDetail(LoginRequiredMixin, DetailView):
             fms.trunk_total = get_sum(check_value(fms.trunk_l_score), check_value(fms.trunk_r_score))
             fms.trunk_rot_total = get_sum(check_value(fms.trunk_rot_l_score), check_value(fms.trunk_rot_r_score))
 
-            fms.total = sum([check_value(fms.squat_score), check_value(fms.fence_total), check_value(fms.lunge_total), check_value(fms.shoulder_total), 
-                             check_value(fms.leg_total), check_value(fms.trunk_total), check_value(fms.trunk_rot_total)])
 
             context['fms'] = fms
 

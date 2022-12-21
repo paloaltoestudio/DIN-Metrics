@@ -10,6 +10,6 @@ def age(birthdate):
     return age
 
 def get_sum(num1, num2):
-    if type(num1) == float and type(num2) == float:
+    if type(num1) == int and type(num2) == int:
         return num1 + num2
     else: return ''

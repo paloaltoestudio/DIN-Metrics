@@ -6,7 +6,7 @@ from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoL
                     FVDetail, ProfileFVGraph, BilateralDetail, FatDetailView, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate, OsteoCreateView, OsteoDeleteView, OsteoReportView
-from fms.views import FmsUpdate
+from fms.views import FmsUpdate, FMSDeleteView, FMSCreateView
 from neuro.views import (NeuroCreateBase, NeuroBaseUpdate, NeuroDelete, 
                         NeuroObservationsView, NeuroObservationsDeleteView,
                         NeuroObservationsEditView)
@@ -38,6 +38,8 @@ urlpatterns = [
     path('deportistas/<int:id>/osteo-detalle', OsteoDetail.as_view(), name='osteo_detail'),
     path('deportistas/<int:id>/fms', FMSList.as_view(), name='fms_list'),
     path('deportistas/<int:id>/fms-detalle', FMSDetail.as_view(), name='fms_detail'),
+    path('deportistas/<int:id>/fms-borrar', FMSDeleteView.as_view(), name='fms_delete'),
+    path('deportistas/<int:id>/fms-crear', FMSCreateView.as_view(), name='fms_create'),
     path('deportistas/<int:id>/neuromuscular', JumpDetail.as_view(), name='jump_detail'),
     path('deportistas/<int:id>/bilateral', BilateralDetail.as_view(), name='bilateral_detail'),
     path('deportistas/<int:id>/perfil_fv/observaciones', ProfileObservationsCreateView.as_view(), name='fv_observation_add'),

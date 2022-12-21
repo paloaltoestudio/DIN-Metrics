@@ -8,6 +8,7 @@
                         <thead class="table-dark">
                             <tr>
                                 <th><strong>Fecha</strong></th>
+                                <th>Puntaje Total</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -17,12 +18,13 @@
                                 <tr>
                                     <td>
                                         <a href="{% url 'users:fms_detail' user.id %}?fms_id={{fms.id}}" class="badge rounded-circle">{{ fms.date }}</a>
-                                    </td>            
+                                    </td>  
+                                    <td>{{fms.total}}</td>          
                                     <td>
                                         <a href="{% url 'users:fms_detail' user.id %}?fms_id={{fms.id}}" class="badge rounded-circle"><i class="fs-6 material-icons">edit</i></a>
                                     
-                                        {% comment %} {% include './inc/osteo_delete_modal.html' with osteo=osteo user=user %}
-                                        {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#osteoDeleteModal_{{ osteo.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %} {% endcomment %}
+                                        {% include './inc/fms_delete_modal.html' with fms=fms user=user %}
+                                        {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#fmsDeleteModal_{{ fms.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %}
                                     </td> 
                                 </tr>
                             {% endfor %}
@@ -34,8 +36,8 @@
 
         <div class="row">
             <div class="col">
-                {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#osteoCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
-                {% include './inc/osteo_create_modal.html' with user=user %}
+                {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#fmsCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+                {% include './inc/fms_create_modal.html' with user=user %}
             </div>
         </div>
 
