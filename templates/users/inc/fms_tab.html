@@ -1,3 +1,9 @@
+<div class="row">
+    <div class="col">
+        <a href="{% url 'users:fms_list' user.id %}" class="btn mb-3"><i class="material-icons">arrow_back</i> Volver</a>
+    </div>
+</div>
+
 <div class="table-responsive table-striped p-0">
     <table class="table align-items-center mb-3">
         <thead class="table-dark">
@@ -83,6 +89,11 @@
         </tbody>
     </table>
 </div> 
+<div class="row">
+    <div class="col">
+        <a href="{% url 'users:fms_list' user.id %}" class="btn mb-3"><i class="material-icons">arrow_back</i> Volver</a>
+    </div>
+</div>
 {{ form }}
 
 

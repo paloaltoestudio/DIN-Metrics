@@ -4,7 +4,8 @@ from django.db import models
 from users.models import Athlete
 
 class Fms(models.Model):
-    athlete = models.OneToOneField(Athlete, on_delete=models.CASCADE, blank=True, null=True)
+    athlete = models.ForeignKey(Athlete, on_delete=models.CASCADE, blank=True, null=True, related_name='fms')
+    date = models.DateField(blank=True, null=True)
     squat_score = models.FloatField('Sentadilla | Puntuación Parcial', blank=True, null=True)
     squat_observations = models.TextField('Sentadilla | Observaciones', blank=True, null=True)
     fence_step_l_score = models.FloatField('Paso Izquierda | Puntuación Parcial', blank=True, null=True)
@@ -28,5 +29,4 @@ class Fms(models.Model):
     total = models.FloatField('Puntuación Total', blank=True, null=True)
 
     def __str__(self):
-        return self.athlete.user.first_name
-
+        return f'{self.date} - {self.athlete.user.first_name}'

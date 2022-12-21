@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoList, OsteoDetail, FMSDetail, JumpDetail, ProfileFVDetail, 
+from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoList, OsteoDetail, FMSDetail, FMSList, JumpDetail, ProfileFVDetail, 
                     FVDetail, ProfileFVGraph, BilateralDetail, FatDetailView, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate, OsteoCreateView, OsteoDeleteView, OsteoReportView
@@ -36,7 +36,8 @@ urlpatterns = [
     path('deportistas/<int:id>/osteo-borrar', OsteoDeleteView.as_view(), name='osteo_delete'),
     path('deportistas/<int:id>/osteo', OsteoList.as_view(), name='osteo_list'),
     path('deportistas/<int:id>/osteo-detalle', OsteoDetail.as_view(), name='osteo_detail'),
-    path('deportistas/<int:id>/fms', FMSDetail.as_view(), name='fms_detail'),
+    path('deportistas/<int:id>/fms', FMSList.as_view(), name='fms_list'),
+    path('deportistas/<int:id>/fms-detalle', FMSDetail.as_view(), name='fms_detail'),
     path('deportistas/<int:id>/neuromuscular', JumpDetail.as_view(), name='jump_detail'),
     path('deportistas/<int:id>/bilateral', BilateralDetail.as_view(), name='bilateral_detail'),
     path('deportistas/<int:id>/perfil_fv/observaciones', ProfileObservationsCreateView.as_view(), name='fv_observation_add'),

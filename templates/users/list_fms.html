@@ -1,0 +1,44 @@
+{% extends 'layout/detail_base.html' %}
+
+{% block user %}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="table-responsive p-0">
+                    <table class="table table-striped align-items-center mb-3 jumps_table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th><strong>Fecha</strong></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                
+                        <tbody>
+                            {% for fms in fms_list %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'users:fms_detail' user.id %}?fms_id={{fms.id}}" class="badge rounded-circle">{{ fms.date }}</a>
+                                    </td>            
+                                    <td>
+                                        <a href="{% url 'users:fms_detail' user.id %}?fms_id={{fms.id}}" class="badge rounded-circle"><i class="fs-6 material-icons">edit</i></a>
+                                    
+                                        {% comment %} {% include './inc/osteo_delete_modal.html' with osteo=osteo user=user %}
+                                        {% if request.user.role == 'ADMIN' %}<a href="#" class="badge rounded-circle" data-bs-toggle="modal" data-bs-target="#osteoDeleteModal_{{ osteo.id }}"><i class="fs-6 material-icons">delete</i></a>{% endif %} {% endcomment %}
+                                    </td> 
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#osteoCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
+                {% include './inc/osteo_create_modal.html' with user=user %}
+            </div>
+        </div>
+
+{% endblock  %}
+
+

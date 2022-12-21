@@ -116,26 +116,27 @@ class ReportDetail(LoginRequiredMixin, DetailView):
 
         #Get FMS data
         fms = Fms.objects.filter(athlete = context['user'].athlete)
+
         if len(fms) > 0:
-            fms = fms[0]
+            # fms = fms[0]
             
-            def check_value(value):
-                if type(value) == str:
-                    return 0.0
-                else:
-                    return value
+            # def check_value(value):
+            #     if type(value) == str:
+            #         return 0.0
+            #     else:
+            #         return value
 
-            fms.fence_total = get_sum(check_value(fms.fence_step_l_score), check_value(fms.fence_step_r_score))
-            fms.lunge_total = get_sum(check_value(fms.lunge_l_score), check_value(fms.lunge_r_score))
-            fms.shoulder_total = get_sum(check_value(fms.shoulder_l_score), check_value(fms.shoulder_r_score))
-            fms.leg_total = get_sum(check_value(fms.leg_raise_l_score), check_value(fms.leg_raise_r_score))
-            fms.trunk_total = get_sum(check_value(fms.trunk_l_score), check_value(fms.trunk_r_score))
-            fms.trunk_rot_total = get_sum(check_value(fms.trunk_rot_l_score), check_value(fms.trunk_rot_r_score))
+            # fms.fence_total = get_sum(check_value(fms.fence_step_l_score), check_value(fms.fence_step_r_score))
+            # fms.lunge_total = get_sum(check_value(fms.lunge_l_score), check_value(fms.lunge_r_score))
+            # fms.shoulder_total = get_sum(check_value(fms.shoulder_l_score), check_value(fms.shoulder_r_score))
+            # fms.leg_total = get_sum(check_value(fms.leg_raise_l_score), check_value(fms.leg_raise_r_score))
+            # fms.trunk_total = get_sum(check_value(fms.trunk_l_score), check_value(fms.trunk_r_score))
+            # fms.trunk_rot_total = get_sum(check_value(fms.trunk_rot_l_score), check_value(fms.trunk_rot_r_score))
 
-            fms.total = sum([check_value(fms.squat_score), check_value(fms.fence_total), check_value(fms.lunge_total), check_value(fms.shoulder_total), 
-                             check_value(fms.leg_total), check_value(fms.trunk_total), check_value(fms.trunk_rot_total)])
+            # fms.total = sum([check_value(fms.squat_score), check_value(fms.fence_total), check_value(fms.lunge_total), check_value(fms.shoulder_total), 
+            #                  check_value(fms.leg_total), check_value(fms.trunk_total), check_value(fms.trunk_rot_total)])
 
-            context['fms'] = fms
+            context['fms_list'] = fms
 
         #Get data from neuro and make chart
         jump_data(context)
@@ -210,6 +211,26 @@ class OsteoList(LoginRequiredMixin, DetailView):
         return context
 
 
+class FMSList(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/list_fms.html'
+    extra_context = {
+        'page': 'user_list_detail',
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        #Get FMS data
+        fms = Fms.objects.filter(athlete = context['user'].athlete)
+
+        if len(fms) > 0:
+            context['fms_list'] = fms
+
+        return context
+
+
 class FMSDetail(LoginRequiredMixin, DetailView):
     model = User
     pk_url_kwarg = 'id'
@@ -220,8 +241,11 @@ class FMSDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        fms = Fms.objects.filter(athlete = context['user'].athlete)
+
+        #Get FMS data
+        fms_id = self.request.GET['fms_id']
+        fms = Fms.objects.filter(id = fms_id)
+
         if len(fms) > 0:
             fms = fms[0]
             
