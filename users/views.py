@@ -618,3 +618,7 @@ def logout_view(request):
     """Logout a user."""
     logout(request)
     return redirect('login')
+
+
+def error_404_view(request, exception):
+    return render(request, 'general/404.html')
