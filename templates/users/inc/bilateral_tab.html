@@ -1,3 +1,4 @@
+{% if request.user.role == 'ADMIN' %}
 <div class="table-responsive p-0">
     <table class="table table-striped align-items-center mb-3 jumps_table">
         <thead class="table-dark">
@@ -35,8 +36,7 @@
     {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#biCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
     {% include './bilateral_create_modal.html' %}
 </div>
-
-<hr>
+{% endif %}
 
 <div class="notes">
     <h4>Observaciones</h4>
@@ -56,8 +56,7 @@
     {% endif %}
 </div>
 
-
-
+<hr>
 
 {% comment %} {{ df|safe }} {% endcomment %}
 {% if graph %}

@@ -1,8 +1,9 @@
-from django.views.generic import UpdateView, DeleteView, CreateView
+from django.views.generic import UpdateView, DeleteView, CreateView, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from users.models import Athlete
+from users.models import User
 from fms.models import Fms
 
 #Utils
@@ -77,3 +78,31 @@ class FMSDeleteView(DeleteView):
         success_url = reverse_lazy('users:fms_list', kwargs = {'id': id})
         url = success_url.format(**self.object.__dict__)
         return url
+
+
+class FMSReportView(LoginRequiredMixin, DetailView):
+    model = User
+    pk_url_kwarg = 'id'
+    template_name = 'users/report_fms.html'
+    extra_context = {
+        'page': 'user_list_detail',
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        #Get data from FMS and make chart
+        fms = Fms.objects.filter(athlete = context['user'].athlete).order_by('-date')
+
+        if len(fms) > 0:
+            context['fms'] = fms[0]
+            context['fms_list'] = fms
+
+        if(self.request.GET.get('fms_id')):
+            fms_id = self.request.GET['fms_id']
+            fms = Fms.objects.filter(id=fms_id)
+            fms = fms[0]
+        
+            context['fms'] = fms
+
+        return context

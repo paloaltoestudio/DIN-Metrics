@@ -1,4 +1,4 @@
-
+{% if request.user.role == 'ADMIN' %}
 <div class="row">
     <div class="col-sm-12">
         <h5>Sentadilla</h5>
@@ -31,8 +31,7 @@
         </div>
     </div>
 </div>
-
-<hr>
+{% endif %}
 
 <div class="notes">
     <h4>Observaciones</h4>
@@ -49,6 +48,7 @@
     {% include './fv_observations_delete_modal.html' with user=user observation=fv_observations %}
     {% endif %}
 </div>
+<hr>
 
 <div class="row">
     <div class="col-12">

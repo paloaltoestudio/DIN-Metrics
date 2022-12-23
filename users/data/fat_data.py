@@ -38,5 +38,6 @@ def fat_data(context):
         update_plot(bi_fig)
 
         context['fat_graph'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
+        context['fat_graph_mobile'] = bi_fig.to_html(include_plotlyjs="cdn", full_html=False)
 
     context['fat_rates'] = fat_rates

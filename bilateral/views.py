@@ -80,7 +80,7 @@ class BilateralReportView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        bilaterals = Bilateral.objects.filter(athlete=context['user'].athlete).order_by('date')
+        bilaterals = Bilateral.objects.filter(athlete=context['user'].athlete).order_by('-date')
 
         if 'date' in self.request.GET:
                 date = self.request.GET['date']

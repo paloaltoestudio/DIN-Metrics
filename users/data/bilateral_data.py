@@ -18,7 +18,7 @@ from .data_utils import update_plot
 
 def bilateral_data(context, date):
     
-    bilaterals = Bilateral.objects.filter(athlete=context['user'].athlete).order_by('date')
+    bilaterals = Bilateral.objects.filter(athlete=context['user'].athlete).order_by('-date')
     #bilaterals_filter = Bilateral.objects.filter(athlete=context['user'].athlete, date=date).order_by('date')
     bilateral_observation = BilateralObservation.objects.filter(athlete=context['user'].athlete)
 

@@ -6,7 +6,7 @@ from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoL
                     FVDetail, ProfileFVGraph, BilateralDetail, FatDetailView, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
 from osteo.views import FlexUpdate, PainUpdate, MeasuresUpdate, OsteoCreateView, OsteoDeleteView, OsteoReportView
-from fms.views import FmsUpdate, FMSDeleteView, FMSCreateView
+from fms.views import FmsUpdate, FMSDeleteView, FMSCreateView, FMSReportView
 from neuro.views import (NeuroCreateBase, NeuroBaseUpdate, NeuroDelete, 
                         NeuroObservationsView, NeuroObservationsDeleteView,
                         NeuroObservationsEditView)
@@ -32,6 +32,7 @@ urlpatterns = [
     path('deportistas/<int:id>/reporte', ReportDetail.as_view(), name='report_detail'),
     path('deportistas/<int:id>/reporte-osteo', OsteoReportView.as_view(), name='report_osteo'),
     path('deportistas/<int:id>/reporte-bilateral', BilateralReportView.as_view(), name='report_bilateral'),
+    path('deportistas/<int:id>/reporte-fms', FMSReportView.as_view(), name='report_fms'),
     path('deportistas/<int:id>/osteo-crear', OsteoCreateView.as_view(), name='osteo_create'),
     path('deportistas/<int:id>/osteo-borrar', OsteoDeleteView.as_view(), name='osteo_delete'),
     path('deportistas/<int:id>/osteo', OsteoList.as_view(), name='osteo_list'),

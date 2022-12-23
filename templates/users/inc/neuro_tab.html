@@ -35,8 +35,9 @@
     {% if request.user.role == 'ADMIN' %}<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#neuroCreateModal">Agregar Métrica<i class="fs-6 material-icons">add</i></a>{% endif %}
     {% include './neuro_create_modal.html' %}
 </div>
+</div>
 
-<hr>
+{% endif %}
 
 <div class="notes">
     <h4>Observaciones</h4>
@@ -53,10 +54,6 @@
     {% include './neuro_observations_delete_modal.html' with user=user observation=neuro_observations %}
     {% endif %}
 </div>
-
-</div>
-
-{% endif %}
 
 <hr>
 

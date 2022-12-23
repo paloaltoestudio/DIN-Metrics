@@ -118,23 +118,7 @@ class ReportDetail(LoginRequiredMixin, DetailView):
         fms = Fms.objects.filter(athlete = context['user'].athlete)
 
         if len(fms) > 0:
-            # fms = fms[0]
-            
-            # def check_value(value):
-            #     if type(value) == str:
-            #         return 0.0
-            #     else:
-            #         return value
-
-            # fms.fence_total = get_sum(check_value(fms.fence_step_l_score), check_value(fms.fence_step_r_score))
-            # fms.lunge_total = get_sum(check_value(fms.lunge_l_score), check_value(fms.lunge_r_score))
-            # fms.shoulder_total = get_sum(check_value(fms.shoulder_l_score), check_value(fms.shoulder_r_score))
-            # fms.leg_total = get_sum(check_value(fms.leg_raise_l_score), check_value(fms.leg_raise_r_score))
-            # fms.trunk_total = get_sum(check_value(fms.trunk_l_score), check_value(fms.trunk_r_score))
-            # fms.trunk_rot_total = get_sum(check_value(fms.trunk_rot_l_score), check_value(fms.trunk_rot_r_score))
-
-            # fms.total = sum([check_value(fms.squat_score), check_value(fms.fence_total), check_value(fms.lunge_total), check_value(fms.shoulder_total), 
-            #                  check_value(fms.leg_total), check_value(fms.trunk_total), check_value(fms.trunk_rot_total)])
+            fms = fms[0]
 
             context['fms_list'] = fms
 

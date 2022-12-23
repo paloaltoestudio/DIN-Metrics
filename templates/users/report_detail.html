@@ -4,7 +4,14 @@
 <hr>
 {% load static %}
 <div class="row">
-    <div class="loading_report_wrapper">
+    <div id="loading_report_wrapper" class="loading_report_wrapper">
+        <div class="loading_report">
+            <img src="{% static 'img/loading.gif' %}" width="50" alt="">
+            <h3>Cargando Reporte</h3>
+        </div>
+    </div>
+
+    <div id="generating_report_wrapper" class="loading_report_wrapper">
         <div class="loading_report">
             <img src="{% static 'img/loading.gif' %}" width="50" alt="">
             <h3>Generando Reporte</h3>
@@ -83,9 +90,9 @@
             
         </div>
 
-        {% if fms %}
+        {% if fms_list %}
         <div class="source">
-            <h3>FMS</h3>
+            <iframe class="frame first" width="100%" height="980" src="{% url 'users:report_fms' user.id %}" frameborder="0" scrolling="no"></iframe>
         </div>
         {% endif %}
         
@@ -229,219 +236,39 @@
         </div>
     
         <hr>
+
+        {% if fat_graph_mobile %}
+        <h3>Grasa</h3>
+        <hr>
+
+        <div class="notes">
+            <h6>Observaciones</h6>
+
+            {% if fat_observation %}
+            <p class="ml-2">{{fat_observation.observation}}</p>
+            {% endif %}
+        </div>
+        <div class="graph_wrapper">
+            <div class="loader" data-html2canvas-ignore="true">
+                <span>Cargando Gráfico</span>
+                <div class="lds-ripple"><div></div><div></div></div>
+            </div>
+            <div class="graph_inner">
+                {{ fat_graph_mobile|safe }}
+            </div>
+        </div>
+        {% endif %}
+
+        <hr>
     
         <div>
-            <h3>FMS</h3>
-            <h6>Evaluación dolor, sensibilidad, inflamación, edema</h6>
-            <p>No refiere (NR). Conservado (C). Alterado (A). No evaluado (NE). </p>
-            <div class="row">
-                <div class="col-sm-4">
-                    <ul class="mb-0">
-                        <li><strong>Dolor:</strong> {{ osteo.pain }}</li>
-                        <li><strong>En reposo:</strong> {{ osteo.resting }}</li>
-                        <li><strong>En movimiento:</strong> {{ osteo.moving }}</li>
-                        <li><strong>A la palpación:</strong> {{ osteo.on_palpitation }}</li>
-                    </ul>
-                </div>
-                <div class="col-sm-4">
-                    <ul class="mb-0">
-                        <li><strong>Zona:</strong> {{ osteo.zone }}</li>
-                        <li><strong>Intensidad:</strong> {{ osteo.intensity }}</li>
-                        <li><strong>Sensibilidad superficial:</strong> {{ osteo.superficial_sensitivity }}</li>
-                    </ul>
-                </div>
-                <div class="col-sm-4">
-                    <ul class="mb-0">
-                        <li><strong>Sensibilidad profunda:</strong> {{ osteo.deep_sensitivity }}</li>
-                        <li><strong>Inflamación:</strong> {{ osteo.inflammation }}</li>
-                        <li><strong>Edema:</strong> {{ osteo.edema }}</li>
-                    </ul>
-                </div>
-                <div class="col-sm-12">
-                    <ul class="mb-0">
-                        <li><strong>Observaciones:</strong> {{ osteo.observations }}</li>
-                    </ul>
-                </div>
-            </div>
-    
-            <hr>
-    
-            <div class="row">
-                <div class="col-sm-6">
-                    <h6>Evaluación de flexibilidad | Retracción</h6>
-                    <h5><strong class="badge badge-pill badge-warning text-dark">leve (L)</strong><strong class="badge badge-pill badge-warning-2 text-dark">Moderada (M)</strong><strong class="badge badge-pill badge-danger text-white">Severa (S)</strong><strong class="badge badge-pill badge-secondary-2 text-dark">No evaluado (NE)</strong><strong class="badge badge-pill badge-success text-white">No retracción (NR)</strong></h5>
-                    
-                    <div class="table-responsive">
-                        <table class="table table-striped user_info_table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th><strong>Grupo Muscular</strong></th>
-                                    <th><strong>Izquierdo</strong></th>
-                                    <th><strong>Derecho</strong></th>
-                                </tr>
-                            </thead>
-    
-                            <tbody>
-                                <tr>
-                                    <td>Pectoral Menor</td>
-                                    <td class="osteo_bg_{{ osteo.pectoralis_minor_l }}">{{ osteo.pectoralis_minor_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.pectoralis_minor_r }}">{{ osteo.pectoralis_minor_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Pectoral Mayor</td>
-                                    <td class="osteo_bg_{{ osteo.pectoralis_major_l }}">{{ osteo.pectoralis_major_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.pectoralis_major_r }}">{{ osteo.pectoralis_major_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Rotador Interno Hombro</td>
-                                    <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_l }}">{{ osteo.shoulder_internal_rotator_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.shoulder_internal_rotator_r }}">{{ osteo.shoulder_internal_rotator_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Rotador Externo Hombro</td>
-                                    <td class="osteo_bg_{{ osteo.shoulder_external_rotator_l }}">{{ osteo.shoulder_external_rotator_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.shoulder_external_rotator_r }}">{{ osteo.shoulder_external_rotator_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>PSOAS Ilíaco</td>
-                                    <td class="osteo_bg_{{ osteo.psoas_iliaco_l }}">{{ osteo.psoas_iliaco_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.psoas_iliaco_r }}">{{ osteo.psoas_iliaco_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Aductores de cadera</td>
-                                    <td class="osteo_bg_{{ osteo.hip_adductors_l }}">{{ osteo.hip_adductors_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.hip_adductors_r }}">{{ osteo.hip_adductors_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tensor de la fascia lata</td>
-                                    <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_l }}">{{ osteo.tensioner_fascia_liata_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.tensioner_fascia_liata_r }}">{{ osteo.tensioner_fascia_liata_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Espinales bajos</td>
-                                    <td class="osteo_bg_{{ osteo.low_spinal_l }}">{{ osteo.low_spinal_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.low_spinal_r }}">{{ osteo.low_spinal_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Isquitibiales</td>
-                                    <td class="osteo_bg_{{ osteo.hamstrings_l }}">{{ osteo.hamstrings_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.hamstrings_r }}">{{ osteo.hamstrings_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Cuadriceps</td>
-                                    <td class="osteo_bg_{{ osteo.quadriceps_l }}">{{ osteo.quadriceps_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.quadriceps_r }}">{{ osteo.quadriceps_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tendón de Aquiles</td>
-                                    <td class="osteo_bg_{{ osteo.achilles_tendon_l }}">{{ osteo.achilles_tendon_l }}</td>
-                                    <td class="osteo_bg_{{ osteo.achilles_tendon_r }}">{{ osteo.achilles_tendon_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Columna vertebral lumbar</td>
-                                    <td  class="osteo_bg_{{ osteo.spine_lumbar }}" colspan="2">{{ osteo.spine_lumbar }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-    
-                <div class="col-sm-6">
-                    <h6>Medidas reales, aparentes y circunferencias</h6>
-                    <p>No evaluado (NE).</p>
-    
-                    <div class="table-responsive mb-4">
-                        <table class="table table-striped user_info_table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th><strong>Medidas Reales | CM</strong></th>
-                                    <th><strong>Izquierdo</strong></th>
-                                    <th><strong>Derecho</strong></th>
-                                </tr>
-                            </thead>
-    
-                            <tbody>
-                                <tr>
-                                    <td>Miembro superior</td>
-                                    <td>{{ osteo.real_upper_l }}</td>
-                                    <td>{{ osteo.real_upper_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Miembro inferior</td>
-                                    <td>{{ osteo.real_lower_l }}</td>
-                                    <td>{{ osteo.real_lower_r }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-    
-                    <div class="table-responsive mb-4">
-                        <table class="table table-striped user_info_table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th><strong>Medidas Aparentes | CM</strong></th>
-                                    <th><strong>Izquierdo</strong></th>
-                                    <th><strong>Derecho</strong></th>
-                                </tr>
-                            </thead>
-    
-                            <tbody>
-                                <tr>
-                                    <td>Miembro superior</td>
-                                    <td>{{ osteo.apparent_upper_l }}</td>
-                                    <td>{{ osteo.apparent_upper_r }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Miembro inferior</td>
-                                    <td>{{ osteo.apparent_lower_l }}</td>
-                                    <td>{{ osteo.apparent_lower_r }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="table-responsive">
-                        <table class="table table-striped user_info_table">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th><strong>Trofismo muscular | CM</strong></th>
-                                    <th><strong>Izquierdo</strong></th>
-                                    <th><strong>Derecho</strong></th>
-                                </tr>
-                            </thead>
-    
-                            <tbody>
-                                <tr>
-                                    <td>Brazo</td>
-                                    <td>{{ osteo.arm_l_mt }}</td>
-                                    <td>{{ osteo.arm_r_mt }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Antebrazo</td>
-                                    <td>{{ osteo.forearm_l_mt }}</td>
-                                    <td>{{ osteo.forearm_r_mt }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Muslo</td>
-                                    <td>{{ osteo.thigh_l_mt }}</td>
-                                    <td>{{ osteo.thigh_r_mt }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Pierna</td>
-                                    <td>{{ osteo.leg_l_mt }}</td>
-                                    <td>{{ osteo.leg_r_mt }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            <iframe width="100%" height="1100" src="{% url 'users:report_fms' user.id %}" frameborder="0" scrolling="no"></iframe>
         </div>
     </div>
     
     <div>
         <h3>Osteomuscular</h3>
-        <iframe width="100%" height="1070" src="{% url 'users:report_osteo' user.id %}" frameborder="0" scrolling="no"></iframe>
+        <iframe width="100%" height="2150" src="{% url 'users:report_osteo' user.id %}" frameborder="0" scrolling="no"></iframe>
     </div>
     
     <div>
@@ -470,42 +297,7 @@
         <hr>
     
         <h3>Déficit Bilateral</h3>
-        <div class="notes">
-            <h6>Observaciones</h6>
-        
-            {% if bilateral_observation %}
-            <p class="ml-2">{{bilateral_observation.observation}}</p>
-            {% endif %}
-        </div>
-        {% if graph_mobile %}
-        <div class="mt-4" style="width: 400px;">
-            <form action="{% url 'users:bilateral_detail' user.id %}" method="get">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="input-group input-group-outline">
-                            <input class="form-control mt-2" type="date" name="date" value="{% if date %}{{date|date:'Y-m-d'}}{% endif %}">
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group input-group-outline">
-                            <button class="btn btn-secondary">Filtrar</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <h4 class="mt-3">Fecha: {{ date|date:'j'}} de {{ date|date:'F'}} de {{ date|date:'Y'}}</h4>
-        <div class="graph_wrapper">
-            <div class="loader">
-                <span>Cargando Gráfico</span>
-                <div class="lds-ripple"><div></div><div></div></div>
-            </div>
-            <div class="graph_inner">
-                {{ graph_mobile|safe }}
-            </div>
-        </div>
-        {% endif %}
+        <iframe width="100%" height="650" src="{% url 'users:report_bilateral' user.id %}" frameborder="0" scrolling="no"></iframe>
     </div>
     
     <hr>
@@ -550,13 +342,16 @@
 {% block extrajs %}
     <script>
         document.addEventListener('DOMContentLoaded', function(){
-            const loading_report = document.querySelector('.loading_report_wrapper')
+            const loading_report = document.querySelector('#loading_report_wrapper')
+            loading_report.style.display = 'none'
+
+            const generating_report = document.querySelector('#generating_report_wrapper')
             window.html2canvas = html2canvas
             window.jsPDF = window.jspdf.jsPDF
 
             function generate(e) {
                 e.preventDefault()
-                loading_report.style.display = 'block'
+                generating_report.style.display = 'block'
 
                 const options = {
                     orientation: 'p',
@@ -607,8 +402,6 @@
                             const first = select_first(iframe, iframe_sibling, report_inside)
                             const second = select_second(iframe, iframe_sibling, report_inside)
 
-                            console.log('primero y segundo: ', first, second)
-
                             html2canvas(first,{
                                 letterRendering:true,
                                 allowTaint: true,
@@ -627,7 +420,7 @@
                                 doc.addImage(header_img, 'JPG', 0.5, 0.5, 20.5, 1.66)
                                 doc.addImage(image, 'PNG', 0.5, 2.3, image_width, image_height)
                                 
-                                if(first){
+                                if(second){
                                     const canvas_html2 = html2canvas(second,{
                                         letterRendering:true,
                                         allowTaint: true,
@@ -651,7 +444,7 @@
                                         if(i+1 == sources.length){
                                             const name = 'Dinametrics_reporte_' + '{{user.first_name}}_{{user.last_name}}' + '.pdf'
                                             doc.save(name);
-                                            loading_report.style.display = 'none'
+                                            generating_report.style.display = 'none'
                                         }
                                     })
                                 } else {
@@ -662,7 +455,7 @@
                                     if(i+1 == sources.length){
                                         const name = 'Dinametrics_reporte_' + '{{user.first_name}}_{{user.last_name}}' + '.pdf'
                                         doc.save(name);
-                                        loading_report.style.display = 'none'
+                                        generating_report.style.display = 'none'
                                     }
                                 }
 
@@ -698,7 +491,7 @@
                                     if(i+1 == sources.length){
                                         const name = 'Dinametrics_reporte_' + '{{user.first_name}}_{{user.last_name}}' + '.pdf'
                                         doc.save(name);
-                                        loading_report.style.display = 'none'
+                                        generating_report.style.display = 'none'
                                     }
                                 })
                             } catch(error){console.log(error)}

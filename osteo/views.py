@@ -52,22 +52,17 @@ class OsteoReportView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         
         #Get data from osteo and make chart
+        osteo = Osteo.objects.filter(athlete = context['user'].athlete).order_by('-date')
+
+        if len(osteo) > 0:
+            context['osteo'] = osteo[0]
+            context['osteos'] = osteo
+            
         if(self.request.GET.get('osteo_id')):
-            osteos = Osteo.objects.filter(athlete = context['user'].athlete)
-            
             osteo_id = self.request.GET['osteo_id']
-            osteo = Osteo.objects.filter(id=osteo_id)
+            osteo = Osteo.objects.filter(id=osteo_id).order_by('-date')
             osteo = osteo[0]
-            
-            context['osteos'] = osteos
             context['osteo'] = osteo
-        else:
-            osteo = Osteo.objects.filter(athlete = context['user'].athlete)
-
-            if len(osteo) > 0:
-                context['osteo'] = osteo[0]
-                context['osteos'] = osteo
-
 
         return context
 
