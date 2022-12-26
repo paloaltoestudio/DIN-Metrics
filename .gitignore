@@ -22,3 +22,4 @@ db
 ._db
 metrics/settings/__pycache__/*
 media
+certbot

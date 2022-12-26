@@ -85,3 +85,5 @@ LOGGING = {
         },
     },
 }
+
+CSRF_TRUSTED_ORIGINS = ['https://*.dinametrics.com.co','https://*.127.0.0.1']
