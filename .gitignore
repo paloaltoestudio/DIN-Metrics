@@ -1,5 +1,6 @@
 .venv
 .env
+.env.prod
 db.sqlite3
 metrics/__pycache__/
 users/__pycache__/
@@ -23,3 +24,5 @@ db
 metrics/settings/__pycache__/*
 media
 certbot
+logs
+tmp
