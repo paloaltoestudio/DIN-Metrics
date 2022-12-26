@@ -52,16 +52,15 @@
             
                     <div class="input-group input-group-outline mb-3 is-upper">
                         <label for="" class="form-label">Fecha de nacimiento</label>
-                        <input class="form-control" type="date" name="birthdate" value="{{ form.birthdate }}">
+                        <input class="form-control" type="date" name="birthdate" value="{{ form.birthdate }}" required>
                     </div>
             
                     <div class="input-group input-group-outline mb-3 is-upper">
                         <label for="" class="form-label">Género</label>
-                        <select class="form-control" name="gender" id="gender">
+                        <select class="form-control" name="gender" id="gender" required>
                             <option value="">Selecciona</option>
                             <option {% if form.gender == 'M' %} selected {% endif %} value="M">Masculino</option>
                             <option {% if form.gender == 'F' %} selected {% endif %} value="F">Femenino</option>
-                            <option {% if form.gender == 'O' %} selected {% endif %} value="O">Otro</option>
                         </select>
                     </div>
                 </div>
