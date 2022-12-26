@@ -1,2 +1,26 @@
 
-<h1>Opps. Esta página no existe</h1>
+{% extends '../layout/base_auth.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<body>
+    <div class="row">
+        <div class="col-lg-5 col-md-6 col-12 mx-auto">
+            <div class="card login p-2">
+                <h1 class="mx-auto mb-0"><img src="{% static 'img/dinametrics-logo.png' %}" alt="Dinametrics logo" width="250"></h1>
+            </div>
+            <div class="text-center text-white">
+                <h2>404<br>
+                    Esta página no existe
+                </h2>
+                <a class="text-white" href="/">Volver al inicio</a>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+{% endblock %}
