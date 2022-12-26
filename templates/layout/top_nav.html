@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+    <div class="container-fluid">
+
+      <div class="navbar-wrapper">
+          <a class="navbar-brand" href="{% url 'users:index' %}">Admin Métricas</a>
+      </div>
+
+      <div class="d-flex">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+        <ul class="navbar-nav account d-flex flex-row">
+          <li>
+            <a class="nav-item mr-3 profile_link" 
+              href="{% url 'users:account_detail' request.user.id %}">
+              <span class="top_picture">
+              {% if request.user.picture.url != '' %}
+                  <img width="30" src="{{ request.user.picture.url }}" alt="">
+              {% else %}
+                  <span class="material-icons">person</span>
+              {% endif %}
+              </span>
+              <span class="d-none d-lg-inline-block">
+                {{ request.user }}{% if request.user.role != 'ATHLETE' %} | {{ request.user.role | title }}{% endif %}
+              </span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="" href="{% url 'logout' %}">
+              <span class="material-icons">logout</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+    </div>
+  </nav>

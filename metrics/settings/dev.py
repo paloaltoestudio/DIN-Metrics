@@ -1,5 +1,8 @@
 from .base import *
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 

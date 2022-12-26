@@ -9,3 +9,5 @@ urlpatterns = [
     path('login', UserLoginView.as_view(), name='login'),
     path('logout', logout_view, name='logout'),
 ]
+
+handler404 = 'users.views.error_404_view'
