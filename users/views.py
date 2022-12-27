@@ -1,7 +1,8 @@
 """Users views."""
 # Django
 from django.contrib.auth import logout
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordChangeDoneView, PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
@@ -622,3 +623,11 @@ def logout_view(request):
 
 def error_404_view(request, exception):
     return render(request, 'general/404.html')
+
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'users/password_reset.html'
+    email_template_name = 'users/password_reset_email.html'
+    subject_template_name = 'users/password_reset_subject'
+    success_message = "Te hemos enviado un email con instrucciones para actualizar la contraseña"
+    success_url = reverse_lazy('password_reset')

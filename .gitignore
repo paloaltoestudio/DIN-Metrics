@@ -27,3 +27,5 @@ certbot
 logs
 tmp
 tmp/*
+docker-compose.bk.yml
+nginx_bk.conf
