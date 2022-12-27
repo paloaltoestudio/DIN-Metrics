@@ -1,7 +1,10 @@
+
+#Django
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
+#Project views
 from .views import (signup, new_manager, Index, UserDetail, ReportDetail, OsteoList, OsteoDetail, FMSDetail, FMSList, JumpDetail, ProfileFVDetail, 
                     FVDetail, ProfileFVGraph, BilateralDetail, FatDetailView, ManagerView, ManagerDetail, manager_update, AccountDetail,
                     PasswordChange, PasswordChangeDone, user_update)
@@ -78,5 +81,6 @@ urlpatterns = [
     path('<int:id>/editar-perfil', ProfileUpdateView.as_view(), name='profile_update'),
     path('crear-perfil', ProfileCreateView.as_view(), name='profile_create'),
     path('deportistas/<int:id>/grasa', FatDetailView.as_view(), name='fat_detail'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
