@@ -11,7 +11,7 @@ class UserFilter(django_filters.FilterSet):
     email = django_filters.CharFilter(lookup_expr='icontains', widget=forms.TextInput(attrs={'class': 'form-control'}))
     document = django_filters.CharFilter(lookup_expr='iexact', widget=forms.TextInput(attrs={'class': 'form-control'}))
 
-    manager = django_filters.CharFilter( method='get_manager', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    manager = django_filters.CharFilter( method='get_manager', lookup_expr='iexact', widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 
     def get_manager( self, qs, name, value):

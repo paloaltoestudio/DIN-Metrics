@@ -38,26 +38,26 @@
                         </div>  
                       </div>
 
-                      <div class="col-sm-2">
+                      <div class="col-sm-3">
                         <div class="input-group input-group-outline mb-3">
                           <label class="form-label">Documento</label>
                           {{ filter.form.document}}
                         </div>  
                       </div>
-                      <div class="col-sm-2">
+                      <div class="col-sm-3">
                         <div class="input-group input-group-outline mb-3">
                           <label class="form-label">Email</label>
                           {{ filter.form.email}}
                         </div>  
                       </div>
-                      {% if request.user.role == 'ADMIN' %}
+                      {% comment %} {% if request.user.role == 'ADMIN' %}
                       <div class="col-sm-2">
                         <div class="input-group input-group-outline mb-3">
                           <label class="form-label">Manager</label>
                           {{ filter.form.manager}}
                         </div>  
                       </div>
-                      {% endif %}
+                      {% endif %} {% endcomment %}
                       <div class="col-sm-2">
                         <button style="height: 35px; width: 100%" class="mt-0 py-2 px-4 btn btn-primary">Buscar</button>
                       </div>
